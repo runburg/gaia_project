@@ -1,0 +1,640 @@
+# %ECSV 0.9
+# ---
+# datatype:
+# - name: MAIN_ID
+#   datatype: object
+#   description: Main identifier for an object
+#   meta: !!omap
+#   - ucd: meta.id;meta.main
+#   - width: 22
+#   - links:
+#     - href: http://simbad.u-strasbg.fr/simbad/sim-id?Ident=${MAIN_ID}&NbIdent=1
+#       value: ${MAIN_ID}
+# - name: RA
+#   datatype: float64
+# - name: DEC
+#   datatype: float64
+# - name: RA_PREC
+#   datatype: int16
+#   description: Right ascension precision
+#   meta: !!omap
+#   - width: 2
+# - name: DEC_PREC
+#   datatype: int16
+#   description: Declination precision
+#   meta: !!omap
+#   - width: 2
+# - name: COO_ERR_MAJA
+#   unit: mas
+#   datatype: float32
+#   format: '{:6.3f}'
+#   description: Coordinate error major axis
+#   meta: !!omap
+#   - ucd: phys.angSize.smajAxis;pos.errorEllipse;pos.eq
+#   - width: 6
+#   - precision: '3'
+# - name: COO_ERR_MINA
+#   unit: mas
+#   datatype: float32
+#   format: '{:6.3f}'
+#   description: Coordinate error minor axis
+#   meta: !!omap
+#   - ucd: phys.angSize.sminAxis;pos.errorEllipse;pos.eq
+#   - width: 6
+#   - precision: '3'
+# - name: COO_ERR_ANGLE
+#   unit: deg
+#   datatype: int16
+#   description: Coordinate error angle
+#   meta: !!omap
+#   - ucd: pos.posAng;pos.errorEllipse;pos.eq
+#   - width: 3
+# - name: COO_QUAL
+#   datatype: string
+#   description: Coordinate quality
+#   meta: !!omap
+#   - ucd: meta.code.qual;pos.eq
+#   - width: 1
+# - name: COO_WAVELENGTH
+#   datatype: string
+#   description: Wavelength class for the origin of the coordinates (R,I,V,U,X,G)
+#   meta: !!omap
+#   - ucd: instr.bandpass;pos.eq
+#   - width: 1
+# - name: COO_BIBCODE
+#   datatype: object
+#   description: Coordinate reference
+#   meta: !!omap
+#   - ucd: meta.bib.bibcode;pos.eq
+#   - width: 19
+# - name: MORPH_TYPE
+#   datatype: object
+#   description: Morphological type
+#   meta: !!omap
+#   - ucd: src.morph.type
+#   - width: 20
+# - name: MORPH_QUAL
+#   datatype: string
+#   description: Morphological type quality
+#   meta: !!omap
+#   - ucd: meta.code.qual;src.morph.type
+#   - width: 1
+# - name: MORPH_BIBCODE
+#   datatype: object
+#   description: morphological type reference
+#   meta: !!omap
+#   - ucd: meta.bib.bibcode;src.morph.type
+#   - width: 19
+# - name: GALDIM_MAJAXIS
+#   unit: arcmin
+#   datatype: float32
+#   format: '{!r:>4}'
+#   description: Angular size major axis
+#   meta: !!omap
+#   - ucd: phys.angSize.smajAxis
+#   - width: 4
+# - name: GALDIM_MINAXIS
+#   unit: arcmin
+#   datatype: float32
+#   format: '{!r:>4}'
+#   description: Angular size minor axis
+#   meta: !!omap
+#   - ucd: phys.angSize.sminAxis
+#   - width: 4
+# - name: Distance_distance
+#   unit: kpc
+#   datatype: float64
+# - name: Distance_Q
+#   datatype: string
+#   description: Quality
+#   meta: !!omap
+#   - ucd: META.CODE.QUAL
+#   - width: 1
+# - name: Distance_unit
+#   datatype: string
+#   description: Unit (pc,kpc or Mpc)
+#   meta: !!omap
+#   - ucd: META.UNIT
+#   - width: 4
+# - name: Distance_merr
+#   datatype: float64
+#   format: '{:9.4f}'
+#   description: minus error
+#   meta: !!omap
+#   - ucd: STAT.ERROR
+#   - width: 9
+#   - precision: '4'
+# - name: Distance_perr
+#   datatype: float64
+#   format: '{:9.4f}'
+#   description: plus error
+#   meta: !!omap
+#   - ucd: STAT.ERROR
+#   - width: 9
+#   - precision: '4'
+# - name: Distance_method
+#   datatype: string
+#   description: distance calculation method
+#   meta: !!omap
+#   - ucd: INSTR.SETUP
+#   - width: 8
+# - name: Distance_bibcode
+#   datatype: string
+#   description: Bibcode
+#   meta: !!omap
+#   - ucd: META.BIB.BIBCODE
+#   - width: 19
+# - name: PMDEC
+#   unit: mas / yr
+#   datatype: float64
+#   format: '{:9.3f}'
+#   description: Proper motion in DEC
+#   meta: !!omap
+#   - ucd: pos.pm;pos.eq.dec
+#   - width: 9
+#   - precision: '3'
+# - name: PMRA
+#   unit: mas / yr
+#   datatype: float64
+#   format: '{:9.3f}'
+#   description: Proper motion in RA
+#   meta: !!omap
+#   - ucd: pos.pm;pos.eq.ra
+#   - width: 9
+#   - precision: '3'
+# - name: PM_MAG
+#   datatype: float64
+# - name: GAIA
+#   datatype: object
+# - name: VELS
+#   datatype: object
+# meta: !!omap
+# - ID: SimbadScript
+# - name: default
+# - description: Simbad script executed on 2019.06.11CEST03:36:40
+# schema: astropy-2.0
+MAIN_ID RA DEC RA_PREC DEC_PREC COO_ERR_MAJA COO_ERR_MINA COO_ERR_ANGLE COO_QUAL COO_WAVELENGTH COO_BIBCODE MORPH_TYPE MORPH_QUAL MORPH_BIBCODE GALDIM_MAJAXIS GALDIM_MINAXIS Distance_distance Distance_Q Distance_unit Distance_merr Distance_perr Distance_method Distance_bibcode PMDEC PMRA PM_MAG GAIA VELS
+"NAME Dra dSph" 260.05972916666667 57.92121944444444 7 7 81.000 79.000 90 C O 2009yCat.2294....0A dSphun C 2015ApJS..217...27A 15.8 15.8 80.0 "" Mpc "" "" T-RDB 2017AJ....153....6K 0.172 0.329 0.3712478956169314 "dist             solution_id     ...                                         epoch_photometry_url                                       
+                                          ...                                                                                                    
+--------------------- ------------------- ... ---------------------------------------------------------------------------------------------------
+0.0025482249793032574 1635721458409799680 ...                                                                                                  --
+0.0037239345798965227 1635721458409799680 ... http://geadata.esac.esa.int/data-server/data?RETRIEVAL_TYPE=epoch_photometry&ID=1433155991683418368
+ 0.005067170899589852 1635721458409799680 ...                                                                                                  --
+  0.00525635866636386 1635721458409799680 ...                                                                                                  --
+ 0.007096440202532823 1635721458409799680 ...                                                                                                  --
+ 0.007140840452334555 1635721458409799680 ...                                                                                                  --
+  0.00739906018139978 1635721458409799680 ...                                                                                                  --
+ 0.007598209157560239 1635721458409799680 ...                                                                                                  --
+ 0.007659694899920076 1635721458409799680 ...                                                                                                  --
+ 0.007877697471980786 1635721458409799680 ...                                                                                                  --
+ 0.009381394291423354 1635721458409799680 ...                                                                                                  --
+ 0.009443853049044406 1635721458409799680 ...                                                                                                  --
+  0.00949171415246908 1635721458409799680 ...                                                                                                  --
+  0.00956103460288997 1635721458409799680 ...                                                                                                  --
+ 0.010293884925700427 1635721458409799680 ...                                                                                                  --
+ 0.010390520725272499 1635721458409799680 ...                                                                                                  --
+ 0.010555290097899293 1635721458409799680 ...                                                                                                  --
+ 0.012264815290771811 1635721458409799680 ...                                                                                                  --
+ 0.012550600680776661 1635721458409799680 ... http://geadata.esac.esa.int/data-server/data?RETRIEVAL_TYPE=epoch_photometry&ID=1433156060402895360
+   0.0125856328175638 1635721458409799680 ...                                                                                                  --
+ 0.012593536487481936 1635721458409799680 ...                                                                                                  --
+   0.0126265824976783 1635721458409799680 ...                                                                                                  --
+ 0.013008272309740998 1635721458409799680 ...                                                                                                  --
+  0.01364122537638969 1635721458409799680 ...                                                                                                  --
+ 0.013921963935580099 1635721458409799680 ...                                                                                                  --
+ 0.014303401841232927 1635721458409799680 ...                                                                                                  --
+                  ...                 ... ...                                                                                                 ...
+  0.49855828143374215 1635721458409799680 ...                                                                                                  --
+  0.49857818942222576 1635721458409799680 ...                                                                                                  --
+   0.4986481226734129 1635721458409799680 ...                                                                                                  --
+   0.4986585344392983 1635721458409799680 ...                                                                                                  --
+   0.4986767139704732 1635721458409799680 ...                                                                                                  --
+  0.49874259909774055 1635721458409799680 ...                                                                                                  --
+  0.49879043706092757 1635721458409799680 ...                                                                                                  --
+   0.4987914906471438 1635721458409799680 ...                                                                                                  --
+   0.4989328820721651 1635721458409799680 ...                                                                                                  --
+   0.4989492861770068 1635721458409799680 ...                                                                                                  --
+  0.49896417587815434 1635721458409799680 ...                                                                                                  --
+  0.49896632741861113 1635721458409799680 ...                                                                                                  --
+  0.49902479528757826 1635721458409799680 ...                                                                                                  --
+  0.49906186899563226 1635721458409799680 ...                                                                                                  --
+  0.49915582179262064 1635721458409799680 ...                                                                                                  --
+   0.4991836891853386 1635721458409799680 ...                                                                                                  --
+   0.4992412192542103 1635721458409799680 ...                                                                                                  --
+  0.49925888209702607 1635721458409799680 ...                                                                                                  --
+   0.4994876618644171 1635721458409799680 ...                                                                                                  --
+   0.4995199044757048 1635721458409799680 ...                                                                                                  --
+   0.4995343276969328 1635721458409799680 ...                                                                                                  --
+  0.49963712033316665 1635721458409799680 ...                                                                                                  --
+  0.49970534560226043 1635721458409799680 ...                                                                                                  --
+    0.499741009089994 1635721458409799680 ...                                                                                                  --
+   0.4997762754140709 1635721458409799680 ...                                                                                                  --
+   0.4998593868378491 1635721458409799680 ...                                                                                                  --
+Length = 6273 rows" "[ 2.42593722  0.44599017  1.02820516 ... 16.5146969   8.02894201
+ 11.04681126]"
+"NAME Leo I dSph" 152.11716666666666 12.306500000000002 6 6 10800.000 10800.000 90 D "" 1999ApJS..125..409C dSphun C 2015ApJS..217...27A 11.4667 11.4667 260.0 "" Mpc "" "" T-RDB 2017AJ....153....6K -0.126 -0.114 0.16991762710207556 "dist             solution_id             designation          ... lum_percentile_upper                                  datalink_url                                 epoch_photometry_url
+                                                                       ...         Lsun                                                                                                           
+--------------------- ------------------- ---------------------------- ... -------------------- ----------------------------------------------------------------------------- --------------------
+0.0015483128198803384 1635721458409799680 Gaia DR2 3881551306208791168 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3881551306208791168                   --
+ 0.002517872505284901 1635721458409799680 Gaia DR2 3881551306209406848 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3881551306209406848                   --
+0.0028145905744310154 1635721458409799680 Gaia DR2 3881551306208788992 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3881551306208788992                   --
+0.0030732158657978646 1635721458409799680 Gaia DR2 3881551306208785024 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3881551306208785024                   --
+ 0.003590533321899071 1635721458409799680 Gaia DR2 3881551306208792320 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3881551306208792320                   --
+ 0.004169489458530749 1635721458409799680 Gaia DR2 3881551306208796160 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3881551306208796160                   --
+  0.00437753771545507 1635721458409799680 Gaia DR2 3881551306208794880 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3881551306208794880                   --
+ 0.004512065801439375 1635721458409799680 Gaia DR2 3881552062123037696 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3881552062123037696                   --
+ 0.004826915027812528 1635721458409799680 Gaia DR2 3881551301919437184 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3881551301919437184                   --
+  0.00570864275725161 1635721458409799680 Gaia DR2 3881552057827992064 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3881552057827992064                   --
+ 0.005933416799049713 1635721458409799680 Gaia DR2 3881551306208800640 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3881551306208800640                   --
+ 0.005960165360603895 1635721458409799680 Gaia DR2 3881552057833638016 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3881552057833638016                   --
+ 0.006425928424850557 1635721458409799680 Gaia DR2 3881552160907216128 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3881552160907216128                   --
+ 0.006557871105117118 1635721458409799680 Gaia DR2 3881552062123039872 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3881552062123039872                   --
+0.0067395988607026475 1635721458409799680 Gaia DR2 3881552062123045504 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3881552062123045504                   --
+0.0072483610303780985 1635721458409799680 Gaia DR2 3881551306208800384 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3881551306208800384                   --
+ 0.007541792605520073 1635721458409799680 Gaia DR2 3881552062123041280 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3881552062123041280                   --
+ 0.007547164219906418 1635721458409799680 Gaia DR2 3881551306208798464 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3881551306208798464                   --
+ 0.007807142094074571 1635721458409799680 Gaia DR2 3881552062123039360 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3881552062123039360                   --
+ 0.007868158060546852 1635721458409799680 Gaia DR2 3881551409287984640 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3881551409287984640                   --
+ 0.007878738285858425 1635721458409799680 Gaia DR2 3881551306208800768 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3881551306208800768                   --
+ 0.008020932406943432 1635721458409799680 Gaia DR2 3881551306209408128 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3881551306209408128                   --
+ 0.008298203853267294 1635721458409799680 Gaia DR2 3881551301913729920 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3881551301913729920                   --
+ 0.008405070735516681 1635721458409799680 Gaia DR2 3881551301913730432 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3881551301913730432                   --
+ 0.008479643785854247 1635721458409799680 Gaia DR2 3881551306208799104 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3881551306208799104                   --
+ 0.008480373094011923 1635721458409799680 Gaia DR2 3881551409287982720 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3881551409287982720                   --
+                  ...                 ...                          ... ...                  ...                                                                           ...                  ...
+  0.49697475776815964 1635721458409799680 Gaia DR2 3881620330628323072 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3881620330628323072                   --
+   0.4970636794277148 1635721458409799680 Gaia DR2 3880768861951964544 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3880768861951964544                   --
+   0.4971683937451234 1635721458409799680 Gaia DR2 3881565565500788480 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3881565565500788480                   --
+   0.4974029138674253 1635721458409799680 Gaia DR2 3881604937465664512 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3881604937465664512                   --
+   0.4974038590095316 1635721458409799680 Gaia DR2 3880395852632114560 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3880395852632114560                   --
+   0.4976854843304423 1635721458409799680 Gaia DR2 3880767453202670592 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3880767453202670592                   --
+   0.4976859689216415 1635721458409799680 Gaia DR2 3881606625388223104 ...           0.39367133 http://geadata.esac.esa.int/data-server/datalink/links?ID=3881606625388223104                   --
+  0.49789364062430597 1635721458409799680 Gaia DR2 3880410631614590464 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3880410631614590464                   --
+   0.4979053245592526 1635721458409799680 Gaia DR2 3881604181551418880 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3881604181551418880                   --
+   0.4979759090308863 1635721458409799680 Gaia DR2 3881648196376270976 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3881648196376270976                   --
+   0.4979769453297249 1635721458409799680 Gaia DR2 3881605109264363904 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3881605109264363904                   --
+  0.49809881408891193 1635721458409799680 Gaia DR2 3881603872313754880 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3881603872313754880                   --
+   0.4983236398099192 1635721458409799680 Gaia DR2 3881646890706168192 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3881646890706168192                   --
+   0.4983820067194092 1635721458409799680 Gaia DR2 3880768380915614592 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3880768380915614592                   --
+  0.49872034977701407 1635721458409799680 Gaia DR2 3880774771827539200 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3880774771827539200                   --
+  0.49881697861785834 1635721458409799680 Gaia DR2 3880804870962804864 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3880804870962804864                   --
+    0.498835747594944 1635721458409799680 Gaia DR2 3881563568340406528 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3881563568340406528                   --
+   0.4988976144254881 1635721458409799680 Gaia DR2 3881648922226034560 ...            1.7402626 http://geadata.esac.esa.int/data-server/datalink/links?ID=3881648922226034560                   --
+   0.4989294862474976 1635721458409799680 Gaia DR2 3881621193917189760 ...           0.17711921 http://geadata.esac.esa.int/data-server/datalink/links?ID=3881621193917189760                   --
+  0.49899943189081164 1635721458409799680 Gaia DR2 3881605113559599232 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3881605113559599232                   --
+  0.49940218410655224 1635721458409799680 Gaia DR2 3880801954675041408 ...            1.0516682 http://geadata.esac.esa.int/data-server/datalink/links?ID=3880801954675041408                   --
+  0.49946858657902965 1635721458409799680 Gaia DR2 3880802744948513152 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3880802744948513152                   --
+  0.49964396285377316 1635721458409799680 Gaia DR2 3880814599058679808 ...            0.2571476 http://geadata.esac.esa.int/data-server/datalink/links?ID=3880814599058679808                   --
+   0.4996579409205579 1635721458409799680 Gaia DR2 3881621189621815680 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3881621189621815680                   --
+   0.4998419234987387 1635721458409799680 Gaia DR2 3880804634734630144 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3880804634734630144                   --
+   0.4999401690840075 1635721458409799680 Gaia DR2 3881562232606172416 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3881562232606172416                   --
+Length = 2844 rows" "[ 3.76690631  2.08405245  2.15204829 ...  8.91307981 14.55856632
+  8.23109631]"
+"NAME Leo B" 168.36720833333334 22.152805555555553 6 6 10800.000 10800.000 90 D "" 1999ApJS..125..409C dSphun C 2015ApJS..217...27A 6.1333 6.1333 250.0 "" Mpc "" "" T-RDB 2017AJ....153....6K -0.033 0.104 0.10911003620199197 "dist             solution_id             designation          ... lum_percentile_upper                                  datalink_url                                 epoch_photometry_url
+                                                                       ...         Lsun                                                                                                           
+--------------------- ------------------- ---------------------------- ... -------------------- ----------------------------------------------------------------------------- --------------------
+ 0.004985328365174089 1635721458409799680 Gaia DR2 3991519507121372416 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3991519507121372416                   --
+ 0.005427792015081176 1635721458409799680 Gaia DR2 3991519472761627008 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3991519472761627008                   --
+ 0.005482087899116118 1635721458409799680 Gaia DR2 3991519511416539776 ...          0.060301237 http://geadata.esac.esa.int/data-server/datalink/links?ID=3991519511416539776                   --
+ 0.006655662509166297 1635721458409799680 Gaia DR2 3991519507121366784 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3991519507121366784                   --
+ 0.006859525140063671 1635721458409799680 Gaia DR2 3991519472761901568 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3991519472761901568                   --
+ 0.006922139236649683 1635721458409799680 Gaia DR2 3991522466354039680 ...           0.25839248 http://geadata.esac.esa.int/data-server/datalink/links?ID=3991522466354039680                   --
+0.0075494186848708445 1635721458409799680 Gaia DR2 3991519472761627136 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3991519472761627136                   --
+ 0.009129939756375115 1635721458409799680 Gaia DR2 3991519472761623552 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3991519472761623552                   --
+ 0.010151348566857064 1635721458409799680 Gaia DR2 3991522427699132928 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3991522427699132928                   --
+ 0.011319927876484798 1635721458409799680 Gaia DR2 3991519472761621504 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3991519472761621504                   --
+ 0.011688444751045772 1635721458409799680 Gaia DR2 3991522427699139456 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3991522427699139456                   --
+ 0.012079785250837468 1635721458409799680 Gaia DR2 3991522462058880768 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3991522462058880768                   --
+ 0.012100444648091818 1635721458409799680 Gaia DR2 3991522462059157888 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3991522462059157888                   --
+  0.01229638796908702 1635721458409799680 Gaia DR2 3991519507121377408 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3991519507121377408                   --
+ 0.012853992166001253 1635721458409799680 Gaia DR2 3991522431993913984 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3991522431993913984                   --
+  0.01305808434381693 1635721458409799680 Gaia DR2 3991519438401887104 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3991519438401887104                   --
+ 0.013649814312365813 1635721458409799680 Gaia DR2 3991519472761620096 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3991519472761620096                   --
+  0.01409744698846865 1635721458409799680 Gaia DR2 3991519507121646592 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3991519507121646592                   --
+  0.01476409643263461 1635721458409799680 Gaia DR2 3991519472761617408 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3991519472761617408                   --
+ 0.014930151904591162 1635721458409799680 Gaia DR2 3991522431994301696 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3991522431994301696                   --
+ 0.015167730056518693 1635721458409799680 Gaia DR2 3991519507121646336 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3991519507121646336                   --
+ 0.015272178785195045 1635721458409799680 Gaia DR2 3991519472761616768 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3991519472761616768                   --
+ 0.015424706946420718 1635721458409799680 Gaia DR2 3991519404042143616 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3991519404042143616                   --
+ 0.015446505307512941 1635721458409799680 Gaia DR2 3991519507124104320 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3991519507124104320                   --
+ 0.015459299176923836 1635721458409799680 Gaia DR2 3991519438402169728 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3991519438402169728                   --
+ 0.015817868050670016 1635721458409799680 Gaia DR2 3991519507121376512 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3991519507121376512                   --
+                  ...                 ...                          ... ...                  ...                                                                           ...                  ...
+  0.49525716727353897 1635721458409799680 Gaia DR2 3991466837937689088 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3991466837937689088                   --
+   0.4954729504242004 1635721458409799680 Gaia DR2 3991909902468541824 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3991909902468541824                   --
+   0.4954769482687571 1635721458409799680 Gaia DR2 3991594754948965760 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3991594754948965760                   --
+   0.4959270163061526 1635721458409799680 Gaia DR2 3991592521565955200 ...            0.1827397 http://geadata.esac.esa.int/data-server/datalink/links?ID=3991592521565955200                   --
+   0.4962676415993609 1635721458409799680 Gaia DR2 3991128596378178816 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3991128596378178816                   --
+   0.4962823238411335 1635721458409799680 Gaia DR2 3991126672233236608 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3991126672233236608                   --
+  0.49687331585612504 1635721458409799680 Gaia DR2 3991126195491959808 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3991126195491959808                   --
+  0.49716332273779934 1635721458409799680 Gaia DR2 3991967936067274112 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3991967936067274112                   --
+   0.4972287146594389 1635721458409799680 Gaia DR2 3991595201625568000 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3991595201625568000                   --
+   0.4973671691117474 1635721458409799680 Gaia DR2 3990736757921420416 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3990736757921420416                   --
+   0.4976335420135057 1635721458409799680 Gaia DR2 3990716657474615424 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3990716657474615424                   --
+  0.49769327901340915 1635721458409799680 Gaia DR2 3991892177138846848 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3991892177138846848                   --
+   0.4979579867972874 1635721458409799680 Gaia DR2 3991906672653132416 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3991906672653132416                   --
+  0.49805631754012153 1635721458409799680 Gaia DR2 3990746825325113600 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3990746825325113600                   --
+  0.49814720919574584 1635721458409799680 Gaia DR2 3991130280005783808 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3991130280005783808                   --
+   0.4981802687748515 1635721458409799680 Gaia DR2 3991540157324049408 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3991540157324049408                   --
+   0.4982572326100801 1635721458409799680 Gaia DR2 3991579400440527744 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3991579400440527744                   --
+   0.4984851471022116 1635721458409799680 Gaia DR2 3990747581239515904 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3990747581239515904                   --
+  0.49888154153988046 1635721458409799680 Gaia DR2 3991888221474554240 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3991888221474554240                   --
+   0.4989951031983915 1635721458409799680 Gaia DR2 3991968039146488448 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3991968039146488448                   --
+   0.4990023878490485 1635721458409799680 Gaia DR2 3991957181469168640 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3991957181469168640                   --
+  0.49907232196484896 1635721458409799680 Gaia DR2 3991126710888006016 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3991126710888006016                   --
+  0.49915613489410354 1635721458409799680 Gaia DR2 3991970478688032384 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3991970478688032384                   --
+  0.49919555390796394 1635721458409799680 Gaia DR2 3990738720722472704 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3990738720722472704                   --
+   0.4998035109913419 1635721458409799680 Gaia DR2 3991482505978386816 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3991482505978386816                   --
+  0.49980849939259403 1635721458409799680 Gaia DR2 3991130215581318656 ...           0.47997573 http://geadata.esac.esa.int/data-server/datalink/links?ID=3991130215581318656                   --
+Length = 1582 rows" "[ 1.53761898 10.19979317 25.5929536  ... 26.55997657  7.19067724
+ 15.37600073]"
+"NAME UMi Galaxy" 227.29725 67.21436111111112 6 6 108000.000 10800.000 90 D "" 1999ApJS..125..409C dSph D 2012AJ....144....4M 32.2333 32.2333 60.0 "" Mpc "" "" T-RDB 2017AJ....153....6K 0.074 0.056 0.09280086206496144 "dist             solution_id     ...                                         epoch_photometry_url                                       
+                                          ...                                                                                                    
+--------------------- ------------------- ... ---------------------------------------------------------------------------------------------------
+0.0008285567420488235 1635721458409799680 ...                                                                                                  --
+ 0.002569676335924818 1635721458409799680 ...                                                                                                  --
+0.0031326950857870797 1635721458409799680 ...                                                                                                  --
+ 0.008764142805280102 1635721458409799680 ...                                                                                                  --
+  0.01013069561333707 1635721458409799680 ...                                                                                                  --
+ 0.010507287874495388 1635721458409799680 ...                                                                                                  --
+  0.01075725199240158 1635721458409799680 ...                                                                                                  --
+ 0.011567203683655875 1635721458409799680 ...                                                                                                  --
+ 0.012519282040040785 1635721458409799680 ...                                                                                                  --
+ 0.012978914724985836 1635721458409799680 ...                                                                                                  --
+ 0.012986154274038948 1635721458409799680 ...                                                                                                  --
+ 0.014666412368931021 1635721458409799680 ...                                                                                                  --
+ 0.015515332089213739 1635721458409799680 ...                                                                                                  --
+  0.01733686680628008 1635721458409799680 ...                                                                                                  --
+ 0.017678785848034922 1635721458409799680 ...                                                                                                  --
+ 0.018104374918526938 1635721458409799680 ...                                                                                                  --
+ 0.018236457749341014 1635721458409799680 ...                                                                                                  --
+ 0.018528715917152463 1635721458409799680 ...                                                                                                  --
+  0.01956423221243944 1635721458409799680 ...                                                                                                  --
+ 0.019800367399411236 1635721458409799680 ...                                                                                                  --
+ 0.019847919848175688 1635721458409799680 ...                                                                                                  --
+ 0.019849319418602344 1635721458409799680 ... http://geadata.esac.esa.int/data-server/data?RETRIEVAL_TYPE=epoch_photometry&ID=1645446849212324992
+  0.02003329184077676 1635721458409799680 ...                                                                                                  --
+  0.02059513985862197 1635721458409799680 ...                                                                                                  --
+ 0.021137410254487846 1635721458409799680 ...                                                                                                  --
+ 0.021270613861761156 1635721458409799680 ...                                                                                                  --
+                  ...                 ... ...                                                                                                 ...
+  0.49807080938495657 1635721458409799680 ...                                                                                                  --
+  0.49812857324739085 1635721458409799680 ...                                                                                                  --
+  0.49813063717806677 1635721458409799680 ...                                                                                                  --
+   0.4981435532648556 1635721458409799680 ...                                                                                                  --
+   0.4981638945035184 1635721458409799680 ...                                                                                                  --
+  0.49822733497366045 1635721458409799680 ...                                                                                                  --
+   0.4983877454610761 1635721458409799680 ...                                                                                                  --
+   0.4983918429871663 1635721458409799680 ...                                                                                                  --
+  0.49840732045851444 1635721458409799680 ...                                                                                                  --
+  0.49852982612090974 1635721458409799680 ...                                                                                                  --
+   0.4986658116065494 1635721458409799680 ...                                                                                                  --
+  0.49876781993465563 1635721458409799680 ...                                                                                                  --
+   0.4987787275436858 1635721458409799680 ...                                                                                                  --
+  0.49882924948670504 1635721458409799680 ...                                                                                                  --
+   0.4989124414214313 1635721458409799680 ...                                                                                                  --
+  0.49893639339264423 1635721458409799680 ...                                                                                                  --
+   0.4991882734305441 1635721458409799680 ...                                                                                                  --
+   0.4994808493750138 1635721458409799680 ...                                                                                                  --
+   0.4995261972862655 1635721458409799680 ...                                                                                                  --
+  0.49962858730781323 1635721458409799680 ...                                                                                                  --
+   0.4997315390421766 1635721458409799680 ...                                                                                                  --
+  0.49976547285748657 1635721458409799680 ...                                                                                                  --
+   0.4998014699554482 1635721458409799680 ...                                                                                                  --
+    0.499868064730692 1635721458409799680 ...                                                                                                  --
+   0.4999534971579572 1635721458409799680 ...                                                                                                  --
+   0.4999896532293784 1635721458409799680 ...                                                                                                  --
+Length = 4547 rows" "[14.61240407 14.17389589 54.25896868 ...  3.49540474 11.72049136
+  1.91553295]"
+"NAME Sculptor Dwarf Galaxy" 15.039166666666667 -32.29111111111111 5 5 8000.000 8000.000 90 D "" 1982ESO...C......0L dSph D 2012AJ....144....4M 15.2667 15.2667 90.0 "" Mpc "" "" T-RDB 2017AJ....153....6K 0.020 0.090 0.09219544457292887 "dist             solution_id             designation          ... lum_percentile_upper                                  datalink_url                                 epoch_photometry_url
+                                                                      ...         Lsun                                                                                                           
+-------------------- ------------------- ---------------------------- ... -------------------- ----------------------------------------------------------------------------- --------------------
+0.018096573157416734 1635721458409799680 Gaia DR2 5027640308123176192 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5027640308123176192                   --
+ 0.02251553364849533 1635721458409799680 Gaia DR2 5027640544344709760 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5027640544344709760                   --
+0.023470729500794627 1635721458409799680 Gaia DR2 5027640376842642560 ...            0.8814309 http://geadata.esac.esa.int/data-server/datalink/links?ID=5027640376842642560                   --
+0.023801217959979748 1635721458409799680 Gaia DR2 5027640956661578624 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5027640956661578624                   --
+0.025729186171556756 1635721458409799680 Gaia DR2 5027641304553635200 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5027641304553635200                   --
+0.026823270424941034 1635721458409799680 Gaia DR2 5027640273763427712 ...            2.4242294 http://geadata.esac.esa.int/data-server/datalink/links?ID=5027640273763427712                   --
+0.031042707911516348 1635721458409799680 Gaia DR2 5027640651720559488 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5027640651720559488                   --
+0.031598955344442216 1635721458409799680 Gaia DR2 5027640376842781184 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5027640376842781184                   --
+0.032680453065149884 1635721458409799680 Gaia DR2 5027640239403699712 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5027640239403699712                   --
+ 0.03430339702767525 1635721458409799680 Gaia DR2 5027641201476363136 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5027641201476363136                   --
+ 0.04043909652024014 1635721458409799680 Gaia DR2 5027640651720560000 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5027640651720560000                   --
+ 0.04304858365140997 1635721458409799680 Gaia DR2 5027637284464941568 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5027637284464941568                   --
+ 0.04355130198259808 1635721458409799680 Gaia DR2 5027641712575830784 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5027641712575830784                   --
+  0.0443243819845997 1635721458409799680 Gaia DR2 5027641403338183680 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5027641403338183680                   --
+0.046900274591889654 1635721458409799680 Gaia DR2 5027641167116624896 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5027641167116624896                   --
+ 0.04768316986908953 1635721458409799680 Gaia DR2 5027641407632860160 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5027641407632860160                   --
+0.049558705073341563 1635721458409799680 Gaia DR2 5027641265899218944 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5027641265899218944                   --
+0.051174407375309636 1635721458409799680 Gaia DR2 5027641575136870400 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5027641575136870400                   --
+ 0.05248524590148954 1635721458409799680 Gaia DR2 5027641819951663104 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5027641819951663104                   --
+ 0.05253557788579384 1635721458409799680 Gaia DR2 5027640823519251072 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5027640823519251072                   --
+ 0.05332975807823054 1635721458409799680 Gaia DR2 5027637795565837952 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5027637795565837952                   --
+  0.0546323756866737 1635721458409799680 Gaia DR2 5027641613791290240 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5027641613791290240                   --
+0.056518954784255025 1635721458409799680 Gaia DR2 5027641231539474048 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5027641231539474048                   --
+ 0.05669975175552839 1635721458409799680 Gaia DR2 5027641476354269952 ...            0.5503627 http://geadata.esac.esa.int/data-server/datalink/links?ID=5027641476354269952                   --
+  0.0574050498644205 1635721458409799680 Gaia DR2 5027546574756413952 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5027546574756413952                   --
+ 0.06091202726060008 1635721458409799680 Gaia DR2 5027641987453742976 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5027641987453742976                   --
+                 ...                 ...                          ... ...                  ...                                                                           ...                  ...
+  0.4971799748961486 1635721458409799680 Gaia DR2 5027475892478359040 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5027475892478359040                   --
+ 0.49734918257000277 1635721458409799680 Gaia DR2 5030559580213410176 ...            2.1945949 http://geadata.esac.esa.int/data-server/datalink/links?ID=5030559580213410176                   --
+  0.4974116784279743 1635721458409799680 Gaia DR2 5030563114970669568 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5030563114970669568                   --
+  0.4975419137001365 1635721458409799680 Gaia DR2 5027692839866387584 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5027692839866387584                   --
+ 0.49768459440682195 1635721458409799680 Gaia DR2 5027578735472059520 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5027578735472059520                   --
+  0.4976869695262536 1635721458409799680 Gaia DR2 5027578529313629824 ...           0.23942032 http://geadata.esac.esa.int/data-server/datalink/links?ID=5027578529313629824                   --
+  0.4977168811873357 1635721458409799680 Gaia DR2 5027624227764010496 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5027624227764010496                   --
+  0.4978157296128557 1635721458409799680 Gaia DR2 5027623368770561024 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5027623368770561024                   --
+  0.4978244596952685 1635721458409799680 Gaia DR2 5030671386802493312 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5030671386802493312                   --
+  0.4979876913802653 1635721458409799680 Gaia DR2 5030667087539326080 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5030667087539326080                   --
+ 0.49804225620272013 1635721458409799680 Gaia DR2 5030570948990916992 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5030570948990916992                   --
+ 0.49805359343918254 1635721458409799680 Gaia DR2 5027670579052694656 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5027670579052694656                   --
+  0.4981602429388878 1635721458409799680 Gaia DR2 5030672658112838400 ...            0.1844294 http://geadata.esac.esa.int/data-server/datalink/links?ID=5030672658112838400                   --
+ 0.49833992275702904 1635721458409799680 Gaia DR2 5027623300052746752 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5027623300052746752                   --
+ 0.49834091287460763 1635721458409799680 Gaia DR2 5030668908605434624 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5030668908605434624                   --
+  0.4984372271009073 1635721458409799680 Gaia DR2 5030569441458340352 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5030569441458340352                   --
+  0.4984549282793855 1635721458409799680 Gaia DR2 5027567426821169920 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5027567426821169920                   --
+ 0.49855030059475575 1635721458409799680 Gaia DR2 5030668844181356032 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5030668844181356032                   --
+  0.4987785747467803 1635721458409799680 Gaia DR2 5027486135975838464 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5027486135975838464                   --
+   0.499070863338896 1635721458409799680 Gaia DR2 5027547704331587200 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5027547704331587200                   --
+ 0.49934975558019723 1635721458409799680 Gaia DR2 5027531349096114432 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5027531349096114432                   --
+  0.4994233030810143 1635721458409799680 Gaia DR2 5030559580213409920 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5030559580213409920                   --
+  0.4995475606654051 1635721458409799680 Gaia DR2 5030556998937197312 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5030556998937197312                   --
+ 0.49955954718839923 1635721458409799680 Gaia DR2 5027624429630557440 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5027624429630557440                   --
+ 0.49991943583108156 1635721458409799680 Gaia DR2 5030674715401259904 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5030674715401259904                   --
+  0.4999309249239112 1635721458409799680 Gaia DR2 5030557793507016064 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5030557793507016064                   --
+Length = 1757 rows" "[64.8222012   9.8017094  13.64874396 ... 16.87315893 26.76004523
+ 11.93169448]"
+"NAME Carina dSph" 100.40291666666667 -49.03388888888889 5 5 8000.000 8000.000 90 D "" 1982ESO...C......0L dSph D 2012AJ....144....4M 19.9333 19.9333 100.0 "" Mpc "" "" T-RDB 2017AJ....153....6K 0.150 0.220 0.26627053911388693 "dist             solution_id             designation          ... lum_percentile_upper                                  datalink_url                                 epoch_photometry_url
+                                                                      ...         Lsun                                                                                                           
+-------------------- ------------------- ---------------------------- ... -------------------- ----------------------------------------------------------------------------- --------------------
+0.003739702002193844 1635721458409799680 Gaia DR2 5551329312657453312 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5551329312657453312                   --
+ 0.00853122546832278 1635721458409799680 Gaia DR2 5551329342720185088 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5551329342720185088                   --
+0.009071751749315028 1635721458409799680 Gaia DR2 5551329308360467072 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5551329308360467072                   --
+0.009730731574578516 1635721458409799680 Gaia DR2 5551329239640963200 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5551329239640963200                   --
+0.011492163774082235 1635721458409799680 Gaia DR2 5551329411439678464 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5551329411439678464                   --
+0.011664377411208321 1635721458409799680 Gaia DR2 5551329518815883392 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5551329518815883392                   --
+ 0.01331695352087401 1635721458409799680 Gaia DR2 5551282407317559552 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5551282407317559552                   --
+0.014382748843017858 1635721458409799680 Gaia DR2 5551329518814585216 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5551329518814585216                   --
+0.017589125123257183 1635721458409799680 Gaia DR2 5551329274000699776 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5551329274000699776                   --
+0.018308128104899322 1635721458409799680 Gaia DR2 5551329411439693952 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5551329411439693952                   --
+0.019190880603728717 1635721458409799680 Gaia DR2 5551329274000701696 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5551329274000701696                   --
+0.019349366703000387 1635721458409799680 Gaia DR2 5551282407317552896 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5551282407317552896                   --
+0.019457430092690024 1635721458409799680 Gaia DR2 5551329239640948736 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5551329239640948736                   --
+0.019788633612687633 1635721458409799680 Gaia DR2 5551329514518912000 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5551329514518912000                   --
+0.021315362858871218 1635721458409799680 Gaia DR2 5551329274000704512 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5551329274000704512                   --
+ 0.02147138211842204 1635721458409799680 Gaia DR2 5551329518814585088 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5551329518814585088                   --
+ 0.02185850138084332 1635721458409799680 Gaia DR2 5551329548878639616 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5551329548878639616                   --
+0.022581359058407642 1635721458409799680 Gaia DR2 5551329484456147840 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5551329484456147840                   --
+ 0.02295651661832399 1635721458409799680 Gaia DR2 5551282304238329600 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5551282304238329600                   --
+ 0.02298786902583365 1635721458409799680 Gaia DR2 5551282304238330368 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5551282304238330368                   --
+ 0.02314353920973433 1635721458409799680 Gaia DR2 5551282308534068480 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5551282308534068480                   --
+ 0.02318088960653004 1635721458409799680 Gaia DR2 5551329209578240256 ...            1.5004914 http://geadata.esac.esa.int/data-server/datalink/links?ID=5551329209578240256                   --
+0.023827146391386857 1635721458409799680 Gaia DR2 5551329621893796480 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5551329621893796480                   --
+0.025390826834213627 1635721458409799680 Gaia DR2 5551329587535359232 ...          0.093587674 http://geadata.esac.esa.int/data-server/datalink/links?ID=5551329587535359232                   --
+ 0.02545778024517931 1635721458409799680 Gaia DR2 5551329484454859648 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5551329484454859648                   --
+0.025966765421371607 1635721458409799680 Gaia DR2 5551282235518847360 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5551282235518847360                   --
+                 ...                 ...                          ... ...                  ...                                                                           ...                  ...
+  0.4994054843087325 1635721458409799680 Gaia DR2 5551255439219854080 ...              2.53363 http://geadata.esac.esa.int/data-server/datalink/links?ID=5551255439219854080                   --
+  0.4994089110781689 1635721458409799680 Gaia DR2 5551355009445400704 ...           0.31224895 http://geadata.esac.esa.int/data-server/datalink/links?ID=5551355009445400704                   --
+ 0.49941382451353933 1635721458409799680 Gaia DR2 5503243099329174400 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5503243099329174400                   --
+ 0.49942856162111976 1635721458409799680 Gaia DR2 5551539044498969344 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5551539044498969344                   --
+  0.4994657848606267 1635721458409799680 Gaia DR2 5551155005704199040 ...           0.28698033 http://geadata.esac.esa.int/data-server/datalink/links?ID=5551155005704199040                   --
+ 0.49954300644000815 1635721458409799680 Gaia DR2 5550961044981062016 ...           0.75689083 http://geadata.esac.esa.int/data-server/datalink/links?ID=5550961044981062016                   --
+  0.4995498620409264 1635721458409799680 Gaia DR2 5551252209402965760 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5551252209402965760                   --
+ 0.49956199681162095 1635721458409799680 Gaia DR2 5551253137117396224 ...            0.6159727 http://geadata.esac.esa.int/data-server/datalink/links?ID=5551253137117396224                   --
+ 0.49961926462317513 1635721458409799680 Gaia DR2 5551316633913713280 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5551316633913713280                   --
+  0.4996463836722842 1635721458409799680 Gaia DR2 5550961487360930560 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5550961487360930560                   --
+  0.4996921598502468 1635721458409799680 Gaia DR2 5503253677833322624 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5503253677833322624                   --
+   0.499699232739031 1635721458409799680 Gaia DR2 5550949397029768960 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5550949397029768960                   --
+  0.4997028789221599 1635721458409799680 Gaia DR2 5503240728507525888 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5503240728507525888                   --
+ 0.49970801960533195 1635721458409799680 Gaia DR2 5551378236628531328 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5551378236628531328                   --
+  0.4997200571207416 1635721458409799680 Gaia DR2 5503216191357821184 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5503216191357821184                   --
+  0.4997545242128272 1635721458409799680 Gaia DR2 5551377480714278656 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5551377480714278656                   --
+  0.4997781255502742 1635721458409799680 Gaia DR2 5551374461351128448 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5551374461351128448                   --
+ 0.49979243231355314 1635721458409799680 Gaia DR2 5503240689851990016 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5503240689851990016                   --
+  0.4998439174053851 1635721458409799680 Gaia DR2 5503241239607663488 ...             19.74496 http://geadata.esac.esa.int/data-server/datalink/links?ID=5503241239607663488                   --
+  0.4998504811993555 1635721458409799680 Gaia DR2 5551543408185542272 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5551543408185542272                   --
+  0.4998696747057001 1635721458409799680 Gaia DR2 5503255125237512704 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5503255125237512704                   --
+ 0.49988044371417484 1635721458409799680 Gaia DR2 5551549279404935552 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5551549279404935552                   --
+ 0.49989273296160336 1635721458409799680 Gaia DR2 5503253922646676992 ...            2.9297729 http://geadata.esac.esa.int/data-server/datalink/links?ID=5503253922646676992                   --
+  0.4999096436336595 1635721458409799680 Gaia DR2 5551536948556387712 ...            0.3745636 http://geadata.esac.esa.int/data-server/datalink/links?ID=5551536948556387712                   --
+ 0.49994024195267706 1635721458409799680 Gaia DR2 5551255434924205696 ...            1.1388838 http://geadata.esac.esa.int/data-server/datalink/links?ID=5551255434924205696                   --
+ 0.49998955788807314 1635721458409799680 Gaia DR2 5551295017341590912 ...           0.50835097 http://geadata.esac.esa.int/data-server/datalink/links?ID=5551295017341590912                   --
+Length = 9830 rows" "[ 4.02716171 11.13740588 14.49020684 ...  4.1683848   4.66066858
+  6.04186459]"
+"NAME Dwarf Elliptical Galaxy in Sex" 153.26208333333332 -0.3852777777777778 5 5 "" "" 0 D O 2003A&A...412...45P dSph D 2012AJ....144....4M 52.2 52.2 90.0 "" Mpc "" "" T-RDB 2017AJ....153....6K 0.100 -0.260 0.2785677655436824 "dist             solution_id             designation          ... lum_percentile_upper                                  datalink_url                                 epoch_photometry_url
+                                                                      ...         Lsun                                                                                                           
+-------------------- ------------------- ---------------------------- ... -------------------- ----------------------------------------------------------------------------- --------------------
+ 0.01578476427659637 1635721458409799680 Gaia DR2 3831550838843360256 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3831550838843360256                   --
+0.016979030877385743 1635721458409799680 Gaia DR2 3831550838842248832 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3831550838842248832                   --
+0.017764942565868507 1635721458409799680 Gaia DR2 3831550740057772800 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3831550740057772800                   --
+ 0.01883219794518665 1635721458409799680 Gaia DR2 3831549945489276672 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3831549945489276672                   --
+0.025650402662968474 1635721458409799680 Gaia DR2 3831550636978558976 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3831550636978558976                   --
+ 0.03137166839086316 1635721458409799680 Gaia DR2 3831551079360420352 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3831551079360420352                   --
+ 0.03249934176640707 1635721458409799680 Gaia DR2 3831549876769799296 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3831549876769799296                   --
+0.033478768794626315 1635721458409799680 Gaia DR2 3831549984143526784 ...           0.38477406 http://geadata.esac.esa.int/data-server/datalink/links?ID=3831549984143526784                   --
+ 0.03639832891227288 1635721458409799680 Gaia DR2 3831549739330728448 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3831549739330728448                   --
+ 0.03719588669725914 1635721458409799680 Gaia DR2 3831550357805909760 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3831550357805909760                   --
+ 0.03831575253019259 1635721458409799680 Gaia DR2 3831549636255535104 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3831549636255535104                   --
+ 0.03963197474370346 1635721458409799680 Gaia DR2 3831551113721237504 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3831551113721237504                   --
+ 0.03981249259025317 1635721458409799680 Gaia DR2 3831551113720330880 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3831551113720330880                   --
+0.040273931383564596 1635721458409799680 Gaia DR2 3831550911856466432 ...           0.04693822 http://geadata.esac.esa.int/data-server/datalink/links?ID=3831550911856466432                   --
+0.042696306395057344 1635721458409799680 Gaia DR2 3831549606186407808 ...            7.4377236 http://geadata.esac.esa.int/data-server/datalink/links?ID=3831549606186407808                   --
+ 0.04540119195473407 1635721458409799680 Gaia DR2 3831549159509810688 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3831549159509810688                   --
+ 0.04572380512831268 1635721458409799680 Gaia DR2 3831551285518852864 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3831551285518852864                   --
+ 0.04646208319064458 1635721458409799680 Gaia DR2 3831551216799374592 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3831551216799374592                   --
+ 0.04728370668071676 1635721458409799680 Gaia DR2 3831551010640396544 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3831551010640396544                   --
+ 0.04799374679961666 1635721458409799680 Gaia DR2 3831550392165650176 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3831550392165650176                   --
+ 0.05038027007921721 1635721458409799680 Gaia DR2 3831549670611251328 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3831549670611251328                   --
+ 0.05057309960065194 1635721458409799680 Gaia DR2 3831548334876089600 ...           0.29423574 http://geadata.esac.esa.int/data-server/datalink/links?ID=3831548334876089600                   --
+ 0.05230622893747895 1635721458409799680 Gaia DR2 3831551148079899648 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3831551148079899648                   --
+0.052414401242137754 1635721458409799680 Gaia DR2 3831550907561178112 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3831550907561178112                   --
+ 0.05271165048021807 1635721458409799680 Gaia DR2 3831550151647707392 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3831550151647707392                   --
+ 0.05295904330539886 1635721458409799680 Gaia DR2 3831551392892526464 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3831551392892526464                   --
+                 ...                 ...                          ... ...                  ...                                                                           ...                  ...
+ 0.49605635441702184 1635721458409799680 Gaia DR2 3831453124040727808 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3831453124040727808                   --
+  0.4961491535268177 1635721458409799680 Gaia DR2 3831452054594291456 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3831452054594291456                   --
+  0.4963703404158216 1635721458409799680 Gaia DR2 3831487032808044672 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3831487032808044672                   --
+ 0.49642238113228543 1635721458409799680 Gaia DR2 3831486998448304384 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3831486998448304384                   --
+  0.4965278819236115 1635721458409799680 Gaia DR2 3831512875626133504 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3831512875626133504                   --
+  0.4965296486221527 1635721458409799680 Gaia DR2 3831452398191682432 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3831452398191682432                   --
+ 0.49654586211475843 1635721458409799680 Gaia DR2 3831457964469290112 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3831457964469290112                   --
+  0.4966884885562044 1635721458409799680 Gaia DR2 3831770779822302464 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3831770779822302464                   --
+ 0.49674236763568835 1635721458409799680 Gaia DR2 3831862138071631488 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3831862138071631488                   --
+  0.4968988277900001 1635721458409799680 Gaia DR2 3831729337682413440 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3831729337682413440                   --
+  0.4969595971959452 1635721458409799680 Gaia DR2 3831727864509130240 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3831727864509130240                   --
+  0.4970719885600567 1635721458409799680 Gaia DR2 3831597331863024768 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3831597331863024768                   --
+  0.4973418995790823 1635721458409799680 Gaia DR2 3831532563756149376 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3831532563756149376                   --
+  0.4974693712266028 1635721458409799680 Gaia DR2 3831760197022911872 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3831760197022911872                   --
+ 0.49748417482358975 1635721458409799680 Gaia DR2 3831597125704595456 ...            3.7774262 http://geadata.esac.esa.int/data-server/datalink/links?ID=3831597125704595456                   --
+  0.4975818730490391 1635721458409799680 Gaia DR2 3831502013653743360 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3831502013653743360                   --
+ 0.49781509867882984 1635721458409799680 Gaia DR2 3831453566422804736 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3831453566422804736                   --
+  0.4980091160706774 1635721458409799680 Gaia DR2 3831462706112935552 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3831462706112935552                   --
+  0.4981582181760211 1635721458409799680 Gaia DR2 3831734873895745536 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3831734873895745536                   --
+ 0.49846896387901357 1635721458409799680 Gaia DR2 3831673503107970816 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3831673503107970816                   --
+  0.4986947842400036 1635721458409799680 Gaia DR2 3831515517031663744 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3831515517031663744                   --
+ 0.49883402939855037 1635721458409799680 Gaia DR2 3831452161968481792 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3831452161968481792                   --
+  0.4991324016291802 1635721458409799680 Gaia DR2 3831529093422574976 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3831529093422574976                   --
+ 0.49962766783373624 1635721458409799680 Gaia DR2 3831729754294735360 ...           0.43750563 http://geadata.esac.esa.int/data-server/datalink/links?ID=3831729754294735360                   --
+  0.4997458470998172 1635721458409799680 Gaia DR2 3831771123419682816 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3831771123419682816                   --
+ 0.49976522026459624 1635721458409799680 Gaia DR2 3831453124041148160 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=3831453124041148160                   --
+Length = 2174 rows" "[ 4.2132223  11.65676301  4.56348186 ... 15.62979927  2.76096139
+  3.9959021 ]"
+"NAME Fornax Dwarf Spheroidal" 39.99708333333333 -33.55083333333334 5 5 8000.000 8000.000 90 D "" 1982ESO...C......0L dSph D 2012AJ....144....4M 27.5 27.5 140.0 "" Mpc "" "" T-RDB 2017AJ....153....6K -0.360 0.476 0.5968048257177551 "dist             solution_id             designation          ... lum_percentile_upper                                  datalink_url                                 epoch_photometry_url
+                                                                      ...         Lsun                                                                                                           
+-------------------- ------------------- ---------------------------- ... -------------------- ----------------------------------------------------------------------------- --------------------
+0.010678324762630953 1635721458409799680 Gaia DR2 5062514617933948800 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5062514617933948800                   --
+0.011316289076860536 1635721458409799680 Gaia DR2 5062514686651182976 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5062514686651182976                   --
+0.016088360189480424 1635721458409799680 Gaia DR2 5062514819795064064 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5062514819795064064                   --
+ 0.02086215816532329 1635721458409799680 Gaia DR2 5062514682356100480 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5062514682356100480                   --
+ 0.02325301995785248 1635721458409799680 Gaia DR2 5062514854154804096 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5062514854154804096                   --
+ 0.02679116455917541 1635721458409799680 Gaia DR2 5062514927171593984 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5062514927171593984                   --
+0.026987693274835904 1635721458409799680 Gaia DR2 5062514751075577472 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5062514751075577472                   --
+0.027776495328305784 1635721458409799680 Gaia DR2 5062514927171593856 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5062514927171593856                   --
+ 0.03181417904734846 1635721458409799680 Gaia DR2 5062514652293687296 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5062514652293687296                   --
+0.033329854297358276 1635721458409799680 Gaia DR2 5062515266471675648 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5062515266471675648                   --
+ 0.03713973149369067 1635721458409799680 Gaia DR2 5062515202047257728 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5062515202047257728                   --
+ 0.04131529203943286 1635721458409799680 Gaia DR2 5062515614364184192 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5062515614364184192                   --
+ 0.04280471656456628 1635721458409799680 Gaia DR2 5062327249985023360 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5062327249985023360                   --
+ 0.04392743391939096 1635721458409799680 Gaia DR2 5062326803308422656 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5062326803308422656                   --
+0.048416626029530674 1635721458409799680 Gaia DR2 5062515472630087424 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5062515472630087424                   --
+ 0.04931794666720033 1635721458409799680 Gaia DR2 5062513170527590272 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5062513170527590272                   --
+0.051500579147980556 1635721458409799680 Gaia DR2 5062327181265546112 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5062327181265546112                   --
+0.053439709871865644 1635721458409799680 Gaia DR2 5062326700229203840 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5062326700229203840                   --
+0.054161990156603404 1635721458409799680 Gaia DR2 5062515575709321216 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5062515575709321216                   --
+ 0.05783004449111346 1635721458409799680 Gaia DR2 5062515678788546176 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5062515678788546176                   --
+ 0.05929136421016255 1635721458409799680 Gaia DR2 5062326631510918272 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5062326631510918272                   --
+0.059564326045735465 1635721458409799680 Gaia DR2 5062515541349568512 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5062515541349568512                   --
+ 0.05959585825180154 1635721458409799680 Gaia DR2 5062326635809174272 ...           0.23660031 http://geadata.esac.esa.int/data-server/datalink/links?ID=5062326635809174272                   --
+  0.0596563963906023 1635721458409799680 Gaia DR2 5062326975107115264 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5062326975107115264                   --
+0.059747327382110214 1635721458409799680 Gaia DR2 5062326601448066176 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5062326601448066176                   --
+ 0.06073060611140892 1635721458409799680 Gaia DR2 5062326635809174400 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5062326635809174400                   --
+                 ...                 ...                          ... ...                  ...                                                                           ...                  ...
+  0.4975436745418694 1635721458409799680 Gaia DR2 5062286464975294464 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5062286464975294464                   --
+  0.4976415269576748 1635721458409799680 Gaia DR2 5062256507583417600 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5062256507583417600                   --
+  0.4978411686864397 1635721458409799680 Gaia DR2 5062301377101805184 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5062301377101805184                   --
+  0.4980523316449149 1635721458409799680 Gaia DR2 5062297941127896064 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5062297941127896064                   --
+ 0.49806089639269596 1635721458409799680 Gaia DR2 5062905764898368256 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5062905764898368256                   --
+   0.498403553578611 1635721458409799680 Gaia DR2 5062256881241998336 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5062256881241998336                   --
+  0.4986871325199021 1635721458409799680 Gaia DR2 5062482182340940544 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5062482182340940544                   --
+ 0.49875992497928434 1635721458409799680 Gaia DR2 5062682259097632384 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5062682259097632384                   --
+  0.4988784545326035 1635721458409799680 Gaia DR2 5062501350778923136 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5062501350778923136                   --
+  0.4989163494630531 1635721458409799680 Gaia DR2 5062584260826456064 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5062584260826456064                   --
+  0.4989399786865954 1635721458409799680 Gaia DR2 5062479154386399488 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5062479154386399488                   --
+  0.4989436373725341 1635721458409799680 Gaia DR2 5062502965685300864 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5062502965685300864                   --
+  0.4989517305047989 1635721458409799680 Gaia DR2 5062291520156569216 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5062291520156569216                   --
+ 0.49910900638462863 1635721458409799680 Gaia DR2 5062297533108610176 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5062297533108610176                   --
+  0.4994586919902575 1635721458409799680 Gaia DR2 5062696209151400320 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5062696209151400320                   --
+  0.4994772310829405 1635721458409799680 Gaia DR2 5062290214486546816 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5062290214486546816                   --
+ 0.49949752041376433 1635721458409799680 Gaia DR2 5062915493002332928 ...            0.2992825 http://geadata.esac.esa.int/data-server/datalink/links?ID=5062915493002332928                   --
+  0.4995191433237698 1635721458409799680 Gaia DR2 5062477990452859264 ...           0.09825314 http://geadata.esac.esa.int/data-server/datalink/links?ID=5062477990452859264                   --
+  0.4995465182290613 1635721458409799680 Gaia DR2 5062903123493469056 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5062903123493469056                   --
+  0.4995772228912477 1635721458409799680 Gaia DR2 5062286464975293184 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5062286464975293184                   --
+   0.499611502303575 1635721458409799680 Gaia DR2 5062903020417332736 ...           0.17928445 http://geadata.esac.esa.int/data-server/datalink/links?ID=5062903020417332736                   --
+ 0.49964023408155916 1635721458409799680 Gaia DR2 5062479154386402816 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5062479154386402816                   --
+ 0.49975798819101136 1635721458409799680 Gaia DR2 5062634705217588992 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5062634705217588992                   --
+  0.4998176773247972 1635721458409799680 Gaia DR2 5062309863957115136 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5062309863957115136                   --
+ 0.49987794871213054 1635721458409799680 Gaia DR2 5062301690635760896 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5062301690635760896                   --
+ 0.49990846278297146 1635721458409799680 Gaia DR2 5062503068764531200 ...                   -- http://geadata.esac.esa.int/data-server/datalink/links?ID=5062503068764531200                   --
+Length = 2387 rows" "[ 5.64181467 23.35037353  5.49413958 ...  0.46451247  1.27078635
+  5.90668946]"
