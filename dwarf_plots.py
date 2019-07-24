@@ -14,12 +14,12 @@ import matplotlib as mpl
 from matplotlib.colors import LogNorm
 
 
-def trim_axs(axs, N):
-    """Little helper to massage the axs list to have correct length..."""
-    axs = axs.flat
-    for ax in axs[N:]:
+def trim_axes(axes, N):
+    """Massage the axes list to have correct length..."""
+    axes = axes.flat
+    for ax in axes[N:]:
         ax.remove()
-    return axs[:N]
+    return axes[:N]
 
 
 def weighted_average(listofvalues):
@@ -62,21 +62,21 @@ def reject_outliers(values1, values2, n=5):
 
 dwarf_specs = ascii.read('./dwarf_info.ecsv', format='ecsv')
 
-with np.load('dwarf_vels.npz', 'rb') as infile:
+with np.load('dwarf_vels.npz', 'rb', allow_pickle=True) as infile:
     # vels = infile['vels']
     pmra = infile['pmra']
     pmdec = infile['pmdec']
 
 plt.close('all')
-mpl.rcParams['axes.labelsize'] = 'xx-large'
+mpl.rcParams['axes.labelsize'] = 'x-large'
 
 figsize = (10, 8)
 bin_width = 2
 d = len(dwarf_specs)
-cols = 3
-rows = d//cols + 1
+rows = 3
+cols = d//rows + 1
 fig, axs = plt.subplots(nrows=rows, ncols=cols, figsize=figsize)
-axs = trim_axs(axs, d)
+axs = trim_axes(axs, d)
 
 for i, ax in enumerate(fig.axes):
     # pmra[i], pmdec[i] = reject_outliers(pmra[i], pmdec[i])
@@ -95,29 +95,30 @@ for i, ax in enumerate(fig.axes):
     # rabins = np.linspace(ramin, ramax, num=int((ramax-ramin)/bin_width))
     # decbins = np.linspace(decmin, decmax, num=int((decmax-decmin)/bin_width))
     # histo, binx, biny = np.histogram2d(pmra[i], pmdec[i], bins=(rabins, decbins))
-    counts, xedges, yedges, im = ax.hist2d(pmra[i], pmdec[i], bins=(rabins, decbins))
+    counts, xedges, yedges, im = ax.hist2d(pmra[i], pmdec[i], bins=(rabins, decbins), vmin=0, vmax=8)
     ax.set_title(dwarf_specs['MAIN_ID'][i].strip('NAME'))
     ax.set_xscale('symlog', linthreshx=0.1)
     ax.set_yscale('symlog', linthreshy=0.1)
-    plt.colorbar(im, ax=ax)
+    # plt.colorbar(im, ax=ax)
     # ax.text(bins_edges[len(bins_edges)//4], int(.75 * max(hist)), 'simbad_pm=' + str(round(dwarf_specs['PM_MAG'][i-1], 3)) + '\nmax=' + str(round(bins_edges[np.argmax(hist)], 3)))
 
 # big axes
 fig.add_subplot(111, frameon=False)
+plt.tight_layout()
+fig.colorbar(im, ax=axs.ravel().tolist())
 # hide tick and tick label of the big axes
 plt.tick_params(labelcolor='none', top=False, bottom=False, left=False, right=False)
 plt.grid(False)
 plt.xlabel("Proper motion, right ascension [mas/yr]")
 plt.ylabel("Proper motion, declination [mas/yr]")
 
-plt.tight_layout()
 fig.savefig('./known_dwarf_histos.pdf', bbox_inches='tight')
 
 
 # random plot
 dwarf_specs = ascii.read('./randomcone_info.ecsv', format='ecsv')
 
-with np.load('randomcone_vels.npz', 'rb') as infile:
+with np.load('randomcone_vels.npz', 'rb', allow_pickle=True) as infile:
     # vels = infile['vels']
     pmra = infile['pmra']
     pmdec = infile['pmdec']
@@ -128,7 +129,7 @@ d = len(dwarf_specs)
 cols = 3
 rows = d//cols + 1
 fig, axs = plt.subplots(nrows=rows, ncols=cols, figsize=figsize)
-axs = trim_axs(axs, d)
+axs = trim_axes(axs, d)
 
 for i, ax in enumerate(fig.axes):
     # pmra[i], pmdec[i] = reject_outliers(pmra[i], pmdec[i])
@@ -145,22 +146,21 @@ for i, ax in enumerate(fig.axes):
     # rabins = np.linspace(ramin, ramax, num=int((ramax-ramin)/bin_width))
     # decbins = np.linspace(decmin, decmax, num=int((decmax-decmin)/bin_width))
     # histo, binx, biny = np.histogram2d(pmra[i], pmdec[i], bins=(rabins, decbins))
-    counts, xedges, yedges, im = ax.hist2d(pmra[i], pmdec[i], bins=(rabins, decbins))
+    counts, xedges, yedges, im = ax.hist2d(pmra[i], pmdec[i], bins=(rabins, decbins), vmin=0, vmax=8)
     # ax.set_title('RA: ' + str(np.round(dwarf_specs['RA'][i], 2)) + ', DEC: ' + str(np.round(dwarf_specs['DEC'][i], 2)) + ', RAD: ' + str(np.round(dwarf_specs['GALDIM_MAJAXIS'][i]/2, 2)))
     ax.set_title('RA: ' + str(np.round(dwarf_specs['RA'][i], 2)) + ', DEC: ' + str(np.round(dwarf_specs['DEC'][i], 2)))
     ax.set_xscale('symlog', linthreshx=0.1)
     ax.set_yscale('symlog', linthreshy=0.1)
-    plt.colorbar(im, ax=ax)
-    # ax.text(bins_edges[len(bins_edges)//4], int(.75 * max(hist)), 'simbad_pm=' + str(round(dwarf_specs['PM_MAG'][i-1], 3)) + '\nmax=' + str(round(bins_edges[np.argmax(hist)], 3)))
+    # plt.colorbar(im, ax=ax)
 
 # big axes
 fig.add_subplot(111, frameon=False)
+plt.tight_layout()
+fig.colorbar(im, ax=axs.ravel().tolist())
 # hide tick and tick label of the big axes
 plt.tick_params(labelcolor='none', top=False, bottom=False, left=False, right=False)
 plt.grid(False)
 plt.xlabel("Proper motion, right ascension [mas/yr]")
 plt.ylabel("Proper motion, declination [mas/yr]")
-
-plt.tight_layout()
 fig.savefig('./random_cone_histos.pdf', bbox_inches='tight')
 plt.show()
