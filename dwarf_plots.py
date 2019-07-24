@@ -60,7 +60,7 @@ def reject_outliers(values1, values2, n=5):
     return values1, values2
 
 
-dwarf_specs = ascii.read('./dwarf_info.ecsv', format='ecsv')
+dwarf_specs = ascii.read('./gaia_data/dwarf_info.ecsv', format='ecsv')
 
 with np.load('dwarf_vels.npz', 'rb', allow_pickle=True) as infile:
     # vels = infile['vels']
@@ -112,11 +112,11 @@ plt.grid(False)
 plt.xlabel("Proper motion, right ascension [mas/yr]")
 plt.ylabel("Proper motion, declination [mas/yr]")
 
-fig.savefig('./known_dwarf_histos.pdf', bbox_inches='tight')
+fig.savefig('./plots/known_dwarf_histos.pdf', bbox_inches='tight')
 
 
 # random plot
-dwarf_specs = ascii.read('./randomcone_info.ecsv', format='ecsv')
+dwarf_specs = ascii.read('./gaia_data/randomcone_info.ecsv', format='ecsv')
 
 with np.load('randomcone_vels.npz', 'rb', allow_pickle=True) as infile:
     # vels = infile['vels']
@@ -162,5 +162,5 @@ plt.tick_params(labelcolor='none', top=False, bottom=False, left=False, right=Fa
 plt.grid(False)
 plt.xlabel("Proper motion, right ascension [mas/yr]")
 plt.ylabel("Proper motion, declination [mas/yr]")
-fig.savefig('./random_cone_histos.pdf', bbox_inches='tight')
+fig.savefig('./plots/random_cone_histos.pdf', bbox_inches='tight')
 plt.show()

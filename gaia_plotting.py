@@ -10,6 +10,6 @@ Date: 22-06-2019 14:41
 import gaia_functions as g
 import matplotlib.pyplot as plt
 
-g.make_pm_maps('./dwarf_info.ecsv', './dwarf_vels.npz', '/Users/runburg/github/gaia_project/known_dwarf_histos.pdf', num_cones=8, titles=1)
-g.make_pm_maps('./randomcone_info.ecsv', './randomcone_vels.npz', '/Users/runburg/github/gaia_project/random_cone_histos.pdf', num_cones=8)
+g.make_pm_maps('./gaia_data/dwarf_info.ecsv', './gaia_data/dwarf_vels.npz', './plots/known_dwarf_histos.pdf', num_cones=8, titles=1)
+g.make_pm_maps('./gaia_data/randomcone_info.ecsv', './gaia_data/randomcone_vels.npz', './plots/random_cone_histos.pdf', num_cones=8)
 plt.show()

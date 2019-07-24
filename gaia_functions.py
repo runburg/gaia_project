@@ -226,12 +226,12 @@ if __name__ == '__main__':
     ycoords = dwarf_specs['DEC']
 
     # load pm values
-    with np.load('/Users/runburg/github/gaia_project/dwarf_vels.npz', allow_pickle=True) as infile:
+    with np.load('./gaia_data/dwarf_vels.npz', allow_pickle=True) as infile:
         # vels = infile['vels']
         pmra = infile['pmra']
         pmdec = infile['pmdec']
         ra = infile['ra']
         dec = infile['dec']
 
-    pm_vector_plot(ra[0], dec[0], pmra[0], pmdec[0], 'draco_quiver.pdf')
+    pm_vector_plot(ra[0], dec[0], pmra[0], pmdec[0], './plots/draco_quiver.pdf')
     plt.show()
