@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 import glob
 
 radii = [0.5, 0.1, 0.05]
-dwarf = 0
+dwarf = 1
 dwarf_dict = {
     0: 'draco',
     1: 'leoI',

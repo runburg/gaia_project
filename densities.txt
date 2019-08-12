@@ -188,3 +188,27 @@ RA: 84.57, DEC: -59.95 quiver	 1782.54
 RA: 84.57, DEC: -59.95 quiver	 1909.86
 RA: 84.57, DEC: -59.95 quiver	 3565.07
 RA: 84.57, DEC: -59.95 quiver	 6366.2
+Leo I dSph quiver	 1176.47
+Leo I dSph quiver	 1227.4
+Leo I dSph quiver	 1716.33
+Leo I dSph quiver	 2318.57
+RA: 356.99, DEC: 32.76 quiver	 1140.82
+RA: 356.99, DEC: 32.76 quiver	 1257.96
+RA: 356.99, DEC: 32.76 quiver	 2743.83
+RA: 356.99, DEC: 32.76 quiver	 4490.72
+Leo I dSph quiver	 16934.09
+Leo I dSph quiver	 17284.23
+Leo I dSph quiver	 20276.34
+Leo I dSph quiver	 23204.79
+RA: 356.99, DEC: 32.76 quiver	 1177.75
+RA: 356.99, DEC: 32.76 quiver	 1305.07
+RA: 356.99, DEC: 32.76 quiver	 2769.3
+RA: 356.99, DEC: 32.76 quiver	 4265.35
+Leo I dSph quiver	 36669.3
+Leo I dSph quiver	 37560.57
+Leo I dSph quiver	 43926.76
+Leo I dSph quiver	 50802.26
+RA: 356.99, DEC: 32.76 quiver	 1400.56
+RA: 356.99, DEC: 32.76 quiver	 1655.21
+RA: 356.99, DEC: 32.76 quiver	 3565.07
+RA: 356.99, DEC: 32.76 quiver	 4965.63

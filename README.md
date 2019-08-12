@@ -7,3 +7,9 @@ The first steps will be to understand the average stellar velocity and stellar o
 Then in this parameter space, use GAIA data to indicate or exclude stellar object structures as dSphs.
 
 If the results are encouraging, the next steps would be to employ machine learning and simulation to more carefully determine dSph candidates.
+
+
+The workflow is:
+  - *main.py* queries SIMBAD and GAIA and gets all necessary astrophysical quantities. If desired, this can be done for multiple cone radii at once
+  - *gaia_functions.py* have all of the necessary functions for the data processing and plotting
+  - *gaia_plotting.py* simply calls the functions from above and deals with the file names, etc.
