@@ -212,3 +212,1187 @@ RA: 356.99, DEC: 32.76 quiver	 1400.56
 RA: 356.99, DEC: 32.76 quiver	 1655.21
 RA: 356.99, DEC: 32.76 quiver	 3565.07
 RA: 356.99, DEC: 32.76 quiver	 4965.63
+RA: 84.57, DEC: -59.95	 8057.06
+RA: 356.99, DEC: 32.76	 6963.35
+RA: 188.39, DEC: 16.73	 2335.12
+RA: 88.64, DEC: 21.34	 32279.17
+RA: 45.63, DEC: -14.96	 2055.01
+RA: 91.97, DEC: 7.66	 33612.25
+RA: 0.83, DEC: 40.21	 10579.35
+RA: 186.14, DEC: 24.05	 2154.32
+RA: 349.67, DEC: 13.67	 3866.83
+RA: 278.01, DEC: -44.31	 96801.86
+RA: 353.2, DEC: 17.14	 4223.34
+RA: 20.91, DEC: 18.62	 2937.36
+RA: 353.2, DEC: -20.9	 2477.72
+RA: 199.71, DEC: 30.38	 2252.36
+Leo I dSph quiver	 1851.29
+Leo I dSph quiver	 2686.54
+Leo I dSph quiver	 2936.09
+RA: 356.99, DEC: 32.76 quiver	 2247.27
+RA: 356.99, DEC: 32.76 quiver	 4279.36
+RA: 356.99, DEC: 32.76 quiver	 5049.67
+Leo I dSph quiver	 24446.2
+Leo I dSph quiver	 30303.1
+Leo I dSph quiver	 30716.9
+RA: 356.99, DEC: 32.76 quiver	 2228.17
+RA: 356.99, DEC: 32.76 quiver	 4583.66
+RA: 356.99, DEC: 32.76 quiver	 5220.28
+Leo I dSph quiver	 53348.74
+Leo I dSph quiver	 64807.89
+Leo I dSph quiver	 65699.16
+RA: 356.99, DEC: 32.76 quiver	 3310.42
+RA: 356.99, DEC: 32.76 quiver	 5347.61
+RA: 356.99, DEC: 32.76 quiver	 6111.55
+Dra dSph quiver	 3497.59
+Dra dSph quiver	 5313.23
+Dra dSph quiver	 5974.04
+RA: 84.57, DEC: -59.95 quiver	 2776.94
+RA: 84.57, DEC: -59.95 quiver	 4840.86
+RA: 84.57, DEC: -59.95 quiver	 5761.41
+Dra dSph quiver	 19703.38
+Dra dSph quiver	 24446.2
+Dra dSph quiver	 25146.48
+RA: 84.57, DEC: -59.95 quiver	 3055.77
+RA: 84.57, DEC: -59.95 quiver	 5156.62
+RA: 84.57, DEC: -59.95 quiver	 5952.39
+Dra dSph quiver	 26101.41
+Dra dSph quiver	 30430.43
+Dra dSph quiver	 31576.34
+RA: 84.57, DEC: -59.95 quiver	 3437.75
+RA: 84.57, DEC: -59.95 quiver	 4838.31
+RA: 84.57, DEC: -59.95 quiver	 5474.93
+Dra dSph quiver	 3497.59
+Dra dSph quiver	 5313.23
+Dra dSph quiver	 5974.04
+RA: 84.57, DEC: -59.95 quiver	 2776.94
+RA: 84.57, DEC: -59.95 quiver	 4840.86
+RA: 84.57, DEC: -59.95 quiver	 5761.41
+Dra dSph quiver	 19703.38
+Dra dSph quiver	 24446.2
+Dra dSph quiver	 25146.48
+RA: 84.57, DEC: -59.95 quiver	 3055.77
+RA: 84.57, DEC: -59.95 quiver	 5156.62
+RA: 84.57, DEC: -59.95 quiver	 5952.39
+Dra dSph quiver	 26101.41
+Dra dSph quiver	 30430.43
+Dra dSph quiver	 31576.34
+RA: 84.57, DEC: -59.95 quiver	 3437.75
+RA: 84.57, DEC: -59.95 quiver	 4838.31
+RA: 84.57, DEC: -59.95 quiver	 5474.93
+Leo I dSph quiver	 1851.29
+Leo I dSph quiver	 2686.54
+Leo I dSph quiver	 2936.09
+RA: 356.99, DEC: 32.76 quiver	 2247.27
+RA: 356.99, DEC: 32.76 quiver	 4279.36
+RA: 356.99, DEC: 32.76 quiver	 5049.67
+Leo I dSph quiver	 24446.2
+Leo I dSph quiver	 30303.1
+Leo I dSph quiver	 30716.9
+RA: 356.99, DEC: 32.76 quiver	 2228.17
+RA: 356.99, DEC: 32.76 quiver	 4583.66
+RA: 356.99, DEC: 32.76 quiver	 5220.28
+Leo I dSph quiver	 53348.74
+Leo I dSph quiver	 64807.89
+Leo I dSph quiver	 65699.16
+RA: 356.99, DEC: 32.76 quiver	 3310.42
+RA: 356.99, DEC: 32.76 quiver	 5347.61
+RA: 356.99, DEC: 32.76 quiver	 6111.55
+Leo I dSph quiver	 1851.29
+Leo I dSph quiver	 2686.54
+Leo I dSph quiver	 2936.09
+RA: 356.99, DEC: 32.76 quiver	 2247.27
+RA: 356.99, DEC: 32.76 quiver	 4279.36
+RA: 356.99, DEC: 32.76 quiver	 5049.67
+Leo I dSph quiver	 24446.2
+Leo I dSph quiver	 30303.1
+Leo I dSph quiver	 30716.9
+RA: 356.99, DEC: 32.76 quiver	 2228.17
+RA: 356.99, DEC: 32.76 quiver	 4583.66
+RA: 356.99, DEC: 32.76 quiver	 5220.28
+Leo I dSph quiver	 53348.74
+Leo I dSph quiver	 64807.89
+Leo I dSph quiver	 65699.16
+RA: 356.99, DEC: 32.76 quiver	 3310.42
+RA: 356.99, DEC: 32.76 quiver	 5347.61
+RA: 356.99, DEC: 32.76 quiver	 6111.55
+Dra dSph quiver	 3497.59
+Dra dSph quiver	 5313.23
+Dra dSph quiver	 5974.04
+RA: 84.57, DEC: -59.95 quiver	 2776.94
+RA: 84.57, DEC: -59.95 quiver	 4840.86
+RA: 84.57, DEC: -59.95 quiver	 5761.41
+Dra dSph quiver	 19703.38
+Dra dSph quiver	 24446.2
+Dra dSph quiver	 25146.48
+RA: 84.57, DEC: -59.95 quiver	 3055.77
+RA: 84.57, DEC: -59.95 quiver	 5156.62
+RA: 84.57, DEC: -59.95 quiver	 5952.39
+Dra dSph quiver	 26101.41
+Dra dSph quiver	 30430.43
+Dra dSph quiver	 31576.34
+RA: 84.57, DEC: -59.95 quiver	 3437.75
+RA: 84.57, DEC: -59.95 quiver	 4838.31
+RA: 84.57, DEC: -59.95 quiver	 5474.93
+UMi Galaxy quiver	 2832.96
+UMi Galaxy quiver	 4009.43
+UMi Galaxy quiver	 4448.7
+RA: 88.64, DEC: 21.34 quiver	 14064.2
+RA: 88.64, DEC: 21.34 quiver	 24099.88
+RA: 88.64, DEC: 21.34 quiver	 27233.32
+UMi Galaxy quiver	 10504.23
+UMi Galaxy quiver	 12636.9
+UMi Galaxy quiver	 13050.71
+RA: 88.64, DEC: 21.34 quiver	 15374.37
+RA: 88.64, DEC: 21.34 quiver	 25942.26
+RA: 88.64, DEC: 21.34 quiver	 29348.17
+UMi Galaxy quiver	 13114.37
+UMi Galaxy quiver	 15533.52
+UMi Galaxy quiver	 15788.17
+RA: 88.64, DEC: 21.34 quiver	 14260.28
+RA: 88.64, DEC: 21.34 quiver	 26228.73
+RA: 88.64, DEC: 21.34 quiver	 29666.48
+Leo B quiver	 795.77
+Leo B quiver	 1285.97
+Leo B quiver	 1480.78
+RA: 188.39, DEC: 16.73 quiver	 861.98
+RA: 188.39, DEC: 16.73 quiver	 1456.59
+RA: 188.39, DEC: 16.73 quiver	 1702.32
+Leo B quiver	 5411.27
+Leo B quiver	 6907.32
+Leo B quiver	 7034.65
+RA: 188.39, DEC: 16.73 quiver	 923.1
+RA: 188.39, DEC: 16.73 quiver	 1687.04
+RA: 188.39, DEC: 16.73 quiver	 1909.86
+Leo B quiver	 13623.66
+Leo B quiver	 17443.38
+Leo B quiver	 17443.38
+RA: 188.39, DEC: 16.73 quiver	 891.27
+RA: 188.39, DEC: 16.73 quiver	 1909.86
+RA: 188.39, DEC: 16.73 quiver	 2291.83
+Leo B quiver	 795.77
+Leo B quiver	 1285.97
+Leo B quiver	 1480.78
+RA: 72.71, DEC: -74.85 quiver	 35741.11
+RA: 72.71, DEC: -74.85 quiver	 44173.77
+RA: 72.71, DEC: -74.85 quiver	 45256.03
+Leo B quiver	 795.77
+Leo B quiver	 1285.97
+Leo B quiver	 1480.78
+RA: 72.71, DEC: -74.85 quiver	 35741.11
+RA: 72.71, DEC: -74.85 quiver	 44173.77
+RA: 72.71, DEC: -74.85 quiver	 45256.03
+Leo B quiver	 5411.27
+Leo B quiver	 6907.32
+Leo B quiver	 7034.65
+RA: 72.71, DEC: -74.85 quiver	 40266.2
+RA: 72.71, DEC: -74.85 quiver	 49942.82
+RA: 72.71, DEC: -74.85 quiver	 51025.07
+RA: 65.48, DEC: 25.26	 8899.94
+RA: 326.48, DEC: 10.47	 8332.08
+RA: 72.71, DEC: -74.85	 47474.01
+RA: 139.11, DEC: -14.85	 8618.56
+RA: 346.25, DEC: 34.66	 10693.94
+RA: 289.11, DEC: -36.56	 36428.66
+RA: 257.07, DEC: 12.41	 15747.43
+RA: 332.56, DEC: -1.28	 4334.11
+RA: 247.96, DEC: -4.8	 15728.33
+RA: 248.9, DEC: -20.17	 44559.56
+RA: 295.08, DEC: 48.19	 42453.63
+RA: 24.22, DEC: 34.88	 6077.17
+RA: 328.36, DEC: 27.28	 15971.52
+RA: 257.78, DEC: 63.91	 5245.75
+RA: 65.48, DEC: 25.26	 8899.94
+RA: 326.48, DEC: 10.47	 8332.08
+RA: 72.71, DEC: -74.85	 47474.01
+RA: 139.11, DEC: -14.85	 8618.56
+RA: 346.25, DEC: 34.66	 10693.94
+RA: 289.11, DEC: -36.56	 36428.66
+RA: 257.07, DEC: 12.41	 15747.43
+RA: 332.56, DEC: -1.28	 4334.11
+RA: 247.96, DEC: -4.8	 15728.33
+RA: 248.9, DEC: -20.17	 44559.56
+RA: 295.08, DEC: 48.19	 42453.63
+RA: 24.22, DEC: 34.88	 6077.17
+RA: 328.36, DEC: 27.28	 15971.52
+RA: 257.78, DEC: 63.91	 5245.75
+RA: 65.48, DEC: 25.26	 6111.55
+RA: 326.48, DEC: 10.47	 7894.09
+RA: 72.71, DEC: -74.85	 53539.72
+RA: 139.11, DEC: -14.85	 8180.56
+RA: 346.25, DEC: 34.66	 10345.07
+RA: 289.11, DEC: -36.56	 26706.2
+RA: 257.07, DEC: 12.41	 14769.58
+RA: 332.56, DEC: -1.28	 4901.97
+RA: 247.96, DEC: -4.8	 16552.11
+RA: 248.9, DEC: -20.17	 45804.79
+RA: 295.08, DEC: 48.19	 41698.6
+RA: 24.22, DEC: 34.88	 6366.2
+RA: 328.36, DEC: 27.28	 17093.24
+RA: 257.78, DEC: 63.91	 4774.65
+RA: 65.48, DEC: 25.26	 6366.2
+RA: 326.48, DEC: 10.47	 7766.76
+RA: 72.71, DEC: -74.85	 47491.84
+RA: 139.11, DEC: -14.85	 9167.32
+RA: 346.25, DEC: 34.66	 10185.92
+RA: 289.11, DEC: -36.56	 27374.65
+RA: 257.07, DEC: 12.41	 15915.49
+RA: 332.56, DEC: -1.28	 5347.61
+RA: 247.96, DEC: -4.8	 16424.79
+RA: 248.9, DEC: -20.17	 44818.03
+RA: 295.08, DEC: 48.19	 43672.12
+RA: 24.22, DEC: 34.88	 6493.52
+RA: 328.36, DEC: 27.28	 15788.17
+RA: 257.78, DEC: 63.91	 4710.99
+Leo B quiver	 795.77
+Leo B quiver	 1285.97
+Leo B quiver	 1480.78
+Leo B quiver	 795.77
+Leo B quiver	 1285.97
+Leo B quiver	 1480.78
+RA: 72.71, DEC: -74.85 quiver	 35741.11
+RA: 72.71, DEC: -74.85 quiver	 44173.77
+RA: 72.71, DEC: -74.85 quiver	 45256.03
+Leo B quiver	 5411.27
+Leo B quiver	 6907.32
+Leo B quiver	 7034.65
+RA: 72.71, DEC: -74.85 quiver	 40266.2
+RA: 72.71, DEC: -74.85 quiver	 49942.82
+RA: 72.71, DEC: -74.85 quiver	 51025.07
+Leo B quiver	 13623.66
+Leo B quiver	 17443.38
+Leo B quiver	 17443.38
+RA: 72.71, DEC: -74.85 quiver	 35396.06
+RA: 72.71, DEC: -74.85 quiver	 43926.76
+RA: 72.71, DEC: -74.85 quiver	 44945.36
+RA: 65.48, DEC: 25.26	 8899.94
+RA: 326.48, DEC: 10.47	 8332.08
+RA: 72.71, DEC: -74.85	 47474.01
+RA: 139.11, DEC: -14.85	 8618.56
+RA: 346.25, DEC: 34.66	 10693.94
+RA: 289.11, DEC: -36.56	 36428.66
+RA: 257.07, DEC: 12.41	 15747.43
+RA: 332.56, DEC: -1.28	 4334.11
+RA: 247.96, DEC: -4.8	 15728.33
+RA: 248.9, DEC: -20.17	 44559.56
+RA: 295.08, DEC: 48.19	 42453.63
+RA: 24.22, DEC: 34.88	 6077.17
+RA: 328.36, DEC: 27.28	 15971.52
+RA: 257.78, DEC: 63.91	 5245.75
+RA: 65.48, DEC: 25.26	 8899.94
+RA: 326.48, DEC: 10.47	 8332.08
+RA: 72.71, DEC: -74.85	 47474.01
+RA: 139.11, DEC: -14.85	 8618.56
+RA: 346.25, DEC: 34.66	 10693.94
+RA: 289.11, DEC: -36.56	 36428.66
+RA: 257.07, DEC: 12.41	 15747.43
+RA: 332.56, DEC: -1.28	 4334.11
+RA: 247.96, DEC: -4.8	 15728.33
+RA: 248.9, DEC: -20.17	 44559.56
+RA: 295.08, DEC: 48.19	 42453.63
+RA: 24.22, DEC: 34.88	 6077.17
+RA: 328.36, DEC: 27.28	 15971.52
+RA: 257.78, DEC: 63.91	 5245.75
+RA: 260.06, DEC: 57.92	 7987.03
+RA: 152.12, DEC: 12.31	 3621.09
+RA: 168.37, DEC: 22.15	 2014.26
+RA: 227.3, DEC: 67.21	 5789.42
+RA: 15.04, DEC: -32.29	 2237.08
+RA: 100.4, DEC: -49.03	 12515.94
+RA: 153.26, DEC: -0.39	 2768.02
+RA: 40.0, DEC: -33.55	 3039.22
+RA: 210.0, DEC: 14.5	 2863.52
+RA: 19.48, DEC: -16.58	 2061.37
+RA: 82.85, DEC: -27.97	 6740.53
+RA: 331.02, DEC: -45.57	 5031.84
+RA: 186.75, DEC: 23.9	 2172.15
+RA: 151.76, DEC: 16.07	 2007.9
+RA: 65.48, DEC: 25.26	 6111.55
+RA: 326.48, DEC: 10.47	 7894.09
+RA: 72.71, DEC: -74.85	 53539.72
+RA: 139.11, DEC: -14.85	 8180.56
+RA: 346.25, DEC: 34.66	 10345.07
+RA: 289.11, DEC: -36.56	 26706.2
+RA: 257.07, DEC: 12.41	 14769.58
+RA: 332.56, DEC: -1.28	 4901.97
+RA: 247.96, DEC: -4.8	 16552.11
+RA: 248.9, DEC: -20.17	 45804.79
+RA: 295.08, DEC: 48.19	 41698.6
+RA: 24.22, DEC: 34.88	 6366.2
+RA: 328.36, DEC: 27.28	 17093.24
+RA: 257.78, DEC: 63.91	 4774.65
+RA: 260.06, DEC: 57.92	 27088.17
+RA: 152.12, DEC: 12.31	 31194.37
+RA: 168.37, DEC: 22.15	 7543.94
+RA: 227.3, DEC: 67.21	 14323.94
+RA: 15.04, DEC: -32.29	 2228.17
+RA: 100.4, DEC: -49.03	 13496.34
+RA: 153.26, DEC: -0.39	 3214.93
+RA: 40.0, DEC: -33.55	 2482.82
+RA: 210.0, DEC: 14.5	 4456.34
+RA: 19.48, DEC: -16.58	 2069.01
+RA: 82.85, DEC: -27.97	 7352.96
+RA: 331.02, DEC: -45.57	 5697.75
+RA: 186.75, DEC: 23.9	 2641.97
+RA: 151.76, DEC: 16.07	 2641.97
+RA: 65.48, DEC: 25.26	 6366.2
+RA: 326.48, DEC: 10.47	 7766.76
+RA: 72.71, DEC: -74.85	 47491.84
+RA: 139.11, DEC: -14.85	 9167.32
+RA: 346.25, DEC: 34.66	 10185.92
+RA: 289.11, DEC: -36.56	 27374.65
+RA: 257.07, DEC: 12.41	 15915.49
+RA: 332.56, DEC: -1.28	 5347.61
+RA: 247.96, DEC: -4.8	 16424.79
+RA: 248.9, DEC: -20.17	 44818.03
+RA: 295.08, DEC: 48.19	 43672.12
+RA: 24.22, DEC: 34.88	 6493.52
+RA: 328.36, DEC: 27.28	 15788.17
+RA: 257.78, DEC: 63.91	 4710.99
+RA: 260.06, DEC: 57.92	 34377.47
+RA: 152.12, DEC: 12.31	 66081.13
+RA: 168.37, DEC: 22.15	 17698.03
+RA: 227.3, DEC: 67.21	 17570.71
+RA: 15.04, DEC: -32.29	 2164.51
+RA: 100.4, DEC: -49.03	 14514.93
+RA: 153.26, DEC: -0.39	 2546.48
+RA: 40.0, DEC: -33.55	 2037.18
+RA: 210.0, DEC: 14.5	 5220.28
+RA: 19.48, DEC: -16.58	 2928.45
+RA: 82.85, DEC: -27.97	 8530.7
+RA: 331.02, DEC: -45.57	 5474.93
+RA: 186.75, DEC: 23.9	 3310.42
+RA: 151.76, DEC: 16.07	 2164.51
+Dra dSph quiver	 3497.59
+Dra dSph quiver	 5313.23
+Dra dSph quiver	 5974.04
+RA: 65.48, DEC: 25.26 quiver	 3589.26
+RA: 65.48, DEC: 25.26 quiver	 6259.25
+RA: 65.48, DEC: 25.26 quiver	 7151.79
+Dra dSph quiver	 19703.38
+Dra dSph quiver	 24446.2
+Dra dSph quiver	 25146.48
+RA: 65.48, DEC: 25.26 quiver	 2387.32
+RA: 65.48, DEC: 25.26 quiver	 4106.2
+RA: 65.48, DEC: 25.26 quiver	 4870.14
+Dra dSph quiver	 26101.41
+Dra dSph quiver	 30430.43
+Dra dSph quiver	 31576.34
+RA: 65.48, DEC: 25.26 quiver	 2801.13
+RA: 65.48, DEC: 25.26 quiver	 4965.63
+RA: 65.48, DEC: 25.26 quiver	 5602.25
+RA: 65.48, DEC: 25.26	 8899.94
+RA: 326.48, DEC: 10.47	 8332.08
+RA: 72.71, DEC: -74.85	 47474.01
+RA: 139.11, DEC: -14.85	 8618.56
+RA: 346.25, DEC: 34.66	 10693.94
+RA: 289.11, DEC: -36.56	 36428.66
+RA: 257.07, DEC: 12.41	 15747.43
+RA: 332.56, DEC: -1.28	 4334.11
+RA: 247.96, DEC: -4.8	 15728.33
+RA: 248.9, DEC: -20.17	 44559.56
+RA: 295.08, DEC: 48.19	 42453.63
+RA: 24.22, DEC: 34.88	 6077.17
+RA: 328.36, DEC: 27.28	 15971.52
+RA: 257.78, DEC: 63.91	 5245.75
+Dra dSph	 7987.03
+Leo I dSph	 3621.09
+Leo B	 2014.26
+UMi Galaxy	 5789.42
+Sculptor Dwarf Galaxy	 2237.08
+Carina dSph	 12515.94
+Dwarf Elliptical Galaxy in Sex	 2768.02
+Fornax Dwarf Spheroidal	 3039.22
+Bootes Dwarf Spheroidal Galaxy	 2863.52
+Cetus II	 2061.37
+Col I	 6740.53
+Gru II	 5031.84
+Coma Dwarf Galaxy	 2172.15
+Segue 1	 2007.9
+RA: 65.48, DEC: 25.26	 6111.55
+RA: 326.48, DEC: 10.47	 7894.09
+RA: 72.71, DEC: -74.85	 53539.72
+RA: 139.11, DEC: -14.85	 8180.56
+RA: 346.25, DEC: 34.66	 10345.07
+RA: 289.11, DEC: -36.56	 26706.2
+RA: 257.07, DEC: 12.41	 14769.58
+RA: 332.56, DEC: -1.28	 4901.97
+RA: 247.96, DEC: -4.8	 16552.11
+RA: 248.9, DEC: -20.17	 45804.79
+RA: 295.08, DEC: 48.19	 41698.6
+RA: 24.22, DEC: 34.88	 6366.2
+RA: 328.36, DEC: 27.28	 17093.24
+RA: 257.78, DEC: 63.91	 4774.65
+Dra dSph	 27088.17
+Leo I dSph	 31194.37
+Leo B	 7543.94
+UMi Galaxy	 14323.94
+Sculptor Dwarf Galaxy	 2228.17
+Carina dSph	 13496.34
+Dwarf Elliptical Galaxy in Sex	 3214.93
+Fornax Dwarf Spheroidal	 2482.82
+Bootes Dwarf Spheroidal Galaxy	 4456.34
+Cetus II	 2069.01
+Col I	 7352.96
+Gru II	 5697.75
+Coma Dwarf Galaxy	 2641.97
+Segue 1	 2641.97
+RA: 65.48, DEC: 25.26	 6366.2
+RA: 326.48, DEC: 10.47	 7766.76
+RA: 72.71, DEC: -74.85	 47491.84
+RA: 139.11, DEC: -14.85	 9167.32
+RA: 346.25, DEC: 34.66	 10185.92
+RA: 289.11, DEC: -36.56	 27374.65
+RA: 257.07, DEC: 12.41	 15915.49
+RA: 332.56, DEC: -1.28	 5347.61
+RA: 247.96, DEC: -4.8	 16424.79
+RA: 248.9, DEC: -20.17	 44818.03
+RA: 295.08, DEC: 48.19	 43672.12
+RA: 24.22, DEC: 34.88	 6493.52
+RA: 328.36, DEC: 27.28	 15788.17
+RA: 257.78, DEC: 63.91	 4710.99
+Dra dSph	 34377.47
+Leo I dSph	 66081.13
+Leo B	 17698.03
+UMi Galaxy	 17570.71
+Sculptor Dwarf Galaxy	 2164.51
+Carina dSph	 14514.93
+Dwarf Elliptical Galaxy in Sex	 2546.48
+Fornax Dwarf Spheroidal	 2037.18
+Bootes Dwarf Spheroidal Galaxy	 5220.28
+Cetus II	 2928.45
+Col I	 8530.7
+Gru II	 5474.93
+Coma Dwarf Galaxy	 3310.42
+Segue 1	 2164.51
+RA: 65.48, DEC: 25.26	 8899.94
+RA: 326.48, DEC: 10.47	 8332.08
+RA: 72.71, DEC: -74.85	 47474.01
+RA: 139.11, DEC: -14.85	 8618.56
+RA: 346.25, DEC: 34.66	 10693.94
+RA: 289.11, DEC: -36.56	 36428.66
+RA: 257.07, DEC: 12.41	 15747.43
+RA: 332.56, DEC: -1.28	 4334.11
+RA: 247.96, DEC: -4.8	 15728.33
+RA: 248.9, DEC: -20.17	 44559.56
+RA: 295.08, DEC: 48.19	 42453.63
+RA: 24.22, DEC: 34.88	 6077.17
+RA: 328.36, DEC: 27.28	 15971.52
+RA: 257.78, DEC: 63.91	 5245.75
+Dra dSph	 7987.03
+Leo I dSph	 3621.09
+Leo B	 2014.26
+UMi Galaxy	 5789.42
+Sculptor Dwarf Galaxy	 2237.08
+Carina dSph	 12515.94
+Dwarf Elliptical Galaxy in Sex	 2768.02
+Fornax Dwarf Spheroidal	 3039.22
+Bootes Dwarf Spheroidal Galaxy	 2863.52
+Cetus II	 2061.37
+Col I	 6740.53
+Gru II	 5031.84
+Coma Dwarf Galaxy	 2172.15
+Segue 1	 2007.9
+RA: 65.48, DEC: 25.26	 6111.55
+RA: 326.48, DEC: 10.47	 7894.09
+RA: 72.71, DEC: -74.85	 53539.72
+RA: 139.11, DEC: -14.85	 8180.56
+RA: 346.25, DEC: 34.66	 10345.07
+RA: 289.11, DEC: -36.56	 26706.2
+RA: 257.07, DEC: 12.41	 14769.58
+RA: 332.56, DEC: -1.28	 4901.97
+RA: 247.96, DEC: -4.8	 16552.11
+RA: 248.9, DEC: -20.17	 45804.79
+RA: 295.08, DEC: 48.19	 41698.6
+RA: 24.22, DEC: 34.88	 6366.2
+RA: 328.36, DEC: 27.28	 17093.24
+RA: 257.78, DEC: 63.91	 4774.65
+Dra dSph	 27088.17
+Leo I dSph	 31194.37
+Leo B	 7543.94
+UMi Galaxy	 14323.94
+Sculptor Dwarf Galaxy	 2228.17
+Carina dSph	 13496.34
+Dwarf Elliptical Galaxy in Sex	 3214.93
+Fornax Dwarf Spheroidal	 2482.82
+Bootes Dwarf Spheroidal Galaxy	 4456.34
+Cetus II	 2069.01
+Col I	 7352.96
+Gru II	 5697.75
+Coma Dwarf Galaxy	 2641.97
+Segue 1	 2641.97
+RA: 65.48, DEC: 25.26	 6366.2
+RA: 326.48, DEC: 10.47	 7766.76
+RA: 72.71, DEC: -74.85	 47491.84
+RA: 139.11, DEC: -14.85	 9167.32
+RA: 346.25, DEC: 34.66	 10185.92
+RA: 289.11, DEC: -36.56	 27374.65
+RA: 257.07, DEC: 12.41	 15915.49
+RA: 332.56, DEC: -1.28	 5347.61
+RA: 247.96, DEC: -4.8	 16424.79
+RA: 248.9, DEC: -20.17	 44818.03
+RA: 295.08, DEC: 48.19	 43672.12
+RA: 24.22, DEC: 34.88	 6493.52
+RA: 328.36, DEC: 27.28	 15788.17
+RA: 257.78, DEC: 63.91	 4710.99
+Dra dSph	 34377.47
+Leo I dSph	 66081.13
+Leo B	 17698.03
+UMi Galaxy	 17570.71
+Sculptor Dwarf Galaxy	 2164.51
+Carina dSph	 14514.93
+Dwarf Elliptical Galaxy in Sex	 2546.48
+Fornax Dwarf Spheroidal	 2037.18
+Bootes Dwarf Spheroidal Galaxy	 5220.28
+Cetus II	 2928.45
+Col I	 8530.7
+Gru II	 5474.93
+Coma Dwarf Galaxy	 3310.42
+Segue 1	 2164.51
+Dra dSph quiver	 3497.59
+Dra dSph quiver	 5313.23
+Dra dSph quiver	 5974.04
+RA: 65.48, DEC: 25.26 quiver	 3589.26
+RA: 65.48, DEC: 25.26 quiver	 6259.25
+RA: 65.48, DEC: 25.26 quiver	 7151.79
+Dra dSph quiver	 19703.38
+Dra dSph quiver	 24446.2
+Dra dSph quiver	 25146.48
+RA: 65.48, DEC: 25.26 quiver	 2387.32
+RA: 65.48, DEC: 25.26 quiver	 4106.2
+RA: 65.48, DEC: 25.26 quiver	 4870.14
+Dra dSph quiver	 26101.41
+Dra dSph quiver	 30430.43
+Dra dSph quiver	 31576.34
+RA: 65.48, DEC: 25.26 quiver	 2801.13
+RA: 65.48, DEC: 25.26 quiver	 4965.63
+RA: 65.48, DEC: 25.26 quiver	 5602.25
+Leo I dSph quiver	 1851.29
+Leo I dSph quiver	 2686.54
+Leo I dSph quiver	 2936.09
+RA: 326.48, DEC: 10.47 quiver	 3158.91
+RA: 326.48, DEC: 10.47 quiver	 5467.29
+RA: 326.48, DEC: 10.47 quiver	 6415.85
+Leo I dSph quiver	 24446.2
+Leo I dSph quiver	 30303.1
+Leo I dSph quiver	 30716.9
+RA: 326.48, DEC: 10.47 quiver	 2832.96
+RA: 326.48, DEC: 10.47 quiver	 5220.28
+RA: 326.48, DEC: 10.47 quiver	 6143.38
+Leo I dSph quiver	 1851.29
+Leo I dSph quiver	 2686.54
+Leo I dSph quiver	 2936.09
+RA: 326.48, DEC: 10.47 quiver	 3158.91
+RA: 326.48, DEC: 10.47 quiver	 5467.29
+RA: 326.48, DEC: 10.47 quiver	 6415.85
+Leo I dSph quiver	 24446.2
+Leo I dSph quiver	 30303.1
+Leo I dSph quiver	 30716.9
+RA: 326.48, DEC: 10.47 quiver	 2832.96
+RA: 326.48, DEC: 10.47 quiver	 5220.28
+RA: 326.48, DEC: 10.47 quiver	 6143.38
+Leo I dSph quiver	 53348.74
+Leo I dSph quiver	 64807.89
+Leo I dSph quiver	 65699.16
+RA: 326.48, DEC: 10.47 quiver	 2291.83
+RA: 326.48, DEC: 10.47 quiver	 5092.96
+RA: 326.48, DEC: 10.47 quiver	 6238.87
+UMi Galaxy quiver	 2832.96
+UMi Galaxy quiver	 4009.43
+UMi Galaxy quiver	 4448.7
+RA: 139.11, DEC: -14.85 quiver	 3124.53
+RA: 139.11, DEC: -14.85 quiver	 5494.03
+RA: 139.11, DEC: -14.85 quiver	 6445.14
+UMi Galaxy quiver	 10504.23
+UMi Galaxy quiver	 12636.9
+UMi Galaxy quiver	 13050.71
+RA: 139.11, DEC: -14.85 quiver	 3151.27
+RA: 139.11, DEC: -14.85 quiver	 5092.96
+RA: 139.11, DEC: -14.85 quiver	 6270.7
+UMi Galaxy quiver	 13114.37
+UMi Galaxy quiver	 15533.52
+UMi Galaxy quiver	 15788.17
+RA: 139.11, DEC: -14.85 quiver	 3692.39
+RA: 139.11, DEC: -14.85 quiver	 6366.2
+RA: 139.11, DEC: -14.85 quiver	 6875.49
+Fornax Dwarf Spheroidal quiver	 1187.93
+Fornax Dwarf Spheroidal quiver	 1864.02
+Fornax Dwarf Spheroidal quiver	 2144.14
+RA: 332.56, DEC: -1.28 quiver	 1562.26
+RA: 332.56, DEC: -1.28 quiver	 2720.91
+RA: 332.56, DEC: -1.28 quiver	 3202.2
+Fornax Dwarf Spheroidal quiver	 827.61
+Fornax Dwarf Spheroidal quiver	 1273.24
+Fornax Dwarf Spheroidal quiver	 1464.23
+RA: 332.56, DEC: -1.28 quiver	 1718.87
+RA: 332.56, DEC: -1.28 quiver	 2896.62
+RA: 332.56, DEC: -1.28 quiver	 3533.24
+Fornax Dwarf Spheroidal quiver	 763.94
+Fornax Dwarf Spheroidal quiver	 1527.89
+Fornax Dwarf Spheroidal quiver	 1782.54
+RA: 332.56, DEC: -1.28 quiver	 1909.86
+RA: 332.56, DEC: -1.28 quiver	 3183.1
+RA: 332.56, DEC: -1.28 quiver	 3692.39
+Fornax Dwarf Spheroidal quiver	 1187.93
+Fornax Dwarf Spheroidal quiver	 1864.02
+Fornax Dwarf Spheroidal quiver	 2144.14
+RA: 332.56, DEC: -1.28 quiver	 1562.26
+RA: 332.56, DEC: -1.28 quiver	 2720.91
+RA: 332.56, DEC: -1.28 quiver	 3202.2
+Fornax Dwarf Spheroidal quiver	 827.61
+Fornax Dwarf Spheroidal quiver	 1273.24
+Fornax Dwarf Spheroidal quiver	 1464.23
+RA: 332.56, DEC: -1.28 quiver	 1718.87
+RA: 332.56, DEC: -1.28 quiver	 2896.62
+RA: 332.56, DEC: -1.28 quiver	 3533.24
+Fornax Dwarf Spheroidal quiver	 763.94
+Fornax Dwarf Spheroidal quiver	 1527.89
+Fornax Dwarf Spheroidal quiver	 1782.54
+RA: 332.56, DEC: -1.28 quiver	 1909.86
+RA: 332.56, DEC: -1.28 quiver	 3183.1
+RA: 332.56, DEC: -1.28 quiver	 3692.39
+Fornax Dwarf Spheroidal quiver	 1187.93
+Fornax Dwarf Spheroidal quiver	 1864.02
+Fornax Dwarf Spheroidal quiver	 2144.14
+Fornax Dwarf Spheroidal quiver	 23757.38
+Fornax Dwarf Spheroidal quiver	 29227.21
+Fornax Dwarf Spheroidal quiver	 29691.95
+RA: 332.56, DEC: -1.28 quiver	 1562.26
+RA: 332.56, DEC: -1.28 quiver	 2720.91
+RA: 332.56, DEC: -1.28 quiver	 3202.2
+Fornax Dwarf Spheroidal quiver	 85816.35
+Fornax Dwarf Spheroidal quiver	 106315.5
+Fornax Dwarf Spheroidal quiver	 108066.21
+RA: 332.56, DEC: -1.28 quiver	 1718.87
+RA: 332.56, DEC: -1.28 quiver	 2896.62
+RA: 332.56, DEC: -1.28 quiver	 3533.24
+Fornax Dwarf Spheroidal quiver	 94601.7
+Fornax Dwarf Spheroidal quiver	 117647.33
+Fornax Dwarf Spheroidal quiver	 119684.52
+RA: 332.56, DEC: -1.28 quiver	 1909.86
+RA: 332.56, DEC: -1.28 quiver	 3183.1
+RA: 332.56, DEC: -1.28 quiver	 3692.39
+Dra dSph quiver	 3497.59
+Dra dSph quiver	 5313.23
+Dra dSph quiver	 5974.04
+RA: 65.48, DEC: 25.26 quiver	 3589.26
+RA: 65.48, DEC: 25.26 quiver	 6259.25
+RA: 65.48, DEC: 25.26 quiver	 7151.79
+Leo I dSph quiver	 1851.29
+Leo I dSph quiver	 2686.54
+Leo I dSph quiver	 2936.09
+RA: 326.48, DEC: 10.47 quiver	 3158.91
+RA: 326.48, DEC: 10.47 quiver	 5467.29
+RA: 326.48, DEC: 10.47 quiver	 6415.85
+Leo B quiver	 795.77
+Leo B quiver	 1285.97
+Leo B quiver	 1480.78
+RA: 72.71, DEC: -74.85 quiver	 35741.11
+RA: 72.71, DEC: -74.85 quiver	 44173.77
+RA: 72.71, DEC: -74.85 quiver	 45256.03
+UMi Galaxy quiver	 2832.96
+UMi Galaxy quiver	 4009.43
+UMi Galaxy quiver	 4448.7
+RA: 139.11, DEC: -14.85 quiver	 3124.53
+RA: 139.11, DEC: -14.85 quiver	 5494.03
+RA: 139.11, DEC: -14.85 quiver	 6445.14
+Sculptor Dwarf Galaxy quiver	 7696.73
+Sculptor Dwarf Galaxy quiver	 9668.98
+Sculptor Dwarf Galaxy quiver	 9958.01
+RA: 346.25, DEC: 34.66 quiver	 3563.8
+RA: 346.25, DEC: 34.66 quiver	 6699.79
+RA: 346.25, DEC: 34.66 quiver	 7962.84
+Carina dSph quiver	 6257.97
+Carina dSph quiver	 10191.01
+Carina dSph quiver	 11684.52
+RA: 289.11, DEC: -36.56 quiver	 18654.23
+RA: 289.11, DEC: -36.56 quiver	 29655.02
+RA: 289.11, DEC: -36.56 quiver	 32431.96
+Dwarf Elliptical Galaxy in Sex quiver	 1623.38
+Dwarf Elliptical Galaxy in Sex quiver	 2445.89
+Dwarf Elliptical Galaxy in Sex quiver	 2717.09
+RA: 257.07, DEC: 12.41 quiver	 6564.82
+RA: 257.07, DEC: 12.41 quiver	 11336.92
+RA: 257.07, DEC: 12.41 quiver	 12894.1
+Fornax Dwarf Spheroidal quiver	 23757.38
+Fornax Dwarf Spheroidal quiver	 29227.21
+Fornax Dwarf Spheroidal quiver	 29691.95
+RA: 332.56, DEC: -1.28 quiver	 1562.26
+RA: 332.56, DEC: -1.28 quiver	 2720.91
+RA: 332.56, DEC: -1.28 quiver	 3202.2
+Bootes Dwarf Spheroidal Galaxy quiver	 1167.56
+Bootes Dwarf Spheroidal Galaxy quiver	 1940.42
+Bootes Dwarf Spheroidal Galaxy quiver	 2182.33
+RA: 247.96, DEC: -4.8 quiver	 7495.56
+RA: 247.96, DEC: -4.8 quiver	 12308.41
+RA: 247.96, DEC: -4.8 quiver	 13647.85
+Cetus II quiver	 679.91
+Cetus II quiver	 1147.19
+Cetus II quiver	 1386.56
+RA: 248.9, DEC: -20.17 quiver	 24726.31
+RA: 248.9, DEC: -20.17 quiver	 38038.03
+RA: 248.9, DEC: -20.17 quiver	 40897.73
+Col I quiver	 1951.88
+Col I quiver	 3666.93
+Col I quiver	 4448.7
+RA: 295.08, DEC: 48.19 quiver	 16760.93
+RA: 295.08, DEC: 48.19 quiver	 29572.26
+RA: 295.08, DEC: 48.19 quiver	 34033.69
+Gru II quiver	 1988.8
+Gru II quiver	 3436.47
+Gru II quiver	 3990.33
+RA: 24.22, DEC: 34.88 quiver	 1953.15
+RA: 24.22, DEC: 34.88 quiver	 3684.76
+RA: 24.22, DEC: 34.88 quiver	 4371.03
+Coma Dwarf Galaxy quiver	 833.97
+Coma Dwarf Galaxy quiver	 1335.63
+Coma Dwarf Galaxy quiver	 1560.99
+RA: 328.36, DEC: 27.28 quiver	 5730.85
+RA: 328.36, DEC: 27.28 quiver	 10458.39
+RA: 328.36, DEC: 27.28 quiver	 12237.11
+Segue 1 quiver	 706.65
+Segue 1 quiver	 1175.2
+Segue 1 quiver	 1359.82
+RA: 257.78, DEC: 63.91 quiver	 1363.64
+RA: 257.78, DEC: 63.91 quiver	 2700.54
+RA: 257.78, DEC: 63.91 quiver	 3361.35
+Dra dSph quiver	 19703.38
+Dra dSph quiver	 24446.2
+Dra dSph quiver	 25146.48
+RA: 65.48, DEC: 25.26 quiver	 2387.32
+RA: 65.48, DEC: 25.26 quiver	 4106.2
+RA: 65.48, DEC: 25.26 quiver	 4870.14
+Leo I dSph quiver	 24446.2
+Leo I dSph quiver	 30303.1
+Leo I dSph quiver	 30716.9
+RA: 326.48, DEC: 10.47 quiver	 2832.96
+RA: 326.48, DEC: 10.47 quiver	 5220.28
+RA: 326.48, DEC: 10.47 quiver	 6143.38
+Leo B quiver	 5411.27
+Leo B quiver	 6907.32
+Leo B quiver	 7034.65
+RA: 72.71, DEC: -74.85 quiver	 40266.2
+RA: 72.71, DEC: -74.85 quiver	 49942.82
+RA: 72.71, DEC: -74.85 quiver	 51025.07
+UMi Galaxy quiver	 10504.23
+UMi Galaxy quiver	 12636.9
+UMi Galaxy quiver	 13050.71
+RA: 139.11, DEC: -14.85 quiver	 3151.27
+RA: 139.11, DEC: -14.85 quiver	 5092.96
+RA: 139.11, DEC: -14.85 quiver	 6270.7
+Sculptor Dwarf Galaxy quiver	 54494.65
+Sculptor Dwarf Galaxy quiver	 65349.02
+Sculptor Dwarf Galaxy quiver	 66017.47
+RA: 346.25, DEC: 34.66 quiver	 3374.08
+RA: 346.25, DEC: 34.66 quiver	 6748.17
+RA: 346.25, DEC: 34.66 quiver	 8053.24
+Carina dSph quiver	 24350.71
+Carina dSph quiver	 32308.45
+Carina dSph quiver	 34409.3
+RA: 289.11, DEC: -36.56 quiver	 13878.31
+RA: 289.11, DEC: -36.56 quiver	 21899.72
+RA: 289.11, DEC: -36.56 quiver	 23777.75
+Dwarf Elliptical Galaxy in Sex quiver	 2578.31
+Dwarf Elliptical Galaxy in Sex quiver	 3501.41
+Dwarf Elliptical Galaxy in Sex quiver	 3660.56
+RA: 257.07, DEC: 12.41 quiver	 5984.23
+RA: 257.07, DEC: 12.41 quiver	 10313.24
+RA: 257.07, DEC: 12.41 quiver	 11936.62
+Fornax Dwarf Spheroidal quiver	 85816.35
+Fornax Dwarf Spheroidal quiver	 106315.5
+Fornax Dwarf Spheroidal quiver	 108066.21
+RA: 332.56, DEC: -1.28 quiver	 1718.87
+RA: 332.56, DEC: -1.28 quiver	 2896.62
+RA: 332.56, DEC: -1.28 quiver	 3533.24
+Bootes Dwarf Spheroidal Galaxy quiver	 2355.49
+Bootes Dwarf Spheroidal Galaxy quiver	 3278.59
+Bootes Dwarf Spheroidal Galaxy quiver	 3565.07
+RA: 247.96, DEC: -4.8 quiver	 8021.41
+RA: 247.96, DEC: -4.8 quiver	 13018.87
+RA: 247.96, DEC: -4.8 quiver	 14419.44
+Cetus II quiver	 700.28
+Cetus II quiver	 1177.75
+Cetus II quiver	 1559.72
+RA: 248.9, DEC: -20.17 quiver	 24382.54
+RA: 248.9, DEC: -20.17 quiver	 38929.3
+RA: 248.9, DEC: -20.17 quiver	 42462.54
+Col I quiver	 2196.34
+Col I quiver	 3628.73
+Col I quiver	 4488.17
+RA: 295.08, DEC: 48.19 quiver	 15851.83
+RA: 295.08, DEC: 48.19 quiver	 28775.21
+RA: 295.08, DEC: 48.19 quiver	 34027.33
+Gru II quiver	 2196.34
+Gru II quiver	 3756.06
+Gru II quiver	 4424.51
+RA: 24.22, DEC: 34.88 quiver	 2037.18
+RA: 24.22, DEC: 34.88 quiver	 3915.21
+RA: 24.22, DEC: 34.88 quiver	 4551.83
+Coma Dwarf Galaxy quiver	 1273.24
+Coma Dwarf Galaxy quiver	 1782.54
+Coma Dwarf Galaxy quiver	 2037.18
+RA: 328.36, DEC: 27.28 quiver	 5920.56
+RA: 328.36, DEC: 27.28 quiver	 11522.82
+RA: 328.36, DEC: 27.28 quiver	 13178.03
+Segue 1 quiver	 1050.42
+Segue 1 quiver	 1846.2
+Segue 1 quiver	 2005.35
+RA: 257.78, DEC: 63.91 quiver	 1145.92
+RA: 257.78, DEC: 63.91 quiver	 2610.14
+RA: 257.78, DEC: 63.91 quiver	 3151.27
+Dra dSph quiver	 26101.41
+Dra dSph quiver	 30430.43
+Dra dSph quiver	 31576.34
+RA: 65.48, DEC: 25.26 quiver	 2801.13
+RA: 65.48, DEC: 25.26 quiver	 4965.63
+RA: 65.48, DEC: 25.26 quiver	 5602.25
+Leo I dSph quiver	 53348.74
+Leo I dSph quiver	 64807.89
+Leo I dSph quiver	 65699.16
+RA: 326.48, DEC: 10.47 quiver	 2291.83
+RA: 326.48, DEC: 10.47 quiver	 5092.96
+RA: 326.48, DEC: 10.47 quiver	 6238.87
+Leo B quiver	 13623.66
+Leo B quiver	 17443.38
+Leo B quiver	 17443.38
+RA: 72.71, DEC: -74.85 quiver	 35396.06
+RA: 72.71, DEC: -74.85 quiver	 43926.76
+RA: 72.71, DEC: -74.85 quiver	 44945.36
+UMi Galaxy quiver	 13114.37
+UMi Galaxy quiver	 15533.52
+UMi Galaxy quiver	 15788.17
+RA: 139.11, DEC: -14.85 quiver	 3692.39
+RA: 139.11, DEC: -14.85 quiver	 6366.2
+RA: 139.11, DEC: -14.85 quiver	 6875.49
+Sculptor Dwarf Galaxy quiver	 70028.17
+Sculptor Dwarf Galaxy quiver	 83651.84
+Sculptor Dwarf Galaxy quiver	 84288.46
+RA: 346.25, DEC: 34.66 quiver	 3947.04
+RA: 346.25, DEC: 34.66 quiver	 7130.14
+RA: 346.25, DEC: 34.66 quiver	 8403.38
+Carina dSph quiver	 31449.02
+Carina dSph quiver	 41762.26
+Carina dSph quiver	 44690.71
+RA: 289.11, DEC: -36.56 quiver	 13750.99
+RA: 289.11, DEC: -36.56 quiver	 22536.34
+RA: 289.11, DEC: -36.56 quiver	 24446.2
+Dwarf Elliptical Galaxy in Sex quiver	 3310.42
+Dwarf Elliptical Galaxy in Sex quiver	 4456.34
+Dwarf Elliptical Galaxy in Sex quiver	 4710.99
+RA: 257.07, DEC: 12.41 quiver	 7639.44
+RA: 257.07, DEC: 12.41 quiver	 11331.83
+RA: 257.07, DEC: 12.41 quiver	 12987.04
+Fornax Dwarf Spheroidal quiver	 94601.7
+Fornax Dwarf Spheroidal quiver	 117647.33
+Fornax Dwarf Spheroidal quiver	 119684.52
+RA: 332.56, DEC: -1.28 quiver	 1909.86
+RA: 332.56, DEC: -1.28 quiver	 3183.1
+RA: 332.56, DEC: -1.28 quiver	 3692.39
+Bootes Dwarf Spheroidal Galaxy quiver	 2164.51
+Bootes Dwarf Spheroidal Galaxy quiver	 3565.07
+Bootes Dwarf Spheroidal Galaxy quiver	 3819.72
+RA: 247.96, DEC: -4.8 quiver	 7384.79
+RA: 247.96, DEC: -4.8 quiver	 12223.1
+RA: 247.96, DEC: -4.8 quiver	 14387.61
+Cetus II quiver	 1145.92
+Cetus II quiver	 1527.89
+Cetus II quiver	 2164.51
+RA: 248.9, DEC: -20.17 quiver	 23809.58
+RA: 248.9, DEC: -20.17 quiver	 37560.57
+RA: 248.9, DEC: -20.17 quiver	 41252.96
+Col I quiver	 2419.16
+Col I quiver	 3819.72
+Col I quiver	 4838.31
+RA: 295.08, DEC: 48.19 quiver	 17443.38
+RA: 295.08, DEC: 48.19 quiver	 31576.34
+RA: 295.08, DEC: 48.19 quiver	 37178.59
+Gru II quiver	 2673.8
+Gru II quiver	 4329.01
+Gru II quiver	 4838.31
+RA: 24.22, DEC: 34.88 quiver	 2673.8
+RA: 24.22, DEC: 34.88 quiver	 4583.66
+RA: 24.22, DEC: 34.88 quiver	 4965.63
+Coma Dwarf Galaxy quiver	 2164.51
+Coma Dwarf Galaxy quiver	 2673.8
+Coma Dwarf Galaxy quiver	 2928.45
+RA: 328.36, DEC: 27.28 quiver	 4838.31
+RA: 328.36, DEC: 27.28 quiver	 10440.56
+RA: 328.36, DEC: 27.28 quiver	 11968.45
+Segue 1 quiver	 891.27
+Segue 1 quiver	 1527.89
+Segue 1 quiver	 1782.54
+RA: 257.78, DEC: 63.91 quiver	 1018.59
+RA: 257.78, DEC: 63.91 quiver	 2801.13
+RA: 257.78, DEC: 63.91 quiver	 3310.42
+RA: 65.48, DEC: 25.26	 8899.94
+RA: 326.48, DEC: 10.47	 8332.08
+RA: 72.71, DEC: -74.85	 47474.01
+RA: 139.11, DEC: -14.85	 8618.56
+RA: 346.25, DEC: 34.66	 10693.94
+RA: 289.11, DEC: -36.56	 36428.66
+RA: 257.07, DEC: 12.41	 15747.43
+RA: 332.56, DEC: -1.28	 4334.11
+RA: 247.96, DEC: -4.8	 15728.33
+RA: 248.9, DEC: -20.17	 44559.56
+RA: 295.08, DEC: 48.19	 42453.63
+RA: 24.22, DEC: 34.88	 6077.17
+RA: 328.36, DEC: 27.28	 15971.52
+RA: 257.78, DEC: 63.91	 5245.75
+Dra dSph quiver	 3497.59
+Dra dSph quiver	 5313.23
+Dra dSph quiver	 5974.04
+RA: 65.48, DEC: 25.26 quiver	 3589.26
+RA: 65.48, DEC: 25.26 quiver	 6259.25
+RA: 65.48, DEC: 25.26 quiver	 7151.79
+Dra dSph quiver	 3497.59
+Dra dSph quiver	 5313.23
+Dra dSph quiver	 5974.04
+RA: 65.48, DEC: 25.26 quiver	 3589.26
+RA: 65.48, DEC: 25.26 quiver	 6259.25
+RA: 65.48, DEC: 25.26 quiver	 7151.79
+Leo I dSph quiver	 1851.29
+Leo I dSph quiver	 2686.54
+Leo I dSph quiver	 2936.09
+RA: 326.48, DEC: 10.47 quiver	 3158.91
+RA: 326.48, DEC: 10.47 quiver	 5467.29
+RA: 326.48, DEC: 10.47 quiver	 6415.85
+Leo B quiver	 795.77
+Leo B quiver	 1285.97
+Leo B quiver	 1480.78
+RA: 72.71, DEC: -74.85 quiver	 35741.11
+RA: 72.71, DEC: -74.85 quiver	 44173.77
+RA: 72.71, DEC: -74.85 quiver	 45256.03
+UMi Galaxy quiver	 2832.96
+UMi Galaxy quiver	 4009.43
+UMi Galaxy quiver	 4448.7
+RA: 139.11, DEC: -14.85 quiver	 3124.53
+RA: 139.11, DEC: -14.85 quiver	 5494.03
+RA: 139.11, DEC: -14.85 quiver	 6445.14
+Sculptor Dwarf Galaxy quiver	 7696.73
+Sculptor Dwarf Galaxy quiver	 9668.98
+Sculptor Dwarf Galaxy quiver	 9958.01
+RA: 346.25, DEC: 34.66 quiver	 3563.8
+RA: 346.25, DEC: 34.66 quiver	 6699.79
+RA: 346.25, DEC: 34.66 quiver	 7962.84
+Carina dSph quiver	 6257.97
+Carina dSph quiver	 10191.01
+Carina dSph quiver	 11684.52
+RA: 289.11, DEC: -36.56 quiver	 18654.23
+RA: 289.11, DEC: -36.56 quiver	 29655.02
+RA: 289.11, DEC: -36.56 quiver	 32431.96
+Dwarf Elliptical Galaxy in Sex quiver	 1623.38
+Dwarf Elliptical Galaxy in Sex quiver	 2445.89
+Dwarf Elliptical Galaxy in Sex quiver	 2717.09
+RA: 257.07, DEC: 12.41 quiver	 6564.82
+RA: 257.07, DEC: 12.41 quiver	 11336.92
+RA: 257.07, DEC: 12.41 quiver	 12894.1
+Fornax Dwarf Spheroidal quiver	 23757.38
+Fornax Dwarf Spheroidal quiver	 29227.21
+Fornax Dwarf Spheroidal quiver	 29691.95
+RA: 332.56, DEC: -1.28 quiver	 1562.26
+RA: 332.56, DEC: -1.28 quiver	 2720.91
+RA: 332.56, DEC: -1.28 quiver	 3202.2
+Bootes Dwarf Spheroidal Galaxy quiver	 1167.56
+Bootes Dwarf Spheroidal Galaxy quiver	 1940.42
+Bootes Dwarf Spheroidal Galaxy quiver	 2182.33
+RA: 247.96, DEC: -4.8 quiver	 7495.56
+RA: 247.96, DEC: -4.8 quiver	 12308.41
+RA: 247.96, DEC: -4.8 quiver	 13647.85
+Cetus II quiver	 679.91
+Cetus II quiver	 1147.19
+Cetus II quiver	 1386.56
+RA: 248.9, DEC: -20.17 quiver	 24726.31
+RA: 248.9, DEC: -20.17 quiver	 38038.03
+RA: 248.9, DEC: -20.17 quiver	 40897.73
+Col I quiver	 1951.88
+Col I quiver	 3666.93
+Col I quiver	 4448.7
+RA: 295.08, DEC: 48.19 quiver	 16760.93
+RA: 295.08, DEC: 48.19 quiver	 29572.26
+RA: 295.08, DEC: 48.19 quiver	 34033.69
+Gru II quiver	 1988.8
+Gru II quiver	 3436.47
+Gru II quiver	 3990.33
+RA: 24.22, DEC: 34.88 quiver	 1953.15
+RA: 24.22, DEC: 34.88 quiver	 3684.76
+RA: 24.22, DEC: 34.88 quiver	 4371.03
+Coma Dwarf Galaxy quiver	 833.97
+Coma Dwarf Galaxy quiver	 1335.63
+Coma Dwarf Galaxy quiver	 1560.99
+RA: 328.36, DEC: 27.28 quiver	 5730.85
+RA: 328.36, DEC: 27.28 quiver	 10458.39
+RA: 328.36, DEC: 27.28 quiver	 12237.11
+Segue 1 quiver	 706.65
+Segue 1 quiver	 1175.2
+Segue 1 quiver	 1359.82
+RA: 257.78, DEC: 63.91 quiver	 1363.64
+RA: 257.78, DEC: 63.91 quiver	 2700.54
+RA: 257.78, DEC: 63.91 quiver	 3361.35
+Dra dSph quiver	 19703.38
+Dra dSph quiver	 24446.2
+Dra dSph quiver	 25146.48
+RA: 65.48, DEC: 25.26 quiver	 2387.32
+RA: 65.48, DEC: 25.26 quiver	 4106.2
+RA: 65.48, DEC: 25.26 quiver	 4870.14
+Leo I dSph quiver	 24446.2
+Leo I dSph quiver	 30303.1
+Leo I dSph quiver	 30716.9
+RA: 326.48, DEC: 10.47 quiver	 2832.96
+RA: 326.48, DEC: 10.47 quiver	 5220.28
+RA: 326.48, DEC: 10.47 quiver	 6143.38
+Leo B quiver	 5411.27
+Leo B quiver	 6907.32
+Leo B quiver	 7034.65
+RA: 72.71, DEC: -74.85 quiver	 40266.2
+RA: 72.71, DEC: -74.85 quiver	 49942.82
+RA: 72.71, DEC: -74.85 quiver	 51025.07
+UMi Galaxy quiver	 10504.23
+UMi Galaxy quiver	 12636.9
+UMi Galaxy quiver	 13050.71
+RA: 139.11, DEC: -14.85 quiver	 3151.27
+RA: 139.11, DEC: -14.85 quiver	 5092.96
+RA: 139.11, DEC: -14.85 quiver	 6270.7
+Sculptor Dwarf Galaxy quiver	 54494.65
+Sculptor Dwarf Galaxy quiver	 65349.02
+Sculptor Dwarf Galaxy quiver	 66017.47
+RA: 346.25, DEC: 34.66 quiver	 3374.08
+RA: 346.25, DEC: 34.66 quiver	 6748.17
+RA: 346.25, DEC: 34.66 quiver	 8053.24
+Carina dSph quiver	 24350.71
+Carina dSph quiver	 32308.45
+Carina dSph quiver	 34409.3
+RA: 289.11, DEC: -36.56 quiver	 13878.31
+RA: 289.11, DEC: -36.56 quiver	 21899.72
+RA: 289.11, DEC: -36.56 quiver	 23777.75
+Dwarf Elliptical Galaxy in Sex quiver	 2578.31
+Dwarf Elliptical Galaxy in Sex quiver	 3501.41
+Dwarf Elliptical Galaxy in Sex quiver	 3660.56
+RA: 257.07, DEC: 12.41 quiver	 5984.23
+RA: 257.07, DEC: 12.41 quiver	 10313.24
+RA: 257.07, DEC: 12.41 quiver	 11936.62
+Fornax Dwarf Spheroidal quiver	 85816.35
+Fornax Dwarf Spheroidal quiver	 106315.5
+Fornax Dwarf Spheroidal quiver	 108066.21
+RA: 332.56, DEC: -1.28 quiver	 1718.87
+RA: 332.56, DEC: -1.28 quiver	 2896.62
+RA: 332.56, DEC: -1.28 quiver	 3533.24
+Bootes Dwarf Spheroidal Galaxy quiver	 2355.49
+Bootes Dwarf Spheroidal Galaxy quiver	 3278.59
+Bootes Dwarf Spheroidal Galaxy quiver	 3565.07
+RA: 247.96, DEC: -4.8 quiver	 8021.41
+RA: 247.96, DEC: -4.8 quiver	 13018.87
+RA: 247.96, DEC: -4.8 quiver	 14419.44
+Cetus II quiver	 700.28
+Cetus II quiver	 1177.75
+Cetus II quiver	 1559.72
+RA: 248.9, DEC: -20.17 quiver	 24382.54
+RA: 248.9, DEC: -20.17 quiver	 38929.3
+RA: 248.9, DEC: -20.17 quiver	 42462.54
+Col I quiver	 2196.34
+Col I quiver	 3628.73
+Col I quiver	 4488.17
+RA: 295.08, DEC: 48.19 quiver	 15851.83
+RA: 295.08, DEC: 48.19 quiver	 28775.21
+RA: 295.08, DEC: 48.19 quiver	 34027.33
+Gru II quiver	 2196.34
+Gru II quiver	 3756.06
+Gru II quiver	 4424.51
+RA: 24.22, DEC: 34.88 quiver	 2037.18
+RA: 24.22, DEC: 34.88 quiver	 3915.21
+RA: 24.22, DEC: 34.88 quiver	 4551.83
+Coma Dwarf Galaxy quiver	 1273.24
+Coma Dwarf Galaxy quiver	 1782.54
+Coma Dwarf Galaxy quiver	 2037.18
+RA: 328.36, DEC: 27.28 quiver	 5920.56
+RA: 328.36, DEC: 27.28 quiver	 11522.82
+RA: 328.36, DEC: 27.28 quiver	 13178.03
+Segue 1 quiver	 1050.42
+Segue 1 quiver	 1846.2
+Segue 1 quiver	 2005.35
+RA: 257.78, DEC: 63.91 quiver	 1145.92
+RA: 257.78, DEC: 63.91 quiver	 2610.14
+RA: 257.78, DEC: 63.91 quiver	 3151.27
+Dra dSph quiver	 26101.41
+Dra dSph quiver	 30430.43
+Dra dSph quiver	 31576.34
+RA: 65.48, DEC: 25.26 quiver	 2801.13
+RA: 65.48, DEC: 25.26 quiver	 4965.63
+RA: 65.48, DEC: 25.26 quiver	 5602.25
+Leo I dSph quiver	 53348.74
+Leo I dSph quiver	 64807.89
+Leo I dSph quiver	 65699.16
+RA: 326.48, DEC: 10.47 quiver	 2291.83
+RA: 326.48, DEC: 10.47 quiver	 5092.96
+RA: 326.48, DEC: 10.47 quiver	 6238.87
+Leo B quiver	 13623.66
+Leo B quiver	 17443.38
+Leo B quiver	 17443.38
+RA: 72.71, DEC: -74.85 quiver	 35396.06
+RA: 72.71, DEC: -74.85 quiver	 43926.76
+RA: 72.71, DEC: -74.85 quiver	 44945.36
+UMi Galaxy quiver	 13114.37
+UMi Galaxy quiver	 15533.52
+UMi Galaxy quiver	 15788.17
+RA: 139.11, DEC: -14.85 quiver	 3692.39
+RA: 139.11, DEC: -14.85 quiver	 6366.2
+RA: 139.11, DEC: -14.85 quiver	 6875.49
+Sculptor Dwarf Galaxy quiver	 70028.17
+Sculptor Dwarf Galaxy quiver	 83651.84
+Sculptor Dwarf Galaxy quiver	 84288.46
+RA: 346.25, DEC: 34.66 quiver	 3947.04
+RA: 346.25, DEC: 34.66 quiver	 7130.14
+RA: 346.25, DEC: 34.66 quiver	 8403.38
+Carina dSph quiver	 31449.02
+Carina dSph quiver	 41762.26
+Carina dSph quiver	 44690.71
+RA: 289.11, DEC: -36.56 quiver	 13750.99
+RA: 289.11, DEC: -36.56 quiver	 22536.34
+RA: 289.11, DEC: -36.56 quiver	 24446.2
+Dwarf Elliptical Galaxy in Sex quiver	 3310.42
+Dwarf Elliptical Galaxy in Sex quiver	 4456.34
+Dwarf Elliptical Galaxy in Sex quiver	 4710.99
+RA: 257.07, DEC: 12.41 quiver	 7639.44
+RA: 257.07, DEC: 12.41 quiver	 11331.83
+RA: 257.07, DEC: 12.41 quiver	 12987.04
+Fornax Dwarf Spheroidal quiver	 94601.7
+Fornax Dwarf Spheroidal quiver	 117647.33
+Fornax Dwarf Spheroidal quiver	 119684.52
+RA: 332.56, DEC: -1.28 quiver	 1909.86
+RA: 332.56, DEC: -1.28 quiver	 3183.1
+RA: 332.56, DEC: -1.28 quiver	 3692.39
+Bootes Dwarf Spheroidal Galaxy quiver	 2164.51
+Bootes Dwarf Spheroidal Galaxy quiver	 3565.07
+Bootes Dwarf Spheroidal Galaxy quiver	 3819.72
+RA: 247.96, DEC: -4.8 quiver	 7384.79
+RA: 247.96, DEC: -4.8 quiver	 12223.1
+RA: 247.96, DEC: -4.8 quiver	 14387.61
+Cetus II quiver	 1145.92
+Cetus II quiver	 1527.89
+Cetus II quiver	 2164.51
+RA: 248.9, DEC: -20.17 quiver	 23809.58
+RA: 248.9, DEC: -20.17 quiver	 37560.57
+RA: 248.9, DEC: -20.17 quiver	 41252.96
+Col I quiver	 2419.16
+Col I quiver	 3819.72
+Col I quiver	 4838.31
+RA: 295.08, DEC: 48.19 quiver	 17443.38
+RA: 295.08, DEC: 48.19 quiver	 31576.34
+RA: 295.08, DEC: 48.19 quiver	 37178.59
+Gru II quiver	 2673.8
+Gru II quiver	 4329.01
+Gru II quiver	 4838.31
+RA: 24.22, DEC: 34.88 quiver	 2673.8
+RA: 24.22, DEC: 34.88 quiver	 4583.66
+RA: 24.22, DEC: 34.88 quiver	 4965.63
+Coma Dwarf Galaxy quiver	 2164.51
+Coma Dwarf Galaxy quiver	 2673.8
+Coma Dwarf Galaxy quiver	 2928.45
+RA: 328.36, DEC: 27.28 quiver	 4838.31
+RA: 328.36, DEC: 27.28 quiver	 10440.56
+RA: 328.36, DEC: 27.28 quiver	 11968.45
+Segue 1 quiver	 891.27
+Segue 1 quiver	 1527.89
+Segue 1 quiver	 1782.54
+RA: 257.78, DEC: 63.91 quiver	 1018.59
+RA: 257.78, DEC: 63.91 quiver	 2801.13
+RA: 257.78, DEC: 63.91 quiver	 3310.42

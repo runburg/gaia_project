@@ -22,9 +22,14 @@ def stringdms_to_deg(list):
     dd = []
     for item in list:
         val = 0
+        sign = 1
         for i, num in enumerate(item.split()):
-            val += float(num)/(60**i)
-        dd.append(val)
+            num = float(num)
+            if i == 0:
+                sign = np.sign(num)
+                num = abs(num)
+            val += num/(60**i)
+        dd.append(sign*val)
     return dd
 
 
@@ -106,17 +111,19 @@ def gaia_search(simbad_table, radius=0.5):
     return r
 
 
-def random_cones_outside_galactic_plane(num, limit=15):
+def random_cones_outside_galactic_plane(num, limit=10):
     """Check if in plane and return new coordinates if not."""
     # generate random coords in galactic coordinate system
     rando = np.random.rand(num, 2)
+    # galactic longitude
     rando[:, 0] = rando[:, 0] * 360
-    rando[:, 1] = (rando[:, 1] - 0.5) * 180
+    # galactic latitude
+    rando[:, 1] = (rando[:, 1] - 0.5) * 90
 
     for i, dec in enumerate(rando[:, 1]):
-        # check that no galactic latitudes are within 5 deg of galactic plane
+        # check that no galactic latitudes are within limit deg of galactic plane
         if np.abs(dec) < limit:
-            rando[:, 1][i] = (dec + limit/2) * np.sign(dec)
+            rando[:, 1][i] = dec + limit * np.sign(dec)
 
     icrs_coords = []
     # convert coords to icrs
@@ -127,6 +134,80 @@ def random_cones_outside_galactic_plane(num, limit=15):
     ra_icrs, dec_icrs = np.hsplit(np.array(icrs_coords), 2)
 
     return ra_icrs.ravel(), dec_icrs.ravel()
+
+
+def fix_names(title):
+    """Make names pretty for plots."""
+    name_dict = {
+        'NAME Dra dSph':'DraI',
+        'NAME Leo I dSph':'LeoI',
+        'NAME Leo B':'LeoII',
+        'NAME UMi Galaxy':'UMiI',
+        'NAME Sculptor Dwarf Galaxy':'SclI',
+        'NAME Carina dSph':'CarI',
+        'NAME Dwarf Elliptical Galaxy in Sex':'SxtI',
+        'NAME Fornax Dwarf Spheroidal':'FnxI',
+        'NAME Bootes Dwarf Spheroidal Galaxy':'BooI',
+        'NAME Cetus II':'CetII',
+        'NAME Col I':'ColI',
+        'NAME Gru II':'GruII',
+        'NAME Coma Dwarf Galaxy':'CBerI',
+        'NAME Segue 1':'Seg1'}
+
+    try:
+        return name_dict[title]
+    except KeyError:
+        return title
+
+
+def fix_pms(title, pmra, pmdec):
+    """Add pm calculations from Fritz et al."""
+    pm_dict = {
+        'AquII':[-0.252, 0.011],
+        'BooI':[-0.554, -1.111],
+        'BooII':[-2.686, -0.53],
+        'CVenI':[-0.159, -0.067],
+        'CVenII':[-0.342, -0.473],
+        'CarI':[0.485, 0.131],
+        'CarII':[1.867, 0.082],
+        'CarIII':[3.046, 1.565],
+        'CBerI':[0.471, -1.716],
+        'CraI':[-0.045, -0.165],
+        'CraII':[-0.184, -0.106],
+        'DraI':[-0.012, -0.158],
+        'DraII':[1.242, 0.845],
+        'EriII':[0.159, 0.372],
+        'FnxI':[0.374, -0.401],
+        'GruI':[-0.261, -0.437],
+        'HerI':[-0.297, -0.329],
+        'HorI':[0.891, -0.55],
+        'HyaII':[-0.416, 0.134],
+        'HyiI':[3.733, -1.605],
+        'LeoI':[-0.086, -0.128],
+        'LeoII':[-0.025, -0.173],
+        'LeoIV':[-0.59, -0.449],
+        'LeoV':[-0.097, -0.628],
+        'PhxI':[0.079, -0.049],
+        'PisII':[-0.108, -0.586],
+        'RetII':[2.398, -1.319],
+        'SgrI':[-2.736, -1.357],
+        'SclI':[0.084, -0.133],
+        'Seg1':[-1.697, -3.501],
+        'Seg2':[1.656, 0.135],
+        'SxtI':[-0.438, 0.055],
+        'TriII':[0.588, 0.554],
+        'TucII':[0.91, -1.159],
+        'TucIII':[-0.025, -1.661],
+        'UMaI':[-0.683, -0.72],
+        'UMaII':[1.691, -1.902],
+        'UMiI':[-0.184, 0.082],
+        'Wil1':[0.199, -1.342]
+    }
+    try:
+        pmra, pmdec = pm_dict[title]
+        return pmra, pmdec
+    except KeyError:
+        return pmra, pmdec
 
 
 def trim_axes(axes, N):
@@ -149,6 +230,9 @@ def plot_setup(rows, cols, d=0, buffer=(0, 0)):
     mpl.rcParams['xtick.labelsize'] = 'x-small'
     mpl.rcParams['figure.subplot.wspace'] = buffer[0]
     mpl.rcParams['figure.subplot.hspace'] = buffer[1]
+
+    plt.rc('text', usetex=True)
+    plt.rc('font', family='serif')
 
     figsize = (6 * cols + buffer[0], 5.5 * rows + buffer[1])
     fig, axs = plt.subplots(nrows=rows, ncols=cols, figsize=figsize)
@@ -179,9 +263,9 @@ def universal_plot_labels(fig, xlabel, ylabel):
     plt.tight_layout()
 
 
-def cut_on_parallax(ra, dec, pmra, pmdec, parallax, cut):
+def cut_on_parallax(ra, dec, pmra, pmdec, parallax, parallax_error, cut):
     """Return objects with parallax magnitude below cut."""
-    indices = [par < cut for par in parallax]
+    indices = [(par - par_error * cut) < 0 for par, par_error in zip(parallax, parallax_error)]
     pmra = pmra[indices]
     pmdec = pmdec[indices]
     ra = ra[indices]
@@ -214,23 +298,26 @@ def load_gaia_search_info(file):
         pmra = infile['pmra']
         pmdec = infile['pmdec']
         parallax = infile['parallax']
+        parallax_error = infile['parallax_error']
         ra = infile['ra']
         dec = infile['dec']
 
-    return ra, dec, pmra, pmdec, parallax
+    return ra, dec, pmra, pmdec, parallax, parallax_error
 
 
-def parallax_histogram(fig, ax, data, title, cut=None):
+def parallax_histogram(fig, ax, data, title, cut=None, append_title=""):
     """Create a histogram of parallax values."""
     if cut is not None:
         ra, dec, pmra, pmdec, parallax, = cut_on_parallax(*data, cut)
     else:
-        ra, dec, pmra, pmdec, parallax, = data
+        ra, dec, pmra, pmdec, parallax, _ = data
 
+
+    title = fix_names(title)
     # bins = np.logspace(-2, 0, num=30)
     bins = np.linspace(parallax.min(), parallax.max(), num = 30)
     n, bins, patches = ax.hist(parallax, bins=bins)
-    ax.set_title(title)
+    ax.set_title(title + append_title)
     ax.set_xlabel('Parallax [mas]')
     ax.set_ylabel('Bin counts')
     # ax.set_xscale('log')
@@ -238,16 +325,18 @@ def parallax_histogram(fig, ax, data, title, cut=None):
     return n, bins, patches
 
 
-def quiver_plot(fig, ax, data, title, cut=None, colorbar=True, radius=None):
+def quiver_plot(fig, ax, data, title, cut=None, colorbar=True, radius=None, append_title=""):
     """Create quiver plot of stellar position and proper motion."""
     if cut is not None:
         ra, dec, pmra, pmdec, parallax, = cut_on_parallax(*data, cut)
     else:
-        ra, dec, pmra, pmdec, parallax, = data
+        ra, dec, pmra, pmdec, parallax, _ = data
 
     pm_mag = np.hypot(pmra, pmdec)
     pmra = pmra / pm_mag
     pmdec = pmdec / pm_mag
+
+    title = fix_names(title)
 
     cmap = cm.viridis
     arrows = ax.quiver(ra, dec, pmra, pmdec, color=cmap(pm_mag), clim=(0, pm_mag.max()), units='xy', pivot='tail', width=0.01, headwidth=2, headlength=3, minlength=0.01)
@@ -255,7 +344,7 @@ def quiver_plot(fig, ax, data, title, cut=None, colorbar=True, radius=None):
     ax.set_facecolor('xkcd:black')
 
     if radius is not None:
-        ax.set_title(title + f', density: {np.round(len(ra)/(np.pi * radius**2), 2)}')
+        ax.set_title(title + append_title + f', density: {np.round(len(ra)/(np.pi * radius**2), 2)}')
         with open('densities.txt', 'a') as outfile:
             outfile.write(f'{title}\t {np.round(len(ra)/(np.pi * radius**2), 2)}\n')
     else:
@@ -269,23 +358,25 @@ def quiver_plot(fig, ax, data, title, cut=None, colorbar=True, radius=None):
     return arrows
 
 
-def pm_histogram(fig, ax, data, title, dwarf_pmra=None, dwarf_pmdec=None, cut=None, colorbar=True):
+def pm_histogram(fig, ax, data, title, dwarf_pmra=None, dwarf_pmdec=None, cut=None, colorbar=True, append_title=""):
     """Create 2d histogram of proper motions from GAIA search."""
     if cut is not None:
         ra, dec, pmra, pmdec, parallax, = cut_on_parallax(*data, cut)
     else:
-        ra, dec, pmra, pmdec, parallax, = data
+        ra, dec, pmra, pmdec, parallax, _ = data
 
     # bin data from gaia in 2d histogram
     bound = 5
     bins = np.linspace(-bound, bound, num=20*bound)
     counts, xedges, yedges, im = ax.hist2d(pmra, pmdec, bins=(bins, bins), vmin=0, cmap='gnuplot')
 
+    title = fix_names(title)
     # plot pm motion of dwarf from simbad
     if dwarf_pmra is not None:
-        ax.plot(dwarf_pmra, dwarf_pmdec, marker='x', markersize=15, color='xkcd:cyan', alpha=0.5)
+        dwarf_pmra, dwarf_pmdec = fix_pms(title, dwarf_pmra, dwarf_pmdec)
+        ax.plot(dwarf_pmra, dwarf_pmdec, marker='X', markersize=10, color='xkcd:white', alpha=1)
 
-    ax.set_title(title)
+    ax.set_title(title + append_title)
     ax.set_xlabel(r"Right ascension proper motion [mas/yr])")
     ax.set_ylabel(r"Declination proper motion [mas/yr]")
 
@@ -302,20 +393,20 @@ def draco_comparison_plot(input_file, input_pm_file, output_file, cuts, dwarf=0,
     titles, dwarf_pmra, dwarf_pmdec = load_dwarf_info(input_file, titles)
 
     # load stellar pm values
-    ra, dec, pmra, pmdec, parallax = load_gaia_search_info(input_pm_file)
+    ra, dec, pmra, pmdec, parallax, parallax_error = load_gaia_search_info(input_pm_file)
 
     # set fig size and shape
     fig, axs = plot_setup(len(cuts), 3)
 
     # plot each dwarf in separate subplots
-    for j, (title, *data) in enumerate(zip(titles, ra, dec, pmra, pmdec, parallax)):
+    for j, (title, *data) in enumerate(zip(titles, ra, dec, pmra, pmdec, parallax, parallax_error)):
         if j==dwarf:
             for i, cut in enumerate(cuts):
                 # add quiver plot
                 arrows = quiver_plot(fig, axs[i, 0], data, f"{title.strip('NAME ')} quiver", cut=cut, radius=radius)
 
                 # generate parallax histogram
-                n, bins, patches = parallax_histogram(fig, axs[i, 1], data, f"{title.strip('NAME ')} parallax, cut={cut} mas", cut=cut)
+                n, bins, patches = parallax_histogram(fig, axs[i, 1], data, rf"{title.strip('NAME ')} parallax, cut={cut}$\sigma$", cut=cut)
 
                 # add pm 2d histograms
                 counts, xedges, yedges, im = pm_histogram(fig, axs[i, 2], data, f"{title.strip('NAME ')} pm histo", dwarf_pmra=dwarf_pmra[j], dwarf_pmdec=dwarf_pmdec[j], cut=cut)
@@ -333,7 +424,7 @@ def comparison_plot(input_file, input_pm_file, output_file, titles=None, cut=Non
     titles, dwarf_pmra, dwarf_pmdec = load_dwarf_info(input_file, titles)
 
     # load stellar pm values
-    ra, dec, pmra, pmdec, parallax = load_gaia_search_info(input_pm_file)
+    ra, dec, pmra, pmdec, parallax, parallax_error = load_gaia_search_info(input_pm_file)
 
     # set fig size and shape
     fig, axs = plot_setup(3, 3)
@@ -342,15 +433,15 @@ def comparison_plot(input_file, input_pm_file, output_file, titles=None, cut=Non
     counter = range(0, 3)
 
     # plot each dwarf in separate subplots
-    for (i, title, *data) in zip(counter, titles, ra, dec, pmra, pmdec, parallax):
+    for (i, title, *data) in zip(counter, titles, ra, dec, pmra, pmdec, parallax, parallax_error):
         # add quiver plot
-        arrows = quiver_plot(fig, axs[i, 0], data, f"{title.strip('NAME ')} quiver", cut=cut)
+        arrows = quiver_plot(fig, axs[i, 0], data, title, append_title=" quiver", cut=cut)
 
         # generate parallax histogram
-        n, bins, patches = parallax_histogram(fig, axs[i, 1], data, f"{title.strip('NAME ')} parallax", cut=cut)
+        n, bins, patches = parallax_histogram(fig, axs[i, 1], data, title, append_title=" parallax", cut=cut)
 
         # add pm 2d histograms
-        counts, xedges, yedges, im = pm_histogram(fig, axs[i, 2], data, f"{title.strip('NAME ')} pm histo", dwarf_pmra=dwarf_pmra[i], dwarf_pmdec=dwarf_pmdec[i], cut=cut)
+        counts, xedges, yedges, im = pm_histogram(fig, axs[i, 2], data, title, append_title=" pm histo", dwarf_pmra=dwarf_pmra[i], dwarf_pmdec=dwarf_pmdec[i], cut=cut)
 
     plt.tight_layout()
 
@@ -364,7 +455,19 @@ def make_pm_maps(input_file, input_pm_file, output_file, num_cones, num_bins=80,
     titles, dwarf_pmra, dwarf_pmdec, = load_dwarf_info(input_file, titles)
 
     # load stellar pm values
-    ra, dec, pmra, pmdec, parallax, = load_gaia_search_info(input_pm_file)
+    ra, dec, pmra, pmdec, parallax, parallax_error = load_gaia_search_info(input_pm_file)
+
+    # from table 2 in
+    # if titles is not None:
+    #     titles = fix_names(titles)
+    #     for i, title, dpmra, dpmdec in enumerate(zip(titles, dwarf_pmra, dwarf_pmdec)):
+    #         dwarf_pmra[i], dwarf_pmdec[i] = fix_pms(title, dpmra, dpmdec)
+    #     # dwarf_pmra[5] = 1.81
+    #     # dwarf_pmra[8] = -1.21
+    #     # dwarf_pmra[11] = 0.22
+    #     # dwarf_pmdec[5] = 0.14
+    #     # dwarf_pmdec[8] = -0.92
+    #     # dwarf_pmdec[11] = -1.41
 
     # set fig size and shape
     d = len(titles)
@@ -374,8 +477,8 @@ def make_pm_maps(input_file, input_pm_file, output_file, num_cones, num_bins=80,
     max_count = [0, 0]
 
     # plot each dwarf in separate subplots
-    for ax, title, dwarfpmra, dwarfpmdec, *data in zip(axs, titles, dwarf_pmra, dwarf_pmdec, ra, dec, pmra, pmdec, parallax):
-        counts, xedges, yedges, im = pm_histogram(fig, ax, data, f"{title.strip('NAME ')}", dwarf_pmra=dwarfpmra, dwarf_pmdec=dwarfpmdec, cut=cut)
+    for ax, title, dwarfpmra, dwarfpmdec, *data in zip(axs, titles, dwarf_pmra, dwarf_pmdec, ra, dec, pmra, pmdec, parallax, parallax_error):
+        counts, xedges, yedges, im = pm_histogram(fig, ax, data, title, dwarf_pmra=dwarfpmra, dwarf_pmdec=dwarfpmdec, cut=cut)
 
     # make labels across all subplots
     universal_plot_labels(fig, r"Proper motion, right ascension [mas/yr]", r"Proper motion, declination [mas/yr]")
@@ -392,7 +495,7 @@ def pm_vector_plot(input_file, input_pm_file, outfile, titles=None, cut=None, cm
     titles, dwarf_pmra, dwarf_pmdec, = load_dwarf_info(input_file, titles)
 
     # load pm values
-    ra, dec, pmra, pmdec, parallax, = load_gaia_search_info(input_pm_file)
+    ra, dec, pmra, pmdec, parallax, parallax_error = load_gaia_search_info(input_pm_file)
 
     # set parameters for subplots
     d = len(ra)
@@ -400,8 +503,8 @@ def pm_vector_plot(input_file, input_pm_file, outfile, titles=None, cut=None, cm
     cols = int(np.ceil(d/rows))
     fig, axs = plot_setup(rows, cols, d)
 
-    for i, (ax, title, *data) in enumerate(zip(axs, titles, ra, dec, pmra, pmdec, parallax)):
-        arrows = quiver_plot(fig, ax, data, title.strip("NAME "), cut=cut, radius=radius)
+    for i, (ax, title, *data) in enumerate(zip(axs, titles, ra, dec, pmra, pmdec, parallax, parallax_error)):
+        arrows = quiver_plot(fig, ax, data, title, cut=cut, radius=radius)
 
     universal_plot_labels(fig, r'Right Ascension [$^\circ$]', r'Declination [$^\circ$]')
     fig.savefig(outfile, bbox_inches='tight')
@@ -409,4 +512,5 @@ def pm_vector_plot(input_file, input_pm_file, outfile, titles=None, cut=None, cm
 
 if __name__ == '__main__':
     for radius in [0.5, 0.1, 0.05]:
-        pm_vector_plot(f'./gaia_data/randomcone_info_{radius}.ecsv', f'./gaia_data/randomcone_vels_{radius}.npz', f'./plots/random_quivers_{radius}.pdf', titles=None, radius=radius)
+        pm_vector_plot(f'./gaia_data/randomcone_info_{radius}.ecsv', f'./gaia_data/randomcone_vels_{radius}.npz', f'./plots/quivers/random_quivers_{radius}.pdf', titles=None, radius=radius)
+        pm_vector_plot(f'./gaia_data/dwarf_info_{radius}.ecsv', f'./gaia_data/dwarf_vels_{radius}.npz', f'./plots/quivers/dwarf_quivers_{radius}.pdf', titles=1, radius=radius)
