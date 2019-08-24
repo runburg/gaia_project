@@ -14,7 +14,7 @@ from astroquery.gaia import Gaia
 import numpy as np
 from random import random as random
 
-def gaia_search(ra, dec, radius=0.5):
+def gaia_search(ra, dec, name, radius=0.5):
     """Given a table from Simbad, return gaia cone search around object."""
     # radius = radius * u.degree
     coords = SkyCoord(ra=ra, dec=dec, unit=(u.degree, u.degree), frame='icrs')
@@ -25,7 +25,7 @@ def gaia_search(ra, dec, radius=0.5):
                                 gaia_source.pmra,gaia_source.pmra_error,gaia_source.pmdec,gaia_source.pmdec_error, \
                                 gaia_source.bp_rp \
                                 FROM gaiadr2.gaia_source \
-                                WHERE CONTAINS(POINT('ICRS',gaiadr2.gaia_source.ra,gaiadr2.gaia_source.dec),CIRCLE('ICRS',{ra},{dec},{radius}))=1")
+                                WHERE CONTAINS(POINT('ICRS',gaiadr2.gaia_source.ra,gaiadr2.gaia_source.dec),CIRCLE('ICRS',{ra},{dec},{radius}))=1", dump_to_file=True, output_file=f'./{name}/vots/{name}_{round(radius*100)}.vot')
 
     return job
 
