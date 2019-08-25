@@ -1,0 +1,7 @@
+Created dwarf 1200_2000 2019-08-23 16:17:34.328899
+For radius 0.5; job 1566613054676O stored in ./candidates/1200_2000/vots/1200_2000_50.vot
+
+
+REJECTED
+Summary: 
+Rejection reason: trial
