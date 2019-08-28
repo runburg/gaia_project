@@ -25,7 +25,7 @@ num_candids = 100
 
 # save new dsph candidate and plots in ...
 
-dwarfs = np.array([['Draco', 260.05972916666667, 57.92121944444444],
+dwarflist = np.array([['Draco', 260.05972916666667, 57.92121944444444],
                     ['LeoI', 152.11716666666666, 12.306500000000002],
                     ['LeoB', 168.36720833333334,  22.152805555555553],
                     ['UMi', 227.29725, 67.21436111111112],
@@ -46,26 +46,49 @@ rando = np.array(list(zip(rando_ra, rando_dec)))
 
 def create_sample_dwarfs():
     """Sample set of dwarfs for testing."""
-    for name, ra, dec in dwarfs:
-        Dwarf(ra, dec, name=name, rad_init=5)
+    for name, ra, dec in dwarflist:
+        Dwarf(ra, dec, name=name, rad_init=0.5)
 
     for ra, dec in rando:
-        Dwarf(ra, dec, rad_init=5)
+        Dwarf(ra, dec, rad_init=0.5)
 
 
-def load_sample_dwarfs():
+def load_sample_dwarfs(known=True):
         """Load sample set of dwarfs for testing."""
-        for name, ra, dec in dwarfs:
-            d = Dwarf(ra, dec, name=name)
-            for table in glob.glob(f'./candidates/{name}/*.vot'):
-                d.load_dwarf_info(table)
+        dwarfs = []
+        if known is True:
+            for (name, ra, dec) in dwarflist:
+                d = Dwarf(ra, dec, name=name)
+                for table in glob.glob(f'./candidates/{d.name}/vots/*.vot'):
+                    d.load_gaia_table(table)
+                yield d
+                # dwarfs.append(d)
+        else:
+            for ra, dec in rando:
+                d = Dwarf(ra, dec)
+                for table in glob.glob(f'./candidates/{d.name}/vots/*.vot'):
+                    d.load_gaia_table(table)
+                yield d
+                # dwarfs.append(d)
 
-        for ra, dec in rando:
-            d = Dwarf(ra, dec)
-            for table in glob.glob(f'./candidates/{name}/*.vot'):
-                d.load_dwarf_info(table)
+        return dwarfs
+
+
+def main():
+    """Execute cuts."""
+    ave = []
+    std = []
+    for dwarf in load_sample_dwarfs():
+        cuts.proper_motion_test(dwarf)
+
+    for dwarf in load_sample_dwarfs(known=False):
+        cuts.proper_motion_test(dwarf)
+
 
 if __name__ == "__main__":
+    main()
     # create_sample_dwarfs()
-    load_sample_dwarfs()
-    # print()
+    # d = load_sample_dwarfs()
+    # dra = Dwarf(260.05972916666667, 57.92121944444444, name='Draco')
+    # dra.load_gaia_table('./candidates/Draco/vots/Draco_500.vot')
+    # print(dra.gaia_data[-1][-1][[1,2,3]])

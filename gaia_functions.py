@@ -369,7 +369,7 @@ def pm_histogram(fig, ax, data, title, dwarf_pmra=None, dwarf_pmdec=None, cut=No
     bound = 5
     bins = np.linspace(-bound, bound, num=20*bound)
     counts, xedges, yedges, im = ax.hist2d(pmra, pmdec, bins=(bins, bins), vmin=0, cmap='gnuplot')
-
+    print(title,  str(counts.max()))
     title = fix_names(title)
     # plot pm motion of dwarf from simbad
     if dwarf_pmra is not None:

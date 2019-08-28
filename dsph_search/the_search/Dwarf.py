@@ -25,7 +25,7 @@ class Dwarf:
         - dec: declination in degrees in ICRS coordinates
         - name: given name of a dwarf or defaults to GAIA search id.
         - rad_init: initial radius of cone search for GAIA
-        - gaia_data: table returned from a GAIA query
+        - gaia_data: tuple of search radius and table returned from a GAIA query
         - log: notes on dwarf or candidacy or crossmatch
         - tests: list of tests performed
     """
@@ -62,17 +62,23 @@ class Dwarf:
         """Add gaia search table to Dwarf."""
         job = gaia_search(self.ra, self.dec, self.name, radius)
         self.log.append(f'For radius {radius}; job {job.jobid} stored in {job.outputFile}')
-        self.gaia_data.append((radius, job.get_results()))
+        table = job.get_results()
+
+        self.gaia_data.append((radius, table))
 
 
     def load_gaia_table(self, table):
         """Load a previously saved GAIA .vot table."""
+        # if this line breaks, it's fucked
+        # apparently very shallow wrap of result = astropy.table.Table.read(file_name, format=output_format)
+        data = read_results_table_from_file(table, output_format='votable', correct_units=True)
         radius_ = float(table.rpartition('_')[-1].strip('.vot'))/100
-        self.gaia_data.append((radius_, read_results_table_from_file(table, output_format='votable', correct_units=True)))
+
+        self.gaia_data.append((radius_, data))
         self.log.append(f'For radius {radius_}; table loaded from {table}')
 
 
-    def accepted(self):
+    def accepted(self, output=False):
         """Celebrate a possible dwarf candidate."""
         self.log.append('\n\nACCEPTED')
         self.log.append('Summary: ' + ", ".join(self.tests))
@@ -80,19 +86,21 @@ class Dwarf:
         with open(f'./candidates/{self.name}/log_{self.name}.txt', 'w') as outfile:
             outfile.write("\n".join(self.log))
 
-        print(f'Dwarf {self.name} ACCEPTED')
+        if output is True:
+            print(f'Dwarf {self.name} ACCEPTED')
 
 
-    def rejected(self, reason=''):
+    def rejected(self, reason='', output=False):
         """Delete rejected dwarf data."""
         self.log.append('\n\nREJECTED')
         self.log.append('Summary: ' + ", ".join(self.tests))
         self.log.append('Rejection reason: ' + reason)
 
-        with open(f'./dead_logs/log_{self.name}.txt', 'w') as outfile:
+        with open(f'./dead_logs/log_{self.name}.log', 'w') as outfile:
             outfile.write("\n".join(self.log))
 
-        print(f'Dwarf {self.name} REJECTED')
+        if output is True:
+            print(f'Dwarf {self.name} REJECTED')
 
         for item in os.walk(f'./candidates/{self.name}', topdown=False):
             for file in item[2]:

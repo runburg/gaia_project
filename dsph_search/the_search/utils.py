@@ -28,7 +28,8 @@ def gaia_search(ra, dec, name, radius=0.5):
                                 gaia_source.pmra,gaia_source.pmra_error,gaia_source.pmdec,gaia_source.pmdec_error, \
                                 gaia_source.bp_rp \
                                 FROM gaiadr2.gaia_source \
-                                WHERE CONTAINS(POINT('ICRS',gaiadr2.gaia_source.ra,gaiadr2.gaia_source.dec),CIRCLE('ICRS',{ra},{dec},{radius}))=1", dump_to_file=True, output_file=f'./candidates/{name}/vots/{name}_{round(radius*100)}.vot')
+                                WHERE \
+                                CONTAINS(POINT('ICRS',gaiadr2.gaia_source.ra,gaiadr2.gaia_source.dec),CIRCLE('ICRS',{ra},{dec},{radius}))=1 AND  (gaiadr2.gaia_source.parallax<=100)", dump_to_file=True, output_file=f'./candidates/{name}/vots/{name}_{round(radius*100)}.vot')
 
     return job
 
@@ -50,9 +51,12 @@ def random_cones_outside_galactic_plane(limit=15):
     return icrs_coords
 
 
-def unmask(dwarf):
+def unmask(data):
     """Return an unmasked table for cuts."""
-    pass
+    data = data[[~obj.mask for obj in data]]
+
+    return data
+
 
 if __name__ == '__main__':
     ra, dec = random_cones_outside_galactic_plane()
