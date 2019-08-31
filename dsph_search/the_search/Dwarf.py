@@ -14,6 +14,8 @@ try:
     from .utils import gaia_search
 except ModuleNotFoundError:
     from utils import gaia_search
+import warnings
+warnings.filterwarnings("ignore", module='astropy.*')
 
 os.chdir('/Users/runburg/github/gaia_project/dsph_search')
 
@@ -34,7 +36,7 @@ class Dwarf:
         """Initialize dwarf object with coordinates."""
         self.ra = ra
         self.dec = dec
-        self.gaia_data = []
+        self.gaia_data = {}
         self.log = []
         self.tests = []
 
@@ -60,11 +62,12 @@ class Dwarf:
 
     def add_gaia_data(self, radius):
         """Add gaia search table to Dwarf."""
+        # automatically cut on parallax with sigma=5 and on pm with pm_threshold=5
         job = gaia_search(self.ra, self.dec, self.name, radius)
         self.log.append(f'For radius {radius}; job {job.jobid} stored in {job.outputFile}')
         table = job.get_results()
 
-        self.gaia_data.append((radius, table))
+        self.gaia_data[radius] = table
 
 
     def load_gaia_table(self, table):
@@ -72,10 +75,10 @@ class Dwarf:
         # if this line breaks, it's fucked
         # apparently very shallow wrap of result = astropy.table.Table.read(file_name, format=output_format)
         data = read_results_table_from_file(table, output_format='votable', correct_units=True)
-        radius_ = float(table.rpartition('_')[-1].strip('.vot'))/100
+        radius = float(table.rpartition('_')[-1].strip('.vot'))/100
 
-        self.gaia_data.append((radius_, data))
-        self.log.append(f'For radius {radius_}; table loaded from {table}')
+        self.gaia_data[radius] = data
+        self.log.append(f'For radius {radius}; table loaded from {table}')
 
 
     def accepted(self, output=False):
