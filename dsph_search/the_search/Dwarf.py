@@ -15,9 +15,9 @@ import warnings
 from astroquery.utils.tap.model.modelutils import read_results_table_from_file
 from astropy.io.votable.tree import Table
 try:
-    from the_search.utils import gaia_search
+    from the_search.utils import gaia_search, pm_histogram, parallax_histogram, quiver_plot
 except ModuleNotFoundError:
-    from utils import gaia_search
+    from utils import gaia_search, pm_histogram, parallax_histogram, quiver_plot
 
 warnings.filterwarnings("ignore", module='astropy.*')
 os.chdir('/Users/runburg/github/gaia_project/dsph_search')
@@ -50,14 +50,15 @@ class Dwarf:
         else:
             self.name = f'{int(round(ra*100))}_{int(round(dec*100))}'
 
+        self.path = f'./candidates/{self.name}'
         # create home for dwarf candidate data
         try:
-            os.mkdir(f'./candidates/{self.name}')
-            os.mkdir(f'./candidates/{self.name}/plots')
-            os.mkdir(f'./candidates/{self.name}/vots')
+            os.mkdir(self.path)
+            os.mkdir(f'{self.path}/plots')
+            os.mkdir(f'{self.path}/vots')
         except FileExistsError:
             pass
-        self.log.append(f'Created dwarf {self.name} ' + str(datetime.datetime.now()))
+        self.log.append(f'Created dwarf {self.name} in {self.path}' + str(datetime.datetime.now()))
 
         # create GAIA query and store initial data
         if rad_init != 0:
@@ -87,8 +88,12 @@ class Dwarf:
         self.log.append('\n\nACCEPTED')
         self.log.append('Summary: ' + ", ".join(self.tests))
 
-        with open(f'./candidates/{self.name}/log_{self.name}.txt', 'w') as outfile:
+        with open(f'{self.path}/log_{self.name}.txt', 'w') as outfile:
             outfile.write("\n".join(self.log))
+
+        parallax_histogram(self)
+        pm_histogram(self)
+        quiver_plot(self)
 
         if output is True:
             print(f'Dwarf {self.name} ACCEPTED')
@@ -105,13 +110,13 @@ class Dwarf:
         if output is True:
             print(f'Dwarf {self.name} REJECTED')
 
-        for item in os.walk(f'./candidates/{self.name}', topdown=False):
+        for item in os.walk(self.path, topdown=False):
             for file in item[2]:
                 os.remove(item[0] + '/' + file)
             for folder in item[1]:
                 os.rmdir(item[0] + '/' + folder)
 
-        os.rmdir(f'./candidates/{self.name}')
+        os.rmdir(self.path)
 
 
 if __name__ == '__main__':

@@ -53,7 +53,7 @@ def parallax_test(dwarf, all_tables=True, table_index=-1, cuts=None, **kwargs):
 def proper_motion_test(dwarf, radius=0.5, cut=None, print_to_stdout=False, test_area=12, test_percentage=0.3, num_maxima=10, **kwargs):
     """Decide if dwarf passes proper motion test."""
     # message to print to log
-    log_message = f': Proper motion test: area {test_area*2} x {test_area*2}, percent {test_percentage*100}%.'
+    log_message = f': Proper motion test: area {test_area*2} x {test_area*2}, threshold {test_percentage*100}%, '
 
     # choose bins for histogram
     bound = 5
@@ -64,7 +64,7 @@ def proper_motion_test(dwarf, radius=0.5, cut=None, print_to_stdout=False, test_
         dwarf.add_gaia_data(radius)
 
     table = cut_on_parallax(dwarf.gaia_data[radius], cut)
-    histo, xbins, ybins = np.histogram2d(table['pmra'].data, table['pmdec'].data, bins=(bins, bins))
+    histo, = np.histogram2d(table['pmra'].data, table['pmdec'].data, bins=(bins, bins))
 
     # get indices of maxima of histo (end of array)
     histo_sorted = np.argsort(histo.flatten())
@@ -72,6 +72,7 @@ def proper_motion_test(dwarf, radius=0.5, cut=None, print_to_stdout=False, test_
     total = np.sum(histo)
 
     # look at num_maxima amount of maxima
+    subtotal = 0
     for index in range(-num_maxima, 0):
         # get coordinates of the maximum
         max_index = histo_sorted[index]
@@ -84,21 +85,21 @@ def proper_motion_test(dwarf, radius=0.5, cut=None, print_to_stdout=False, test_
         if subtotal / total >= test_percentage:
             if print_to_stdout:
                 print(f'{dwarf.name}, proper motion test: PASS')
-            dwarf.log.append('PASS' + log_message)
+            dwarf.log.append('PASS' + log_message + f'percentage {subtotal}')
             dwarf.tests.append(True)
             return True
 
     # if none of the num_maxima maxima are above the threshold, the test is a FAIL
     if print_to_stdout:
         print(f'{dwarf.name}, proper motion test: FAIL')
-    dwarf.log.append('FAIL' + log_message)
+    dwarf.log.append('FAIL' + log_message + f'percentage {subtotal}')
     dwarf.tests.append(False)
     return False
 
 
 def angular_density_test(dwarf, radii=None, print_to_stdout=False, density_tolerance=1.2, **kwargs):
     """Test for candidacy based on change in object density with changing angular size."""
-    log_message = f': Angular density test: radii {radii}, tolerance {density_tolerance}'
+    log_message = f': Angular density test: radii {radii}, tolerance {density_tolerance}, '
 
     # list for density values
     densities = []
@@ -114,6 +115,8 @@ def angular_density_test(dwarf, radii=None, print_to_stdout=False, density_toler
         # get the density of objects for the given radius
         table = dwarf.gaia_data[radius]
         densities.append(len(table) / (radius**2))
+
+    log_message.append(f'ratio {densities[-1] / densities[0]}')
 
     if densities[-1] / densities[0] > density_tolerance:
         if print_to_stdout:
