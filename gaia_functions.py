@@ -10,17 +10,17 @@ Date: 22-06-2019 13:12
 
 import astropy.units as u
 import astropy.coordinates as coord
-import astropy.io.ascii as ascii
+from astropy.io import ascii as apascii
 import matplotlib.pyplot as plt
 import matplotlib as mpl
 import matplotlib.cm as cm
 import numpy as np
 
 
-def stringdms_to_deg(list):
+def stringdms_to_deg(data):
     """Convert from dms to deg given a list of the three componenets."""
-    dd = []
-    for item in list:
+    degrees = []
+    for item in data:
         val = 0
         sign = 1
         for i, num in enumerate(item.split()):
@@ -29,19 +29,19 @@ def stringdms_to_deg(list):
                 sign = np.sign(num)
                 num = abs(num)
             val += num/(60**i)
-        dd.append(sign*val)
-    return dd
+        degrees.append(sign*val)
+    return degrees
 
 
-def stringhms_to_deg(list):
+def stringhms_to_deg(data):
     """Convert from dms to deg given a list of the three componenets."""
-    dd = []
-    for item in list:
+    degrees = []
+    for item in data:
         val = 0
         for i, num in enumerate(item.split()):
             val += float(num)/(60**i)
-        dd.append(val*15)
-    return dd
+        degrees.append(val*15)
+    return degrees
 
 
 def pm_mag(pmdec, pmra):
@@ -56,14 +56,14 @@ def pm_mag(pmdec, pmra):
     return np.array([np.sqrt(dec**2 + ra**2) for (dec, ra) in zip(pmdec, pmra)])
 
 
-def reject_outliers(values1, values2, n=5):
+def reject_outliers(values1, values2, sigma_num=5):
     """Reject the outliers of an array that are n sigmas away from the mean."""
     # values1 = values1[~np.isnan(values1)]
     # values2 = values2[~np.isnan(values2)]
-    ind1 = abs(values1 - np.mean(values1)) < n * np.std(values1)
+    ind1 = abs(values1 - np.mean(values1)) < sigma_num * np.std(values1)
     values1 = values1[ind1]
     values2 = values2[ind1]
-    ind2 = abs(values2 - np.mean(values2)) < n * np.std(values2)
+    ind2 = abs(values2 - np.mean(values2)) < sigma_num * np.std(values2)
     values1 = values1[ind2]
     values2 = values2[ind2]
     return values1, values2
@@ -89,22 +89,22 @@ def weighted_median(values):
 
 def weighted_average(listofvalues):
     """Compute weighted average of list (a,b) with 'a' as the weights and 'b' as the values."""
-    sum = 0
+    total = 0
     weights = 0
     for [w, v] in listofvalues:
-        sum += w*v
+        total += w*v
         weights += w
-    return sum/weights
+    return total/weights
 
 
-def gaia_search(simbad_table, radius=0.5):
+def gaia_search(simbad_table, rad=0.5):
     """Given a table from Simbad, return gaia cone search around object."""
     from astroquery.gaia import Gaia
 
-    radius = radius * u.degree
+    rad = rad * u.degree
     r = []
-    for object in simbad_table:
-        coords = coord.SkyCoord(ra=object['RA'], dec=object['DEC'], unit=(u.degree, u.degree), frame='icrs')
+    for obj in simbad_table:
+        coords = coord.SkyCoord(ra=obj['RA'], dec=obj['DEC'], unit=(u.degree, u.degree), frame='icrs')
         # radius = u.Quantity(object['GALDIM_MAJAXIS']/2, u.arcmin).to(u.degree)
         j = Gaia.cone_search_async(coords, radius)
         r.append(j.get_results())
@@ -277,7 +277,7 @@ def cut_on_parallax(ra, dec, pmra, pmdec, parallax, parallax_error, cut):
 
 def load_dwarf_info(file, titles=None):
     """Load the dwarf info from Simbad files."""
-    dwarf_specs = ascii.read(file, format='ecsv')
+    dwarf_specs = apascii.read(file, format='ecsv')
 
 
     if titles is None:

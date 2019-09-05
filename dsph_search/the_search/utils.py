@@ -8,12 +8,12 @@ Date: 22-08-2019 14:30
 
 """
 
+import warnings
+from random import random
 import astropy.units as u
 from astropy.coordinates import SkyCoord
 from astroquery.gaia import Gaia
 import numpy as np
-from random import random as random
-import warnings
 
 
 def gaia_search(ra, dec, name, radius=0.5, sigma=5, pm_threshold=5, dump_to_file=True):
@@ -29,7 +29,7 @@ def gaia_search(ra, dec, name, radius=0.5, sigma=5, pm_threshold=5, dump_to_file
                                 gaia_source.bp_rp \
                                 FROM gaiadr2.gaia_source \
                                 WHERE \
-                                CONTAINS(POINT('ICRS',gaiadr2.gaia_source.ra,gaiadr2.gaia_source.dec),CIRCLE('ICRS',{ra},{dec},{radius}))=1 AND  (gaiadr2.gaia_source.parallax - gaiadr2.gaia_source.parallax_error * {sigma} <= 0) AND (SQRT(POWER(gaiadr2.gaia_source.pmra, 2) + POWER(gaiadr2.gaia_source.pmdec, 2)) <= {pm_threshold})", dump_to_file=dump_to_file, output_file=f'./candidates/{name}/vots/{name}_{round(radius*100)}.vot')
+                                CONTAINS(POINT('ICRS',gaiadr2.gaia_source.ra,gaiadr2.gaia_source.dec),CIRCLE('ICRS',{coords.ra.degree},{coords.dec.degree},{radius}))=1 AND  (gaiadr2.gaia_source.parallax - gaiadr2.gaia_source.parallax_error * {sigma} <= 0) AND (SQRT(POWER(gaiadr2.gaia_source.pmra, 2) + POWER(gaiadr2.gaia_source.pmdec, 2)) <= {pm_threshold})", dump_to_file=dump_to_file, output_file=f'./candidates/{name}/vots/{name}_{round(radius*100)}.vot')
 
     return job
 
@@ -39,15 +39,15 @@ def random_cones_outside_galactic_plane(limit=15):
     # galactic longitude
     l = random() * 360
     # galactic latitude
-    b = (random() - 0.5) * (90-limit)
+    b = (random() - 0.5) * (90 - limit)
     # check that no galactic latitudes are within limit deg of galactic plane
 
-    if b<0:
+    if b < 0:
         b -= limit
     else:
         b += limit
 
-    c_gal = SkyCoord(l=l*u.degree, b=b*u.degree, frame='galactic')
+    c_gal = SkyCoord(l=l * u.degree, b=b * u.degree, frame='galactic')
     icrs_coords = (c_gal.icrs.ra.value, c_gal.icrs.dec.value)
 
     return icrs_coords
@@ -61,6 +61,6 @@ def unmask(data):
 
 
 if __name__ == '__main__':
-    ra, dec = random_cones_outside_galactic_plane()
     gaia_search(90, 90, 'test', dump_to_file=False)
-    print(ra, dec)
+    for i in range(16):
+        print(random_cones_outside_galactic_plane())

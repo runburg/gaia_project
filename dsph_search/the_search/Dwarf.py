@@ -7,17 +7,21 @@ Date: 22-08-2019 14:16
 
 
 """
+
+import os
+import datetime
+import glob
+import warnings
 from astroquery.utils.tap.model.modelutils import read_results_table_from_file
 from astropy.io.votable.tree import Table
-import os, datetime, glob
 try:
-    from .utils import gaia_search
+    from the_search.utils import gaia_search
 except ModuleNotFoundError:
     from utils import gaia_search
-import warnings
-warnings.filterwarnings("ignore", module='astropy.*')
 
+warnings.filterwarnings("ignore", module='astropy.*')
 os.chdir('/Users/runburg/github/gaia_project/dsph_search')
+
 
 class Dwarf:
     """A Dwarf spheroidal galaxy (candidate) object.
@@ -56,9 +60,8 @@ class Dwarf:
         self.log.append(f'Created dwarf {self.name} ' + str(datetime.datetime.now()))
 
         # create GAIA query and store initial data
-        if not rad_init==0:
+        if rad_init != 0:
             self.add_gaia_data(rad_init)
-
 
     def add_gaia_data(self, radius):
         """Add gaia search table to Dwarf."""
@@ -69,17 +72,15 @@ class Dwarf:
 
         self.gaia_data[radius] = table
 
-
     def load_gaia_table(self, table):
         """Load a previously saved GAIA .vot table."""
         # if this line breaks, it's fucked
         # apparently very shallow wrap of result = astropy.table.Table.read(file_name, format=output_format)
         data = read_results_table_from_file(table, output_format='votable', correct_units=True)
-        radius = float(table.rpartition('_')[-1].strip('.vot'))/100
+        radius = float(table.rpartition('_')[-1].strip('.vot')) / 100
 
         self.gaia_data[radius] = data
         self.log.append(f'For radius {radius}; table loaded from {table}')
-
 
     def accepted(self, output=False):
         """Celebrate a possible dwarf candidate."""
@@ -91,7 +92,6 @@ class Dwarf:
 
         if output is True:
             print(f'Dwarf {self.name} ACCEPTED')
-
 
     def rejected(self, reason='', output=False):
         """Delete rejected dwarf data."""
@@ -107,9 +107,9 @@ class Dwarf:
 
         for item in os.walk(f'./candidates/{self.name}', topdown=False):
             for file in item[2]:
-                os.remove(item[0]+'/'+file)
-            for dir in item[1]:
-                os.rmdir(item[0]+'/'+dir)
+                os.remove(item[0] + '/' + file)
+            for folder in item[1]:
+                os.rmdir(item[0] + '/' + folder)
 
         os.rmdir(f'./candidates/{self.name}')
 
@@ -119,6 +119,6 @@ if __name__ == '__main__':
     # rando.load_gaia_table('./candidates/1200_2000/vots/1200_2000_50.vot')
     # print(rando.gaia_data[-1])
     rando.add_gaia_data(0.5)
-    print(rando.gaia_data[-1])
+    print(rando.gaia_data[0.5])
     print(rando.log)
     # print('\n'.join(rando.log))
