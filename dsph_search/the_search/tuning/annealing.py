@@ -12,8 +12,8 @@ import glob
 import warnings
 import numpy as np
 from simanneal import Annealer
-from dsph_search.the_search import cuts
-from dsph_search.the_search.dwarf import Dwarf
+from the_search import cuts
+from the_search.dwarf import Dwarf
 
 warnings.filterwarnings("ignore", module='astropy.*')
 

@@ -13,21 +13,11 @@ import warnings
 import numpy as np
 from the_search.dwarf import Dwarf
 from the_search import cuts
+from the_search.utils import random_cones_outside_galactic_plane, fibonnaci_sphere
 
 warnings.filterwarnings("ignore", module='astropy.*')
 
 os.chdir('/Users/runburg/github/gaia_project/dsph_search')
-
-# set number of random coordinates to search through or alternatively amount of candidates to find
-num_coords = 1000
-num_candids = 100
-
-# import list of previously identified dSph candidates to crossmatch
-# open("dsph_candidates.txt")
-
-# append to file if not present
-
-# save new dsph candidate and plots in ...
 
 
 def create_sample_dwarfs():
@@ -60,11 +50,18 @@ def load_sample_dwarfs(known=True):
     return dwarfs
 
 
-def main():
-    """Execute cuts."""
+def look_at_tuned_parameter_values():
+    """Check params from tuning."""
+    dwarflist = []
+    rando = []
+    for dwa in np.loadtxt('./the_search/tuning/tuning_known_dwarfs.txt', dtype=str, delimiter=','):
+        dwarflist.append([dwa[1].astype(np.float), dwa[2].astype(np.float), dwa[0]])
+    for ran in np.loadtxt('./the_search/tuning/tuning_random.txt', delimiter=','):
+        rando.append([ran[0].astype(np.float), ran[1].astype(np.float)])
+
+    # Execute cuts.
     cutlist = [100]
     # params = {'test_area': 5, 'test_percentage': 0.0685171143004674, 'num_maxima': 8, 'density_tolerance': 1.362830538392538}
-    params = {'test_area': 10, 'test_percentage': 0.179376451145657, 'num_maxima': 8, 'density_tolerance': 1.362830538392538}
     for dwarf in load_sample_dwarfs():
         for cut in cutlist:
             cuts.proper_motion_test(dwarf, cut=cut, print_to_stdout=True, **params)
@@ -76,14 +73,38 @@ def main():
             cuts.angular_density_test(dwarf, print_to_stdout=True, **params)
 
 
+def main():
+    """Run through num_ocones to look for candidates."""
+    # set number of random coordinates to search through or alternatively amount of candidates to find
+    num_cones = 10000
+    # num_candids = 100
+
+    # for _ in range(num_cones):
+    #     dwa = Dwarf(*random_cones_outside_galactic_plane())
+    for coords in fibonnaci_sphere(num_cones):
+        dwa = Dwarf(*coords)
+        cuts.proper_motion_test(dwa, **params)
+        cuts.angular_density_test(dwa, **params)
+
+        message = ''
+        for test, test_name in zip(dwa.tests, [' pm test ', ' ang.den. ']):
+            if test is False:
+                message += test_name + 'FAIL'
+            else:
+                message += test_name + 'PASS'
+        if all(dwa.tests):
+            dwa.accepted(summary=message)
+        else:
+            dwa.rejected(summary=message)
+
+
+params = {'test_area': 10, 'test_percentage': 0.179376451145657, 'num_maxima': 8, 'density_tolerance': 1.362830538392538}
 if __name__ == "__main__":
-    dwarflist = []
-    rando = []
-    for dwa in np.loadtxt('./the_search/tuning_known_dwarfs.txt', dtype=str, delimiter=','):
-        dwarflist.append([dwa[1].astype(np.float), dwa[2].astype(np.float), dwa[0]])
-    for ran in np.loadtxt('./the_search/tuning_random.txt', delimiter=','):
-        rando.append([ran[0].astype(np.float), ran[1].astype(np.float)])
     main()
+    with open('candidate_coords.txt', 'w') as outfile:
+        for file in glob.glob('./candidates/*'):
+            ra, _, dec = file.rpartition('/')[-1].partition('_')
+            outfile.write(str(round(float(ra)/100, 2)) + '\t' + str(round(float(dec)/100, 2)) + '\n')
     # create_sample_dwarfs()
     # d = load_sample_dwarfs()
     # dra = Dwarf(260.05972916666667, 57.92121944444444, name='Draco')

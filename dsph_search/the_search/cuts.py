@@ -64,7 +64,7 @@ def proper_motion_test(dwarf, radius=0.5, cut=None, print_to_stdout=False, test_
         dwarf.add_gaia_data(radius)
 
     table = cut_on_parallax(dwarf.gaia_data[radius], cut)
-    histo, = np.histogram2d(table['pmra'].data, table['pmdec'].data, bins=(bins, bins))
+    histo, *_ = np.histogram2d(table['pmra'].data, table['pmdec'].data, bins=(bins, bins))
 
     # get indices of maxima of histo (end of array)
     histo_sorted = np.argsort(histo.flatten())
@@ -116,7 +116,7 @@ def angular_density_test(dwarf, radii=None, print_to_stdout=False, density_toler
         table = dwarf.gaia_data[radius]
         densities.append(len(table) / (radius**2))
 
-    log_message.append(f'ratio {densities[-1] / densities[0]}')
+    log_message += f'ratio {densities[-1] / densities[0]}'
 
     if densities[-1] / densities[0] > density_tolerance:
         if print_to_stdout:

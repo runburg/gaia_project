@@ -9,8 +9,8 @@ Date: 04-09-2019 18:39
 """
 import glob
 import numpy as np
-from dsph_search.the_search.dwarf import Dwarf
-from dsph_search.the_search.tuning.annealing import truth_to_power, OptimizeCutParameters
+from the_search.dwarf import Dwarf
+from the_search.tuning.annealing import truth_to_power, OptimizeCutParameters
 
 # parameter dict
 params = {'test_area': 10, 'test_percentage': 0.179376451145657, 'num_maxima': 8, 'density_tolerance': 1.362830538392538}

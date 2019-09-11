@@ -83,10 +83,10 @@ class Dwarf:
         self.gaia_data[radius] = data
         self.log.append(f'For radius {radius}; table loaded from {table}')
 
-    def accepted(self, output=False):
+    def accepted(self, output=False, summary=''):
         """Celebrate a possible dwarf candidate."""
         self.log.append('\n\nACCEPTED')
-        self.log.append('Summary: ' + ", ".join(self.tests))
+        self.log.append('Summary: ' + summary)
 
         with open(f'{self.path}/log_{self.name}.txt', 'w') as outfile:
             outfile.write("\n".join(self.log))
@@ -98,11 +98,10 @@ class Dwarf:
         if output is True:
             print(f'Dwarf {self.name} ACCEPTED')
 
-    def rejected(self, reason='', output=False):
+    def rejected(self, output=False, summary=''):
         """Delete rejected dwarf data."""
         self.log.append('\n\nREJECTED')
-        self.log.append('Summary: ' + ", ".join(self.tests))
-        self.log.append('Rejection reason: ' + reason)
+        self.log.append('Summary: ' + summary)
 
         with open(f'./dead_logs/log_{self.name}.log', 'w') as outfile:
             outfile.write("\n".join(self.log))
