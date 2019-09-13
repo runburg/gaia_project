@@ -22,7 +22,6 @@ except ModuleNotFoundError:
     from plots import pm_histogram, parallax_histogram, quiver_plot
 
 warnings.filterwarnings("ignore", module='astropy.*')
-os.chdir('/Users/runburg/github/gaia_project/dsph_search')
 
 
 class Dwarf:
