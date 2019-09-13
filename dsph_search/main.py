@@ -17,8 +17,6 @@ from the_search.utils import random_cones_outside_galactic_plane, fibonnaci_sphe
 
 warnings.filterwarnings("ignore", module='astropy.*')
 
-os.chdir('/Users/runburg/github/gaia_project/dsph_search')
-
 
 def create_sample_dwarfs():
     """Sample set of dwarfs for testing."""
