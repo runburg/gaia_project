@@ -51,7 +51,7 @@ class Dwarf:
         else:
             self.name = f'{int(round(ra*100))}_{int(round(dec*100))}'
 
-        self.path = f'./candidates/{self.name}'
+        self.path = f'candidates/{self.name}'
         # create home for dwarf candidate data
         try:
             os.mkdir(self.path)
