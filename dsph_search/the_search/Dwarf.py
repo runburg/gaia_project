@@ -15,9 +15,11 @@ import warnings
 from astroquery.utils.tap.model.modelutils import read_results_table_from_file
 from astropy.io.votable.tree import Table
 try:
-    from the_search.utils import gaia_search, pm_histogram, parallax_histogram, quiver_plot
+    from the_search.utils import gaia_search
+    from the_search.plots import pm_histogram, parallax_histogram, quiver_plot
 except ModuleNotFoundError:
-    from utils import gaia_search, pm_histogram, parallax_histogram, quiver_plot
+    from utils import gaia_search
+    from plots import pm_histogram, parallax_histogram, quiver_plot
 
 warnings.filterwarnings("ignore", module='astropy.*')
 os.chdir('/Users/runburg/github/gaia_project/dsph_search')
