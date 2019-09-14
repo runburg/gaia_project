@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=the_search_1
+#SBATCH --job-name=the_search_2
 #SBATCH --partition=shared
 ## 3 day max run time for public partitions, except 4 hour max runtime for the sandbox partition
 #SBATCH --time=1-00:00:00 ## time format is DD-HH:MM:SS
@@ -26,5 +26,5 @@ pip install --user matplotlib
 pip install --user astropy
 pip install --user astroquery
 
-## cd gaia_project/dsph_search/
+cd gaia_project/dsph_search/
 python3 -c "import main; main.main(num_cones=10000, point_start=0, point_end=5000)"
