@@ -26,5 +26,5 @@ pip install --user matplotlib
 pip install --user astropy
 pip install --user astroquery
 
-cd gaia_project/dsph_search/
-python3 main.main(num_cones=10000, point_start=5000, point_end=None)
+## cd gaia_project/dsph_search/
+python3 -c "import main; main.main(num_cones=10000, point_start=5000, point_end=None)""
