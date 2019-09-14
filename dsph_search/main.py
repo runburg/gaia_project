@@ -75,7 +75,7 @@ def main(num_cones, point_start, point_end):
     """Run through num_ocones to look for candidates."""
     # for _ in range(num_cones):
     #     dwa = Dwarf(*random_cones_outside_galactic_plane())
-    for coords in fibonnaci_sphere(num_cones, point_start, point_end):
+    for coords in fibonnaci_sphere(num_points=num_cones, point_start=point_start, point_end=point_end):
         dwa = Dwarf(*coords)
         cuts.proper_motion_test(dwa, **params)
         cuts.angular_density_test(dwa, **params)
