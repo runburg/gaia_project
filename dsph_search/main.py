@@ -73,15 +73,11 @@ def look_at_tuned_parameter_values():
             cuts.angular_density_test(dwarf, print_to_stdout=True, **params)
 
 
-def main():
+def main(num_cones, point_start, point_end):
     """Run through num_ocones to look for candidates."""
-    # set number of random coordinates to search through or alternatively amount of candidates to find
-    num_cones = 10000
-    # num_candids = 100
-
     # for _ in range(num_cones):
     #     dwa = Dwarf(*random_cones_outside_galactic_plane())
-    for coords in fibonnaci_sphere(num_cones):
+    for coords in fibonnaci_sphere(num_cones, point_start, point_end):
         dwa = Dwarf(*coords)
         cuts.proper_motion_test(dwa, **params)
         cuts.angular_density_test(dwa, **params)
@@ -97,14 +93,16 @@ def main():
         else:
             dwa.rejected(summary=message)
 
-
-params = {'test_area': 10, 'test_percentage': 0.179376451145657, 'num_maxima': 8, 'density_tolerance': 1.362830538392538}
-if __name__ == "__main__":
-    main()
-    with open('candidate_coords.txt', 'w') as outfile:
+    with open('candidate_coords.txt', 'a') as outfile:
         for file in glob.glob('./candidates/*'):
             ra, _, dec = file.rpartition('/')[-1].partition('_')
             outfile.write(str(round(float(ra)/100, 2)) + '\t' + str(round(float(dec)/100, 2)) + '\n')
+
+
+params = {'test_area': 10, 'test_percentage': 0.179376451145657, 'num_maxima': 8, 'density_tolerance': 1.362830538392538}
+if __name__ == "__main__":
+    main(num_cones=10000, point_start=0, point_end=None)
+
     # create_sample_dwarfs()
     # d = load_sample_dwarfs()
     # dra = Dwarf(260.05972916666667, 57.92121944444444, name='Draco')
