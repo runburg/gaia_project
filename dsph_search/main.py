@@ -71,6 +71,14 @@ def look_at_tuned_parameter_values():
             cuts.angular_density_test(dwarf, print_to_stdout=True, **params)
 
 
+def write_candidate_coords():
+    """Write out positions of dwarf candidates."""
+    with open('candidate_coords.txt', 'a') as outfile:
+        for file in glob.glob('./candidates/*'):
+            ra, _, dec = file.rpartition('/')[-1].partition('_')
+            outfile.write(str(round(float(ra)/100, 2)) + '\t' + str(round(float(dec)/100, 2)) + '\n')
+
+
 def main(num_cones, point_start, point_end):
     """Run through num_ocones to look for candidates."""
     # for _ in range(num_cones):
@@ -91,16 +99,11 @@ def main(num_cones, point_start, point_end):
         else:
             dwa.rejected(summary=message)
 
-    with open('candidate_coords.txt', 'a') as outfile:
-        for file in glob.glob('./candidates/*'):
-            ra, _, dec = file.rpartition('/')[-1].partition('_')
-            outfile.write(str(round(float(ra)/100, 2)) + '\t' + str(round(float(dec)/100, 2)) + '\n')
-
 
 params = {'test_area': 10, 'test_percentage': 0.179376451145657, 'num_maxima': 8, 'density_tolerance': 1.362830538392538}
 if __name__ == "__main__":
-    main(num_cones=10000, point_start=0, point_end=None)
-
+    # main(num_cones=10000, point_start=0, point_end=None)
+    write_candidate_coords()
     # create_sample_dwarfs()
     # d = load_sample_dwarfs()
     # dra = Dwarf(260.05972916666667, 57.92121944444444, name='Draco')
