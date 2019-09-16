@@ -1,0 +1,10 @@
+Created dwarf 20653_-193 in candidates/20653_-1932019-09-15 09:07:32.970264
+For radius 0.5; job 1568538453311O stored in ./candidates/20653_-193/vots/20653_-193_50.vot
+PASS: Proper motion test: area 20 x 20, threshold 17.9376451145657%, percentage 80.0
+For radius 1.5; job 1568538455162O stored in ./candidates/20653_-193/vots/20653_-193_150.vot
+For radius 0.1; job 1568538459603O stored in ./candidates/20653_-193/vots/20653_-193_10.vot
+FAIL: Angular density test: radii None, tolerance 1.362830538392538, ratio 0.772787318361955
+
+
+REJECTED
+Summary:  pm test PASS ang.den. FAIL
