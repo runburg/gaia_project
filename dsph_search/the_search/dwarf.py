@@ -84,7 +84,7 @@ class Dwarf:
         self.gaia_data[radius] = data
         self.log.append(f'For radius {radius}; table loaded from {table}')
 
-    def accepted(self, output=False, summary=''):
+    def accepted(self, plot, output=False, summary=''):
         """Celebrate a possible dwarf candidate."""
         self.log.append('\n\nACCEPTED')
         self.log.append('Summary: ' + summary)
@@ -92,9 +92,10 @@ class Dwarf:
         with open(f'{self.path}/log_{self.name}.txt', 'w') as outfile:
             outfile.write("\n".join(self.log))
 
-        parallax_histogram(self)
-        pm_histogram(self)
-        quiver_plot(self)
+        if plot is True:
+            parallax_histogram(self)
+            pm_histogram(self)
+            quiver_plot(self)
 
         if output is True:
             print(f'Dwarf {self.name} ACCEPTED')

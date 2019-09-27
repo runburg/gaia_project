@@ -76,10 +76,10 @@ def write_candidate_coords():
     with open('candidate_coords.txt', 'a') as outfile:
         for file in glob.glob('./candidates/*'):
             ra, _, dec = file.rpartition('/')[-1].partition('_')
-            outfile.write(str(round(float(ra)/100, 2)) + '\t' + str(round(float(dec)/100, 2)) + '\n')
+            outfile.write(str(round(float(ra)/100, 2)) + ' ' + str(round(float(dec)/100, 2)) + '\n')
 
 
-def main(num_cones, point_start, point_end):
+def main(num_cones, point_start, point_end, plot=True):
     """Run through num_ocones to look for candidates."""
     # for _ in range(num_cones):
     #     dwa = Dwarf(*random_cones_outside_galactic_plane())
@@ -95,7 +95,7 @@ def main(num_cones, point_start, point_end):
             else:
                 message += test_name + 'PASS'
         if all(dwa.tests):
-            dwa.accepted(summary=message)
+            dwa.accepted(plot, output=False, summary=message)
         else:
             dwa.rejected(summary=message)
 

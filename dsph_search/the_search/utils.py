@@ -60,11 +60,11 @@ def unmask(data):
     return data
 
 
-def fibonnaci_sphere(num_points, limit=18, point_start=0, point_end=None):
+def fibonnaci_sphere(num_points, limit=16, point_start=0, point_end=None):
     """Return a coordinate on a Fibonnaci sphere."""
     if point_end is None:
         point_end = num_points
-    for point in range(point_start, point_end):
+    for point in range(int(point_start), int(point_end)):
         if point % 100 == 0:
             print(point)
         point += 0.5
