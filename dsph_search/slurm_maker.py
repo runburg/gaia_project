@@ -23,7 +23,7 @@ for num in range(num_cones//num_per_file):
 #SBATCH --job-name=the_search_{num}
 #SBATCH --partition=shared
 ## 3 day max run time for public partitions, except 4 hour max runtime for the sandbox partition
-#SBATCH --time=1-00:00:00 ## time format is DD-HH:MM:SS
+#SBATCH --time=01-00:00:00 ## time format is DD-HH:MM:SS
 ## task-per-node x cpus-per-task should not typically exceed core count on an individual node
 #SBATCH --nodes=1
 #SBATCH --tasks-per-node=1
