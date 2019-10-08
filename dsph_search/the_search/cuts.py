@@ -120,13 +120,13 @@ def angular_density_test(dwarf, radii=None, print_to_stdout=False, density_toler
 
     if densities[-1] / densities[0] > density_tolerance:
         if print_to_stdout:
-            print(f'{dwarf.name}, density test: PASS')
+            print(f'{dwarf.name}, density test: \tPASS')
         dwarf.log.append('PASS' + log_message)
         dwarf.tests.append(True)
         return True
 
     if print_to_stdout:
-        print(f'{dwarf.name}, density test: FAIL')
+        print(f'{dwarf.name}, density test: \tFAIL')
     dwarf.log.append('FAIL' + log_message)
     dwarf.tests.append(False)
     return False
