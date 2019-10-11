@@ -83,7 +83,7 @@ def look_at_tuned_parameter_values():
 
 def write_candidate_coords():
     """Write out positions of dwarf candidates."""
-    with open('candidate_coords.txt', 'a') as outfile:
+    with open('candidate_coords.txt', 'w') as outfile:
         for file in glob.glob('./candidates/*'):
             ra, _, dec = file.rpartition('/')[-1].partition('_')
             outfile.write(str(round(float(ra)/100, 2)) + ' ' + str(round(float(dec)/100, 2)) + '\n')
@@ -93,6 +93,7 @@ def main(num_cones, point_start, point_end, plot=True):
     """Run through num_ocones to look for candidates."""
     # for _ in range(num_cones):
     #     dwa = Dwarf(*random_cones_outside_galactic_plane())
+    params = {'test_area': 18, 'test_percentage': 0.3860391143213926, 'num_maxima': 8, 'density_tolerance': 1.262830538392538}
     for coords in fibonnaci_sphere(num_points=num_cones, point_start=point_start, point_end=point_end):
         dwa = Dwarf(*coords)
         cuts.proper_motion_test(dwa, **params)
@@ -112,17 +113,16 @@ def main(num_cones, point_start, point_end, plot=True):
 
 # params = {'test_area': 10, 'test_percentage': 0.179376451145657, 'num_maxima': 8, 'density_tolerance': 1.362830538392538}
 
-# very discriminatory, all random fail, 23 dwarfs fail
 params = {'test_area': 18, 'test_percentage': 0.3860391143213926, 'num_maxima': 8, 'density_tolerance': 1.262830538392538}
 
 # params = {'test_area': 42, 'test_percentage': 0.3380960890954652, 'num_maxima': 8, 'density_tolerance': 1.239830538392538}
 
 if __name__ == "__main__":
     # main(num_cones=10000, point_start=0, point_end=None)
-    # write_candidate_coords()
+    write_candidate_coords()
     # create_sample_dwarfs()
     # d = load_sample_dwarfs()
-    look_at_tuned_parameter_values()
+    # look_at_tuned_parameter_values()
     # dra = Dwarf(260.05972916666667, 57.92121944444444, name='Draco')
     # dra.load_gaia_table('./candidates/Draco/vots/Draco_500.vot')
     # print(dra.gaia_data[-1][-1][[1,2,3]])
