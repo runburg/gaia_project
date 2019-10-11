@@ -16,7 +16,7 @@ from astroquery.gaia import Gaia
 import numpy as np
 
 
-def gaia_search(ra, dec, name, output_path, radius=0.5, sigma=5, pm_threshold=5, bp_rp_threshold=2, dump_to_file=True):
+def gaia_search(ra, dec, name, output_path, radius=0.5, sigma=3, pm_threshold=5, bp_rp_threshold=1.6, dump_to_file=True):
     """Given coordinates, return gaia cone search around object."""
     warnings.filterwarnings("ignore", module='astropy.*')
     coords = SkyCoord(ra=ra, dec=dec, unit=(u.degree, u.degree), frame='icrs')
@@ -32,7 +32,7 @@ def gaia_search(ra, dec, name, output_path, radius=0.5, sigma=5, pm_threshold=5,
     return job
 
 
-def random_cones_outside_galactic_plane(limit=18):
+def random_cones_outside_galactic_plane(limit=15):
     """Check if in plane and return new coordinates if not."""
     # galactic longitude
     l = random() * 360

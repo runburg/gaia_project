@@ -103,6 +103,7 @@ class Dwarf:
         if output is True:
             print(f'Dwarf {self.name} ACCEPTED')
 
+
     def rejected(self, output=False, summary=''):
         """Delete rejected dwarf data."""
         self.log.append('\n\nREJECTED')
