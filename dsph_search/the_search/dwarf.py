@@ -18,8 +18,8 @@ try:
     from the_search.utils import gaia_search
     from the_search.plots import pm_histogram, parallax_histogram, quiver_plot
 except ModuleNotFoundError:
-    from utils import gaia_search
-    from plots import pm_histogram, parallax_histogram, quiver_plot
+    from .utils import gaia_search
+    from .plots import pm_histogram, parallax_histogram, quiver_plot
 
 warnings.filterwarnings("ignore", module='astropy.*')
 
@@ -37,7 +37,7 @@ class Dwarf:
         - tests: list of tests performed
     """
 
-    def __init__(self, ra, dec, name=None, rad_init=0):
+    def __init__(self, ra, dec, name=None, rad_init=0, path=None):
         """Initialize dwarf object with coordinates."""
         self.ra = ra
         self.dec = dec
@@ -51,7 +51,10 @@ class Dwarf:
         else:
             self.name = f'{int(round(ra*100))}_{int(round(dec*100))}'
 
-        self.path = f'candidates/{self.name}'
+        if path is None:
+            self.path = f'candidates/{self.name}'
+        else:
+            self.path = f'{path}/{self.name}'
         # create home for dwarf candidate data
         try:
             os.mkdir(self.path)
@@ -68,7 +71,7 @@ class Dwarf:
     def add_gaia_data(self, radius):
         """Add gaia search table to Dwarf."""
         # automatically cut on parallax with sigma=5 and on pm with pm_threshold=5
-        job = gaia_search(self.ra, self.dec, self.name, radius)
+        job = gaia_search(self.ra, self.dec, self.name, self.path, radius=radius)
         self.log.append(f'For radius {radius}; job {job.jobid} stored in {job.outputFile}')
         table = job.get_results()
 
@@ -99,6 +102,7 @@ class Dwarf:
 
         if output is True:
             print(f'Dwarf {self.name} ACCEPTED')
+
 
     def rejected(self, output=False, summary=''):
         """Delete rejected dwarf data."""

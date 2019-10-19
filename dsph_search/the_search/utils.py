@@ -16,12 +16,10 @@ from astroquery.gaia import Gaia
 import numpy as np
 
 
-def gaia_search(ra, dec, name, radius=0.5, sigma=5, pm_threshold=5, dump_to_file=True):
-    """Given a table from Simbad, return gaia cone search around object."""
+def gaia_search(ra, dec, name, output_path, radius=0.5, sigma=3, pm_threshold=5, bp_rp_threshold=1.6, dump_to_file=True):
+    """Given coordinates, return gaia cone search around object."""
     warnings.filterwarnings("ignore", module='astropy.*')
-    # radius = radius * u.degree
     coords = SkyCoord(ra=ra, dec=dec, unit=(u.degree, u.degree), frame='icrs')
-    # radius = u.Quantity(object['GALDIM_MAJAXIS']/2, u.arcmin).to(u.degree)
     job = Gaia.launch_job_async(f"SELECT TOP 500000 \
                                 gaia_source.source_id,gaia_source.ra,gaia_source.ra_error,gaia_source.dec, \
                                 gaia_source.dec_error,gaia_source.parallax,gaia_source.parallax_error, \
@@ -29,12 +27,12 @@ def gaia_search(ra, dec, name, radius=0.5, sigma=5, pm_threshold=5, dump_to_file
                                 gaia_source.bp_rp \
                                 FROM gaiadr2.gaia_source \
                                 WHERE \
-                                CONTAINS(POINT('ICRS',gaiadr2.gaia_source.ra,gaiadr2.gaia_source.dec),CIRCLE('ICRS',{coords.ra.degree},{coords.dec.degree},{radius}))=1 AND  (gaiadr2.gaia_source.parallax - gaiadr2.gaia_source.parallax_error * {sigma} <= 0) AND (SQRT(POWER(gaiadr2.gaia_source.pmra, 2) + POWER(gaiadr2.gaia_source.pmdec, 2)) <= {pm_threshold})", dump_to_file=dump_to_file, output_file=f'./candidates/{name}/vots/{name}_{round(radius*100)}.vot')
+                                CONTAINS(POINT('ICRS',gaiadr2.gaia_source.ra,gaiadr2.gaia_source.dec),CIRCLE('ICRS',{coords.ra.degree},{coords.dec.degree},{radius}))=1 AND  (gaiadr2.gaia_source.parallax - gaiadr2.gaia_source.parallax_error * {sigma} <= 0) AND (SQRT(POWER(gaiadr2.gaia_source.pmra, 2) + POWER(gaiadr2.gaia_source.pmdec, 2)) <= {pm_threshold}) AND (gaiadr2.gaia_source.bp_rp <= {bp_rp_threshold})", dump_to_file=dump_to_file, output_file=f'{output_path}/vots/{name}_{round(radius*100)}.vot')
 
     return job
 
 
-def random_cones_outside_galactic_plane(limit=18):
+def random_cones_outside_galactic_plane(limit=15):
     """Check if in plane and return new coordinates if not."""
     # galactic longitude
     l = random() * 360
@@ -80,6 +78,6 @@ def fibonnaci_sphere(num_points, limit=16, point_start=0, point_end=None):
 
 
 if __name__ == '__main__':
-    gaia_search(90, 90, 'test', dump_to_file=False)
-    for i in range(16):
-        print(random_cones_outside_galactic_plane())
+    # gaia_search(90, 90, 'test', dump_to_file=False)
+    for _ in range(20):
+        print('{}, {}'.format(*random_cones_outside_galactic_plane()))
