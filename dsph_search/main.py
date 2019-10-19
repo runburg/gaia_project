@@ -79,7 +79,7 @@ def write_candidate_coords():
             outfile.write(str(round(float(ra)/100, 2)) + ' ' + str(round(float(dec)/100, 2)) + '\n')
 
 
-def main(num_cones, point_start, point_end, plot=True):
+def main(num_cones, point_start, point_end, plot=False):
     """Run through num_ocones to look for candidates."""
     # for _ in range(num_cones):
     #     dwa = Dwarf(*random_cones_outside_galactic_plane())
