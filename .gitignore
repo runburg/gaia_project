@@ -1,3 +1,5 @@
 */__pycache__/*
 *.vot
 *.pyc
+*/dead_logs/*
+*.log
