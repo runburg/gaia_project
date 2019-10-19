@@ -8,8 +8,8 @@ Date: 27-09-2019 13:10
 
 """
 
-num_cones = 100000
-num_per_file = 5000
+num_cones = 1000000
+num_per_file = 4000
 plot = False
 
 for num in range(num_cones//num_per_file):
@@ -35,18 +35,18 @@ for num in range(num_cones//num_per_file):
 #SBATCH --error=%A.err ## %A - filled with jobid
 #SBATCH --output=%A.out ## %A - filled with jobid
 ## Useful for remote notification
-#SBATCH --mail-type=BEGIN,END,FAIL,REQUEUE,TIME_LIMIT_80
-#SBATCH --mail-user=runburg@hawaii.edu
+##SBATCH --mail-type=BEGIN,END,FAIL,REQUEUE,TIME_LIMIT_80
+##SBATCH --mail-user=runburg@hawaii.edu
 
 source ~/.bash_profile
 
-module load lang/Python/3.7.2-intel-2018.5.274
+module load lang/Python/3.7.2-intel-2018.5.274 
 
-pip install --user numpy
-pip install --user matplotlib
-pip install --user astropy
-pip install --user astroquery
+pip3 install --user numpy
+pip3 install --user matplotlib
+pip3 install --user astropy
+pip3 install --user astroquery
 
-cd gaia_project/dsph_search/
+# cd gaia_project/dsph_search/
 python3 -c "import main; main.main(num_cones={num_cones}, point_start={point_start}, point_end={point_end}, plot={plot})"
 ''')
