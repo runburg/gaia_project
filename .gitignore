@@ -2,3 +2,4 @@
 *.vot
 *.pyc
 */dead_logs/*
+*.log
