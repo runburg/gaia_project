@@ -59,9 +59,11 @@ def plot_setup(rows, cols, d=0, buffer=(0.3, 0.3)):
 
 def string_name(dwarf):
     """Give a string rep of name."""
-    ra, _, dec = dwarf.name.partition('_')
-
-    return f'({round(float(ra)/100, 2)}, {round(float(dec)/100, 2)})'
+    try:
+        ra, _, dec = dwarf.name.partition('_')
+        return f'({round(float(ra)/100, 2)}, {round(float(dec)/100, 2)})'
+    except ValueError:
+        return f'{dwarf.name}'
 
 
 def parallax_histogram(dwarf):
@@ -77,7 +79,7 @@ def parallax_histogram(dwarf):
         bins = np.linspace(parallax.min(), parallax.max(), num=30)
         ax.hist(parallax, bins=bins)
 
-        ax.set_title(r'radius=${table}^\circ$')
+        ax.set_title(rf'radius=${table}^\circ$')
         ax.set_xlabel('Parallax [mas]')
         ax.set_ylabel('Bin counts')
 
@@ -143,6 +145,28 @@ def pm_histogram(dwarf):
 
     fig.suptitle(f'Proper motion histogram for {string_name(dwarf)}')
     fig.savefig(f'{dwarf.path}/plots/pmhisto_plot.pdf', bbox_inches='tight')
+
+
+def mag_v_color(dwarf):
+    """Create color magnitude diagram."""
+    cols = 2
+    rows = len(dwarf.gaia_data)//2 + len(dwarf.gaia_data) % 2
+
+    fig, axs = plot_setup(rows, cols, d=len(dwarf.gaia_data))
+
+    for ax, table in zip(axs.flatten(), dwarf.gaia_data):
+        color = dwarf.gaia_data[table]['bp_rp']
+        mag = dwarf.gaia_data[table]['phot_g_mean_mag']
+
+        lines = ax.scatter(color, mag, c=color, cmap=cm.cool)
+        title = f'radius={table}, color-mag diagram'
+
+        ax.set_title(title)
+        ax.set_xlabel(r"BpRp [mag]")
+        ax.set_ylabel(r"photGMeanMag [mag]")
+
+    fig.suptitle(f'Color magnitude diagrams for {string_name(dwarf)}')
+    fig.savefig(f'{dwarf.path}/plots/colormag.pdf', bbox_inches='tight')
 
 
 def all_sky(candidate_list):
