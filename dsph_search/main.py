@@ -106,7 +106,7 @@ def main(num_cones, point_start, point_end, plot=False):
             else:
                 message += test_name + 'PASS'
         if all(dwa.tests):
-            dwa.accepted(plot, output=False, summary=message)
+            dwa.accepted(plot, output=False, summary=message, verbose=False)
         else:
             dwa.rejected(summary=message)
 
