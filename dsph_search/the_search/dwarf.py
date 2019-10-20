@@ -13,6 +13,7 @@ import datetime
 import glob
 import warnings
 from astroquery.utils.tap.model.modelutils import read_results_table_from_file
+from filelock import FileLock
 from astropy.io.votable.tree import Table
 try:
     from the_search.utils import gaia_search
@@ -87,13 +88,14 @@ class Dwarf:
         self.gaia_data[radius] = data
         self.log.append(f'For radius {radius}; table loaded from {table}')
 
-    def accepted(self, plot, output=False, summary=''):
+    def accepted(self, plot, output=False, log=True, verbose=True, summary=''):
         """Celebrate a possible dwarf candidate."""
         self.log.append('\n\nACCEPTED')
         self.log.append('Summary: ' + summary)
 
-        with open(f'{self.path}/log_{self.name}.txt', 'w') as outfile:
-            outfile.write("\n".join(self.log))
+        if log is True:
+            with open(f'{self.path}/log_{self.name}.txt', 'w') as outfile:
+                outfile.write("\n".join(self.log))
 
         if plot is True:
             parallax_histogram(self)
@@ -103,6 +105,18 @@ class Dwarf:
         if output is True:
             print(f'Dwarf {self.name} ACCEPTED')
 
+        if verbose is False:
+            lock = FileLock("candidate_coords.txt.lock")
+            with lock:
+                with open('candidate_coords.txt', 'a') as outfile:
+                    outfile.write(str(round(float(self.ra)/100, 2)) + ' ' + str(round(float(self.dec)/100, 2)) + '\n')
+            for item in os.walk(self.path, topdown=False):
+                for file in item[2]:
+                    os.remove(item[0] + '/' + file)
+                for folder in item[1]:
+                    os.rmdir(item[0] + '/' + folder)
+
+            os.rmdir(self.path)
 
     def rejected(self, output=False, summary=''):
         """Delete rejected dwarf data."""

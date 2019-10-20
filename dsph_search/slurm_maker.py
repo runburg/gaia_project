@@ -40,12 +40,13 @@ for num in range(num_cones//num_per_file):
 
 source ~/.bash_profile
 
-module load lang/Python/3.7.2-intel-2018.5.274 
+module load lang/Python/3.7.2-intel-2018.5.274
 
 pip3 install --user numpy
 pip3 install --user matplotlib
 pip3 install --user astropy
 pip3 install --user astroquery
+pip3 install --user filelock
 
 # cd gaia_project/dsph_search/
 python3 -c "import main; main.main(num_cones={num_cones}, point_start={point_start}, point_end={point_end}, plot={plot})"

@@ -143,3 +143,29 @@ def pm_histogram(dwarf):
 
     fig.suptitle(f'Proper motion histogram for {string_name(dwarf)}')
     fig.savefig(f'{dwarf.path}/plots/pmhisto_plot.pdf', bbox_inches='tight')
+
+
+def all_sky(candidate_list):
+    """Create all sky plot of dwarf candidates."""
+    from mw_plot import MWSkyMap
+    from astropy import units as u
+    from astropy.coordinates import SkyCoord
+
+    # setup a MWSkyMap instance
+    fig = MWSkyMap(projection='hammer')
+
+    # alpha value for the milkyway image
+    fig.imalpha = 1.
+
+    # setup colormap
+    fig.cmap = 'jet'
+
+    # use mw_scatter instead of scatter because we want a colorbar
+    fig.mw_scatter(candidate_list[:, 0]*u.degree, candidate_list[:, 1]*u.degree, "xkcd:mauve")
+
+    fig.savefig(file='./dsph_search/all_sky_candidates.pdf')
+
+
+if __name__ == '__main__':
+    coords = np.loadtxt("./dsph_search/candidate_coords.txt", delimiter=" ")
+    all_sky(coords)
