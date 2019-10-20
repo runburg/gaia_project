@@ -1,0 +1,10 @@
+Created dwarf Antlia 2 in the_search/tuning/test_candidates/Antlia 22019-10-20 12:51:59.027298
+For radius 1.5; table loaded from the_search/tuning/test_candidates/Antlia 2/vots/Antlia 2_150.vot
+For radius 0.1; table loaded from the_search/tuning/test_candidates/Antlia 2/vots/Antlia 2_10.vot
+For radius 0.5; table loaded from the_search/tuning/test_candidates/Antlia 2/vots/Antlia 2_50.vot
+PASS: Proper motion test: area 36 x 36, threshold 38.603911432139256%, percentage 5195.0
+FAIL: Angular density test: radii None, tolerance 1.262830538392538, ratio 1.0074361205600821
+
+
+ACCEPTED
+Summary: 

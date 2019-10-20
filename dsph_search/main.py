@@ -51,7 +51,7 @@ def load_sample_dwarfs(dwarflist, known=True, path=None):
     return dwarfs
 
 
-def look_at_tuned_parameter_values():
+def look_at_tuned_parameter_values(plot=False):
     """Check params from tuning."""
     dwarflist = []
     rando = []
@@ -62,22 +62,32 @@ def look_at_tuned_parameter_values():
 
     # Execute cuts.
     cutlist = [100]
-    dwarfpass = 0
-    for dwarf in load_sample_dwarfs(dwarflist, path='the_search/tuning/test_candidates'):
-        for cut in cutlist:
-            pass1 = cuts.proper_motion_test(dwarf, cut=cut, print_to_stdout=True, **params)
-            pass2 = cuts.angular_density_test(dwarf, print_to_stdout=True, **params)
-            dwarfpass += pass1 & pass2
+    set_of_dwarfs = [dwarflist, rando]
+    for list_of_dwarfs, known, label in zip(set_of_dwarfs, [True, False], ['Known', 'Random']):
+        dwarfpass = 0
+        for dwarf in load_sample_dwarfs(list_of_dwarfs, known=known, path='the_search/tuning/test_candidates'):
+            for cut in cutlist:
+                pass1 = cuts.proper_motion_test(dwarf, cut=cut, print_to_stdout=True, **params)
+                pass2 = cuts.angular_density_test(dwarf, print_to_stdout=True, **params)
+                dwarfpass += pass1 & pass2
 
-    randompass = 0
-    for dwarf in load_sample_dwarfs(rando, known=False, path='the_search/tuning/test_candidates'):
-        for cut in cutlist:
-            pass1 = cuts.proper_motion_test(dwarf, cut=cut, print_to_stdout=True, **params)
-            pass2 = cuts.angular_density_test(dwarf, print_to_stdout=True, **params)
-            randompass += pass1 & pass2
+            if plot is True:
+                dwarf.accepted(plot)
 
-    print(f'Dwarf pass rate \t{dwarfpass}/{len(dwarflist)}')
-    print(f'Random pass rate \t{randompass}/{len(rando)}')
+        print(f'{label} dwarf pass rate \t{dwarfpass}/{len(list_of_dwarfs)}')
+
+    # randompass = 0
+    # for dwarf in load_sample_dwarfs(rando, known=, path='the_search/tuning/test_candidates'):
+    #     for cut in cutlist:
+    #         pass1 = cuts.proper_motion_test(dwarf, cut=cut, print_to_stdout=True, **params)
+    #         pass2 = cuts.angular_density_test(dwarf, print_to_stdout=True, **params)
+    #         randompass += pass1 & pass2
+    #
+    #     if plot is True:
+    #         dwarf.accepted(plot)
+
+
+    # print(f'Random pass rate \t{randompass}/{len(rando)}')
     print(params)
 
 
@@ -90,7 +100,7 @@ def write_candidate_coords():
 
 
 def main(num_cones, point_start, point_end, plot=False):
-    """Run through num_ocones to look for candidates."""
+    """Run through num_cones to look for candidates."""
     # for _ in range(num_cones):
     #     dwa = Dwarf(*random_cones_outside_galactic_plane())
     params = {'test_area': 18, 'test_percentage': 0.3860391143213926, 'num_maxima': 8, 'density_tolerance': 1.262830538392538}
@@ -119,10 +129,10 @@ params = {'test_area': 18, 'test_percentage': 0.3860391143213926, 'num_maxima': 
 
 if __name__ == "__main__":
     # main(num_cones=10000, point_start=0, point_end=None)
-    write_candidate_coords()
+    # write_candidate_coords()
     # create_sample_dwarfs()
     # d = load_sample_dwarfs()
-    # look_at_tuned_parameter_values()
+    look_at_tuned_parameter_values(plot=True)
     # dra = Dwarf(260.05972916666667, 57.92121944444444, name='Draco')
     # dra.load_gaia_table('./candidates/Draco/vots/Draco_500.vot')
     # print(dra.gaia_data[-1][-1][[1,2,3]])

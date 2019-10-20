@@ -17,10 +17,10 @@ from filelock import FileLock
 from astropy.io.votable.tree import Table
 try:
     from the_search.utils import gaia_search
-    from the_search.plots import pm_histogram, parallax_histogram, quiver_plot
+    from the_search.plots import pm_histogram, parallax_histogram, quiver_plot, mag_v_color
 except ModuleNotFoundError:
     from .utils import gaia_search
-    from .plots import pm_histogram, parallax_histogram, quiver_plot
+    from .plots import pm_histogram, parallax_histogram, quiver_plot, mag_v_color
 
 warnings.filterwarnings("ignore", module='astropy.*')
 
@@ -101,6 +101,7 @@ class Dwarf:
             parallax_histogram(self)
             pm_histogram(self)
             quiver_plot(self)
+            mag_v_color(self)
 
         if output is True:
             print(f'Dwarf {self.name} ACCEPTED')
