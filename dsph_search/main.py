@@ -106,9 +106,9 @@ def main(num_cones, point_start, point_end, plot=False):
             else:
                 message += test_name + 'PASS'
         if all(dwa.tests):
-            dwa.accepted(plot, output=False, summary=message, verbose=False)
+            dwa.accepted(plot, output=False, summary=message, log=False, verbose=False)
         else:
-            dwa.rejected(summary=message)
+            dwa.rejected(summary=message, log=False)
 
 
 # params = {'test_area': 10, 'test_percentage': 0.179376451145657, 'num_maxima': 8, 'density_tolerance': 1.362830538392538}

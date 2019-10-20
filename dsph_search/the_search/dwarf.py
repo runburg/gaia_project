@@ -118,13 +118,14 @@ class Dwarf:
 
             os.rmdir(self.path)
 
-    def rejected(self, output=False, summary=''):
+    def rejected(self, output=False, log=True, summary=''):
         """Delete rejected dwarf data."""
         self.log.append('\n\nREJECTED')
         self.log.append('Summary: ' + summary)
 
-        with open(f'./dead_logs/log_{self.name}.log', 'w') as outfile:
-            outfile.write("\n".join(self.log))
+        if log is True:
+            with open(f'./dead_logs/log_{self.name}.log', 'w') as outfile:
+                outfile.write("\n".join(self.log))
 
         if output is True:
             print(f'Dwarf {self.name} REJECTED')
