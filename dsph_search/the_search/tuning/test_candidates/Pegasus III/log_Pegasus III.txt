@@ -1,0 +1,10 @@
+Created dwarf Pegasus III in the_search/tuning/test_candidates/Pegasus III2019-10-21 20:53:42.591654
+For radius 1.5; table loaded from the_search/tuning/test_candidates/Pegasus III/vots/Pegasus III_150.vot
+For radius 0.5; table loaded from the_search/tuning/test_candidates/Pegasus III/vots/Pegasus III_50.vot
+For radius 0.1; table loaded from the_search/tuning/test_candidates/Pegasus III/vots/Pegasus III_10.vot
+PASS: Proper motion test: area 36 x 36, threshold 38.603911432139256%, percentage 166.0
+FAIL: Angular density test: radii None, tolerance 1.262830538392538, ratio 1.1568123393316192
+
+
+ACCEPTED
+Summary: 

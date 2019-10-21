@@ -1,0 +1,10 @@
+Created dwarf Sgr II in the_search/tuning/test_candidates/Sgr II2019-10-21 20:55:12.626452
+For radius 0.1; table loaded from the_search/tuning/test_candidates/Sgr II/vots/Sgr II_10.vot
+For radius 0.5; table loaded from the_search/tuning/test_candidates/Sgr II/vots/Sgr II_50.vot
+For radius 1.5; table loaded from the_search/tuning/test_candidates/Sgr II/vots/Sgr II_150.vot
+PASS: Proper motion test: area 36 x 36, threshold 38.603911432139256%, percentage 2193.0
+FAIL: Angular density test: radii None, tolerance 1.262830538392538, ratio 1.146050388331123
+
+
+ACCEPTED
+Summary: 

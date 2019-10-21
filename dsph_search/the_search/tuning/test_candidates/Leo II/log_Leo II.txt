@@ -1,0 +1,10 @@
+Created dwarf Leo II in the_search/tuning/test_candidates/Leo II2019-10-21 20:42:32.109839
+For radius 0.1; table loaded from the_search/tuning/test_candidates/Leo II/vots/Leo II_10.vot
+For radius 0.5; table loaded from the_search/tuning/test_candidates/Leo II/vots/Leo II_50.vot
+For radius 1.5; table loaded from the_search/tuning/test_candidates/Leo II/vots/Leo II_150.vot
+PASS: Proper motion test: area 36 x 36, threshold 38.603911432139256%, percentage 150.0
+PASS: Angular density test: radii None, tolerance 1.262830538392538, ratio 22.069710055521277
+
+
+ACCEPTED
+Summary: 

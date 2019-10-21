@@ -1,0 +1,10 @@
+Created dwarf Tuc V in the_search/tuning/test_candidates/Tuc V2019-10-21 20:50:53.611594
+For radius 1.5; table loaded from the_search/tuning/test_candidates/Tuc V/vots/Tuc V_150.vot
+For radius 0.1; table loaded from the_search/tuning/test_candidates/Tuc V/vots/Tuc V_10.vot
+For radius 0.5; table loaded from the_search/tuning/test_candidates/Tuc V/vots/Tuc V_50.vot
+PASS: Proper motion test: area 36 x 36, threshold 38.603911432139256%, percentage 216.0
+FAIL: Angular density test: radii None, tolerance 1.262830538392538, ratio 0.9985984583041343
+
+
+ACCEPTED
+Summary: 

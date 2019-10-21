@@ -1,0 +1,10 @@
+Created dwarf Pisces II in the_search/tuning/test_candidates/Pisces II2019-10-21 20:53:22.729464
+For radius 0.1; table loaded from the_search/tuning/test_candidates/Pisces II/vots/Pisces II_10.vot
+For radius 0.5; table loaded from the_search/tuning/test_candidates/Pisces II/vots/Pisces II_50.vot
+For radius 1.5; table loaded from the_search/tuning/test_candidates/Pisces II/vots/Pisces II_150.vot
+PASS: Proper motion test: area 36 x 36, threshold 38.603911432139256%, percentage 148.0
+FAIL: Angular density test: radii None, tolerance 1.262830538392538, ratio 1.1101973684210524
+
+
+ACCEPTED
+Summary: 

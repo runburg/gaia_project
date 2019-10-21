@@ -1,4 +1,4 @@
-Created dwarf Antlia 2 in the_search/tuning/test_candidates/Antlia 22019-10-20 13:12:48.753221
+Created dwarf Antlia 2 in the_search/tuning/test_candidates/Antlia 22019-10-21 20:37:48.683915
 For radius 1.5; table loaded from the_search/tuning/test_candidates/Antlia 2/vots/Antlia 2_150.vot
 For radius 0.1; table loaded from the_search/tuning/test_candidates/Antlia 2/vots/Antlia 2_10.vot
 For radius 0.5; table loaded from the_search/tuning/test_candidates/Antlia 2/vots/Antlia 2_50.vot

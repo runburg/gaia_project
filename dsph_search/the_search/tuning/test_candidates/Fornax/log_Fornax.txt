@@ -1,0 +1,10 @@
+Created dwarf Fornax in the_search/tuning/test_candidates/Fornax2019-10-21 20:42:50.173552
+For radius 0.1; table loaded from the_search/tuning/test_candidates/Fornax/vots/Fornax_10.vot
+For radius 0.5; table loaded from the_search/tuning/test_candidates/Fornax/vots/Fornax_50.vot
+For radius 1.5; table loaded from the_search/tuning/test_candidates/Fornax/vots/Fornax_150.vot
+PASS: Proper motion test: area 36 x 36, threshold 38.603911432139256%, percentage 14982.0
+PASS: Angular density test: radii None, tolerance 1.262830538392538, ratio 25.42764491284961
+
+
+ACCEPTED
+Summary: 

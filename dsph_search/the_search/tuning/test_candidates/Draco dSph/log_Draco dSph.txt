@@ -1,0 +1,10 @@
+Created dwarf Draco dSph in the_search/tuning/test_candidates/Draco dSph2019-10-21 20:41:29.619589
+For radius 1.5; table loaded from the_search/tuning/test_candidates/Draco dSph/vots/Draco dSph_150.vot
+For radius 0.5; table loaded from the_search/tuning/test_candidates/Draco dSph/vots/Draco dSph_50.vot
+For radius 0.1; table loaded from the_search/tuning/test_candidates/Draco dSph/vots/Draco dSph_10.vot
+PASS: Proper motion test: area 36 x 36, threshold 38.603911432139256%, percentage 1589.0
+PASS: Angular density test: radii None, tolerance 1.262830538392538, ratio 17.98090523338048
+
+
+ACCEPTED
+Summary: 

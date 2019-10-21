@@ -1,0 +1,10 @@
+Created dwarf Car II in the_search/tuning/test_candidates/Car II2019-10-21 21:02:01.472253
+For radius 1.5; table loaded from the_search/tuning/test_candidates/Car II/vots/Car II_150.vot
+For radius 0.1; table loaded from the_search/tuning/test_candidates/Car II/vots/Car II_10.vot
+For radius 0.5; table loaded from the_search/tuning/test_candidates/Car II/vots/Car II_50.vot
+PASS: Proper motion test: area 36 x 36, threshold 38.603911432139256%, percentage 1657.0
+FAIL: Angular density test: radii None, tolerance 1.262830538392538, ratio 1.0660304961462743
+
+
+ACCEPTED
+Summary: 

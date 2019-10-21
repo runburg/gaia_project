@@ -1,0 +1,10 @@
+Created dwarf Phoenix II in the_search/tuning/test_candidates/Phoenix II2019-10-21 21:01:00.945964
+For radius 0.5; table loaded from the_search/tuning/test_candidates/Phoenix II/vots/Phoenix II_50.vot
+For radius 0.1; table loaded from the_search/tuning/test_candidates/Phoenix II/vots/Phoenix II_10.vot
+For radius 1.5; table loaded from the_search/tuning/test_candidates/Phoenix II/vots/Phoenix II_150.vot
+PASS: Proper motion test: area 36 x 36, threshold 38.603911432139256%, percentage 162.0
+PASS: Angular density test: radii None, tolerance 1.262830538392538, ratio 1.7400806993947542
+
+
+ACCEPTED
+Summary: 

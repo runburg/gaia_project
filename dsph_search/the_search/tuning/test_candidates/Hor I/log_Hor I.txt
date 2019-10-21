@@ -1,0 +1,10 @@
+Created dwarf Hor I in the_search/tuning/test_candidates/Hor I2019-10-21 21:00:14.607157
+For radius 1.5; table loaded from the_search/tuning/test_candidates/Hor I/vots/Hor I_150.vot
+For radius 0.1; table loaded from the_search/tuning/test_candidates/Hor I/vots/Hor I_10.vot
+For radius 0.5; table loaded from the_search/tuning/test_candidates/Hor I/vots/Hor I_50.vot
+PASS: Proper motion test: area 36 x 36, threshold 38.603911432139256%, percentage 149.0
+PASS: Angular density test: radii None, tolerance 1.262830538392538, ratio 1.8907563025210081
+
+
+ACCEPTED
+Summary: 

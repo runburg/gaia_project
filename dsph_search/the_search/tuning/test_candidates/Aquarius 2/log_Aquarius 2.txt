@@ -1,0 +1,10 @@
+Created dwarf Aquarius 2 in the_search/tuning/test_candidates/Aquarius 22019-10-21 20:47:30.290617
+For radius 1.5; table loaded from the_search/tuning/test_candidates/Aquarius 2/vots/Aquarius 2_150.vot
+For radius 0.1; table loaded from the_search/tuning/test_candidates/Aquarius 2/vots/Aquarius 2_10.vot
+For radius 0.5; table loaded from the_search/tuning/test_candidates/Aquarius 2/vots/Aquarius 2_50.vot
+PASS: Proper motion test: area 36 x 36, threshold 38.603911432139256%, percentage 119.0
+PASS: Angular density test: radii None, tolerance 1.262830538392538, ratio 1.6239624684229514
+
+
+ACCEPTED
+Summary: 
