@@ -1,0 +1,10 @@
+Created dwarf UMa I in the_search/tuning/test_candidates/UMa I2019-10-21 21:01:20.638556
+For radius 1.5; table loaded from the_search/tuning/test_candidates/UMa I/vots/UMa I_150.vot
+For radius 0.1; table loaded from the_search/tuning/test_candidates/UMa I/vots/UMa I_10.vot
+For radius 0.5; table loaded from the_search/tuning/test_candidates/UMa I/vots/UMa I_50.vot
+PASS: Proper motion test: area 36 x 36, threshold 38.603911432139256%, percentage 126.0
+PASS: Angular density test: radii None, tolerance 1.262830538392538, ratio 3.107416879795396
+
+
+ACCEPTED
+Summary: 

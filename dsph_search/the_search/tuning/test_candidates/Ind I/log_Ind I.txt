@@ -1,0 +1,10 @@
+Created dwarf Ind I in the_search/tuning/test_candidates/Ind I2019-10-21 21:00:34.868179
+For radius 1.5; table loaded from the_search/tuning/test_candidates/Ind I/vots/Ind I_150.vot
+For radius 0.1; table loaded from the_search/tuning/test_candidates/Ind I/vots/Ind I_10.vot
+For radius 0.5; table loaded from the_search/tuning/test_candidates/Ind I/vots/Ind I_50.vot
+FAIL: Proper motion test: area 36 x 36, threshold 38.603911432139256%, percentage 0.0
+PASS: Angular density test: radii None, tolerance 1.262830538392538, ratio 1.5321645899739202
+
+
+ACCEPTED
+Summary: 

@@ -1,0 +1,10 @@
+Created dwarf Bootes dSph in the_search/tuning/test_candidates/Bootes dSph2019-10-21 20:47:49.725044
+For radius 0.1; table loaded from the_search/tuning/test_candidates/Bootes dSph/vots/Bootes dSph_10.vot
+For radius 0.5; table loaded from the_search/tuning/test_candidates/Bootes dSph/vots/Bootes dSph_50.vot
+For radius 1.5; table loaded from the_search/tuning/test_candidates/Bootes dSph/vots/Bootes dSph_150.vot
+PASS: Proper motion test: area 36 x 36, threshold 38.603911432139256%, percentage 201.0
+PASS: Angular density test: radii None, tolerance 1.262830538392538, ratio 5.022779043280181
+
+
+ACCEPTED
+Summary: 

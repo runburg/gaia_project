@@ -1,0 +1,10 @@
+Created dwarf Gru II in the_search/tuning/test_candidates/Gru II2019-10-21 20:48:52.683918
+For radius 0.5; table loaded from the_search/tuning/test_candidates/Gru II/vots/Gru II_50.vot
+For radius 0.1; table loaded from the_search/tuning/test_candidates/Gru II/vots/Gru II_10.vot
+For radius 1.5; table loaded from the_search/tuning/test_candidates/Gru II/vots/Gru II_150.vot
+PASS: Proper motion test: area 36 x 36, threshold 38.603911432139256%, percentage 215.0
+PASS: Angular density test: radii None, tolerance 1.262830538392538, ratio 1.891210374639769
+
+
+ACCEPTED
+Summary: 

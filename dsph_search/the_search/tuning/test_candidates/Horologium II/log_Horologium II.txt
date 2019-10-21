@@ -1,0 +1,10 @@
+Created dwarf Horologium II in the_search/tuning/test_candidates/Horologium II2019-10-21 20:54:53.163102
+For radius 0.1; table loaded from the_search/tuning/test_candidates/Horologium II/vots/Horologium II_10.vot
+For radius 0.5; table loaded from the_search/tuning/test_candidates/Horologium II/vots/Horologium II_50.vot
+For radius 1.5; table loaded from the_search/tuning/test_candidates/Horologium II/vots/Horologium II_150.vot
+PASS: Proper motion test: area 36 x 36, threshold 38.603911432139256%, percentage 126.0
+FAIL: Angular density test: radii None, tolerance 1.262830538392538, ratio 1.238532110091743
+
+
+ACCEPTED
+Summary: 

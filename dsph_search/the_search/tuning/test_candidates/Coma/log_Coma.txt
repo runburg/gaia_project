@@ -1,0 +1,10 @@
+Created dwarf Coma in the_search/tuning/test_candidates/Coma2019-10-21 20:52:13.598435
+For radius 0.1; table loaded from the_search/tuning/test_candidates/Coma/vots/Coma_10.vot
+For radius 0.5; table loaded from the_search/tuning/test_candidates/Coma/vots/Coma_50.vot
+For radius 1.5; table loaded from the_search/tuning/test_candidates/Coma/vots/Coma_150.vot
+PASS: Proper motion test: area 36 x 36, threshold 38.603911432139256%, percentage 141.0
+PASS: Angular density test: radii None, tolerance 1.262830538392538, ratio 2.7854195323246214
+
+
+ACCEPTED
+Summary: 

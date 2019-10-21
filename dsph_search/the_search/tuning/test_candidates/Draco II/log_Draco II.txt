@@ -1,0 +1,10 @@
+Created dwarf Draco II in the_search/tuning/test_candidates/Draco II2019-10-21 20:58:49.711416
+For radius 1.5; table loaded from the_search/tuning/test_candidates/Draco II/vots/Draco II_150.vot
+For radius 0.1; table loaded from the_search/tuning/test_candidates/Draco II/vots/Draco II_10.vot
+For radius 0.5; table loaded from the_search/tuning/test_candidates/Draco II/vots/Draco II_50.vot
+PASS: Proper motion test: area 36 x 36, threshold 38.603911432139256%, percentage 194.0
+PASS: Angular density test: radii None, tolerance 1.262830538392538, ratio 1.7149390243902438
+
+
+ACCEPTED
+Summary: 

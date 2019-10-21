@@ -1,0 +1,10 @@
+Created dwarf Bootes III in the_search/tuning/test_candidates/Bootes III2019-10-21 20:40:22.955874
+For radius 1.5; table loaded from the_search/tuning/test_candidates/Bootes III/vots/Bootes III_150.vot
+For radius 0.5; table loaded from the_search/tuning/test_candidates/Bootes III/vots/Bootes III_50.vot
+For radius 0.1; table loaded from the_search/tuning/test_candidates/Bootes III/vots/Bootes III_10.vot
+PASS: Proper motion test: area 36 x 36, threshold 38.603911432139256%, percentage 93.0
+PASS: Angular density test: radii None, tolerance 1.262830538392538, ratio 2.0290581162324646
+
+
+ACCEPTED
+Summary: 

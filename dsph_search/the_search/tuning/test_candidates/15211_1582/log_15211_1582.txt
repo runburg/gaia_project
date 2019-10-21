@@ -1,0 +1,10 @@
+Created dwarf 15211_1582 in the_search/tuning/test_candidates/15211_15822019-10-21 21:04:00.817925
+For radius 0.1; table loaded from the_search/tuning/test_candidates/15211_1582/vots/15211_1582_10.vot
+For radius 0.5; table loaded from the_search/tuning/test_candidates/15211_1582/vots/15211_1582_50.vot
+For radius 1.5; table loaded from the_search/tuning/test_candidates/15211_1582/vots/15211_1582_150.vot
+PASS: Proper motion test: area 36 x 36, threshold 38.603911432139256%, percentage 111.0
+PASS: Angular density test: radii None, tolerance 1.262830538392538, ratio 1.378958120531154
+
+
+ACCEPTED
+Summary: 

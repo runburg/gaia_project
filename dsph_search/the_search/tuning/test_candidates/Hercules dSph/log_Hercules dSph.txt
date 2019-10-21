@@ -1,0 +1,10 @@
+Created dwarf Hercules dSph in the_search/tuning/test_candidates/Hercules dSph2019-10-21 20:42:01.541447
+For radius 1.5; table loaded from the_search/tuning/test_candidates/Hercules dSph/vots/Hercules dSph_150.vot
+For radius 0.5; table loaded from the_search/tuning/test_candidates/Hercules dSph/vots/Hercules dSph_50.vot
+For radius 0.1; table loaded from the_search/tuning/test_candidates/Hercules dSph/vots/Hercules dSph_10.vot
+PASS: Proper motion test: area 36 x 36, threshold 38.603911432139256%, percentage 476.0
+PASS: Angular density test: radii None, tolerance 1.262830538392538, ratio 1.9650655021834058
+
+
+ACCEPTED
+Summary: 

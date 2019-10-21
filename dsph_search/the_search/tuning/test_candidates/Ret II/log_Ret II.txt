@@ -1,0 +1,10 @@
+Created dwarf Ret II in the_search/tuning/test_candidates/Ret II2019-10-21 20:59:10.802835
+For radius 0.1; table loaded from the_search/tuning/test_candidates/Ret II/vots/Ret II_10.vot
+For radius 0.5; table loaded from the_search/tuning/test_candidates/Ret II/vots/Ret II_50.vot
+For radius 1.5; table loaded from the_search/tuning/test_candidates/Ret II/vots/Ret II_150.vot
+PASS: Proper motion test: area 36 x 36, threshold 38.603911432139256%, percentage 179.0
+PASS: Angular density test: radii None, tolerance 1.262830538392538, ratio 4.102941176470588
+
+
+ACCEPTED
+Summary: 

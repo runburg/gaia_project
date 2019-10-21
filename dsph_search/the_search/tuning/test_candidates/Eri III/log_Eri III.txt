@@ -1,0 +1,10 @@
+Created dwarf Eri III in the_search/tuning/test_candidates/Eri III2019-10-21 20:59:55.118368
+For radius 1.5; table loaded from the_search/tuning/test_candidates/Eri III/vots/Eri III_150.vot
+For radius 0.5; table loaded from the_search/tuning/test_candidates/Eri III/vots/Eri III_50.vot
+For radius 0.1; table loaded from the_search/tuning/test_candidates/Eri III/vots/Eri III_10.vot
+PASS: Proper motion test: area 36 x 36, threshold 38.603911432139256%, percentage 131.0
+FAIL: Angular density test: radii None, tolerance 1.262830538392538, ratio 0.9789702683103696
+
+
+ACCEPTED
+Summary: 

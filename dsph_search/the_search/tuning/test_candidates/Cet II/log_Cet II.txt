@@ -1,0 +1,10 @@
+Created dwarf Cet II in the_search/tuning/test_candidates/Cet II2019-10-21 20:51:15.084763
+For radius 0.5; table loaded from the_search/tuning/test_candidates/Cet II/vots/Cet II_50.vot
+For radius 0.1; table loaded from the_search/tuning/test_candidates/Cet II/vots/Cet II_10.vot
+For radius 1.5; table loaded from the_search/tuning/test_candidates/Cet II/vots/Cet II_150.vot
+FAIL: Proper motion test: area 36 x 36, threshold 38.603911432139256%, percentage 68.0
+FAIL: Angular density test: radii None, tolerance 1.262830538392538, ratio 1.0869565217391302
+
+
+ACCEPTED
+Summary: 

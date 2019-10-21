@@ -1,0 +1,10 @@
+Created dwarf Sex dSph in the_search/tuning/test_candidates/Sex dSph2019-10-21 20:44:29.937283
+For radius 1.5; table loaded from the_search/tuning/test_candidates/Sex dSph/vots/Sex dSph_150.vot
+For radius 0.5; table loaded from the_search/tuning/test_candidates/Sex dSph/vots/Sex dSph_50.vot
+For radius 0.1; table loaded from the_search/tuning/test_candidates/Sex dSph/vots/Sex dSph_10.vot
+PASS: Proper motion test: area 36 x 36, threshold 38.603911432139256%, percentage 500.0
+PASS: Angular density test: radii None, tolerance 1.262830538392538, ratio 4.191414686825054
+
+
+ACCEPTED
+Summary: 

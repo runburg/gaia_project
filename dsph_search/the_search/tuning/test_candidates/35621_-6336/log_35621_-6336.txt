@@ -1,0 +1,10 @@
+Created dwarf 35621_-6336 in the_search/tuning/test_candidates/35621_-63362019-10-21 21:39:10.747111
+For radius 0.5; job 1571693951089O stored in the_search/tuning/test_candidates/35621_-6336/vots/35621_-6336_50.vot
+PASS: Proper motion test: area 36 x 36, threshold 38.603911432139256%, percentage 181.0
+For radius 1.5; job 1571693953215O stored in the_search/tuning/test_candidates/35621_-6336/vots/35621_-6336_150.vot
+For radius 0.1; job 1571693957954O stored in the_search/tuning/test_candidates/35621_-6336/vots/35621_-6336_10.vot
+FAIL: Angular density test: radii None, tolerance 1.262830538392538, ratio 0.9159482758620688
+
+
+ACCEPTED
+Summary: 

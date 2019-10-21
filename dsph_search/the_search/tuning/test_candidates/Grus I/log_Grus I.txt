@@ -1,0 +1,10 @@
+Created dwarf Grus I in the_search/tuning/test_candidates/Grus I2019-10-21 21:01:40.859754
+For radius 0.5; table loaded from the_search/tuning/test_candidates/Grus I/vots/Grus I_50.vot
+For radius 0.1; table loaded from the_search/tuning/test_candidates/Grus I/vots/Grus I_10.vot
+For radius 1.5; table loaded from the_search/tuning/test_candidates/Grus I/vots/Grus I_150.vot
+FAIL: Proper motion test: area 36 x 36, threshold 38.603911432139256%, percentage 55.0
+PASS: Angular density test: radii None, tolerance 1.262830538392538, ratio 1.7290344136318072
+
+
+ACCEPTED
+Summary: 

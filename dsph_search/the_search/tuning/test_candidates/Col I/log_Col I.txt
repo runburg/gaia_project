@@ -1,0 +1,10 @@
+Created dwarf Col I in the_search/tuning/test_candidates/Col I2019-10-21 20:49:42.294173
+For radius 0.1; table loaded from the_search/tuning/test_candidates/Col I/vots/Col I_10.vot
+For radius 0.5; table loaded from the_search/tuning/test_candidates/Col I/vots/Col I_50.vot
+For radius 1.5; table loaded from the_search/tuning/test_candidates/Col I/vots/Col I_150.vot
+PASS: Proper motion test: area 36 x 36, threshold 38.603911432139256%, percentage 554.0
+FAIL: Angular density test: radii None, tolerance 1.262830538392538, ratio 1.0478763040238448
+
+
+ACCEPTED
+Summary: 

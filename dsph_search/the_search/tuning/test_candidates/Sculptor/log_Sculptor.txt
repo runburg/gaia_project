@@ -1,0 +1,10 @@
+Created dwarf Sculptor in the_search/tuning/test_candidates/Sculptor2019-10-21 20:40:44.022001
+For radius 1.5; table loaded from the_search/tuning/test_candidates/Sculptor/vots/Sculptor_150.vot
+For radius 0.5; table loaded from the_search/tuning/test_candidates/Sculptor/vots/Sculptor_50.vot
+For radius 0.1; table loaded from the_search/tuning/test_candidates/Sculptor/vots/Sculptor_10.vot
+PASS: Proper motion test: area 36 x 36, threshold 38.603911432139256%, percentage 5554.0
+PASS: Angular density test: radii None, tolerance 1.262830538392538, ratio 49.982752673335625
+
+
+ACCEPTED
+Summary: 
