@@ -123,8 +123,9 @@ def main(num_cones, point_start, point_end, plot=False):
 
 # params = {'test_area': 10, 'test_percentage': 0.179376451145657, 'num_maxima': 8, 'density_tolerance': 1.362830538392538}
 
-params = {'test_area': 18, 'test_percentage': 0.3860391143213926, 'num_maxima': 8, 'density_tolerance': 1.262830538392538}
+# params = {'test_area': 14, 'test_percentage': 0.32151337896836803, 'num_maxima': 8, 'density_tolerance': 1.269830538392538}
 
+params = {'test_area': 16, 'test_percentage': 0.4067369094279682, 'num_maxima': 8, 'density_tolerance': 1.269830538392538}
 # params = {'test_area': 42, 'test_percentage': 0.3380960890954652, 'num_maxima': 8, 'density_tolerance': 1.239830538392538}
 
 if __name__ == "__main__":
@@ -132,7 +133,7 @@ if __name__ == "__main__":
     # write_candidate_coords()
     # create_sample_dwarfs()
     # d = load_sample_dwarfs()
-    look_at_tuned_parameter_values(plot=True)
+    look_at_tuned_parameter_values()
     # dra = Dwarf(260.05972916666667, 57.92121944444444, name='Draco')
     # dra.load_gaia_table('./candidates/Draco/vots/Draco_500.vot')
     # print(dra.gaia_data[-1][-1][[1,2,3]])
