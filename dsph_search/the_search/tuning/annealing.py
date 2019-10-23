@@ -59,7 +59,7 @@ class OptimizeCutParameters(Annealer):
     def move(self):
         """Choose new values using random walk."""
         if self.kind == 'pm':
-            self.state['test_area'] += np.random.randint(-1, high=2)
+            # self.state['test_area'] += np.random.randint(-1, high=2)
             self.state['test_percentage'] += np.random.uniform(low=-0.05, high=0.05)
             # self.state['num_maxima'] += int(np.random.uniform(-2, high=3))
         if self.kind == 'density':
@@ -71,7 +71,6 @@ class OptimizeCutParameters(Annealer):
 
     def energy(self):
         """Calculate rate of passing."""
-        energy = 0
         energy = self.truth_to_power()
         return energy
 
@@ -110,7 +109,9 @@ class OptimizeCutParameters(Annealer):
 
 def main():
     # parameter dict
-    params = {'test_area': 16, 'test_percentage': 0.340960890954652, 'num_maxima': 8, 'density_tolerance': 1.269830538392538}
+    params = {'test_area': 16, 'test_percentage': 0.4067369094279682, 'num_maxima': 8, 'density_tolerance': 1.269830538392538}
+    # params = {'test_area': 14, 'test_percentage': 0.28151337896836803, 'num_maxima': 8, 'density_tolerance': 1.269830538392538}
+
     kind = 'pm'
 
     params_values = params.values()
@@ -135,7 +136,7 @@ def main():
     print(truth_to_power(dwarfs, randoms, params, kind=kind))
 
     ocp = OptimizeCutParameters(params, dwarfs, randoms, kind=kind)
-    ocp.Tmax = 100000000.0  # Max (starting) temperature
+    ocp.Tmax = 10000000.0  # Max (starting) temperature
     ocp.Tmin = 100    # Min (ending) temperature
     ocp.steps = 2000   # Number of iterations
     ocp.updates = 20   # Number of updates (by default an update prints to stdout)
