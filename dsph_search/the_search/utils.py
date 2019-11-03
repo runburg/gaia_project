@@ -17,7 +17,7 @@ import numpy as np
 from regions import CircleSkyRegion
 
 
-def gaia_search(ra, dec, name, output_path, radius=0.5, sigma=3, pm_threshold=5, bp_rp_threshold=1.6, dump_to_file=True):
+def gaia_search(ra, dec, name, output_path, radius=0.5, sigma=3, pm_threshold=5, bp_rp_threshold=2, dump_to_file=True):
     """Given coordinates, return gaia cone search around object."""
     warnings.filterwarnings("ignore", module='astropy.*')
     coords = SkyCoord(ra=ra, dec=dec, unit=(u.degree, u.degree), frame='icrs')
@@ -50,6 +50,55 @@ def random_cones_outside_galactic_plane(limit=15):
     icrs_coords = (c_gal.icrs.ra.value, c_gal.icrs.dec.value)
 
     return icrs_coords
+
+
+def gaia_region_search(ra, dec, radius=10, sigma=3, pm_threshold=5, bp_rp_threshold=2, limit=15,  dump_to_file=True):
+    """Given coordinates, search gaia around a region and populate cones within that region."""
+    warnings.filterwarnings("ignore", module='astropy.*')
+    coords = SkyCoord(ra, dec, frame='icrs', unit='deg')
+    outfile = f'the_search/regions/ra{round(ra*100,2)}_dec{round(dec*100,2)}_rad{round(radius*100,2)}.vot'
+    job = Gaia.launch_job_async(f"SELECT * \
+                                gaia_source.source_id,gaia_source.ra,gaia_source.ra_error,gaia_source.dec, \
+                                gaia_source.dec_error,gaia_source.parallax,gaia_source.parallax_error, \
+                                gaia_source.pmra,gaia_source.pmra_error,gaia_source.pmdec,gaia_source.pmdec_error, \
+                                gaia_source.bp_rp, gaia_source.phot_g_mean_mag \
+                                FROM gaiadr2.gaia_source \
+                                WHERE \
+                                CONTAINS(POINT('ICRS',gaiadr2.gaia_source.ra,gaiadr2.gaia_source.dec),CIRCLE('ICRS',{coords.ra.degree},{coords.dec.degree},{radius}))=1 AND {abs(coords.galactic.b.value)} > {limit} AND (gaiadr2.gaia_source.parallax - gaiadr2.gaia_source.parallax_error * {sigma} <= 0) AND (SQRT(POWER(gaiadr2.gaia_source.pmra, 2) + POWER(gaiadr2.gaia_source.pmdec, 2)) <= {pm_threshold}) AND (gaiadr2.gaia_source.bp_rp <= {bp_rp_threshold})", dump_to_file=dump_to_file, output_file=outfile, verbose=False)
+
+    return job
+
+
+def get_cone_in_region(ra, dec, region_radius, max_radius=1.5, limit=15, num_cones=1000000000):
+    """Generate cones given a circular region of region_radius that won't bleed out of the region."""
+    for point in range(num_cones):
+        point += 0.5
+
+        # equally spaced coordinates
+        theta = 180/np.pi * (np.arccos(1 - 2 * point / num_cones) - np.pi/2)
+        phi = 180 * (1 + 5**0.5) * point
+
+        if abs(theta) > limit:
+            c_gal = SkyCoord(phi, theta, unit='deg', frame='galactic')
+            ra_cone, dec_cone = (c_gal.icrs.ra.value, c_gal.icrs.dec.value)
+
+            ang_dist = angular_distance(ra, dec, ra_cone, dec_cone)
+            if ang_dist < (region_radius - max_radius) * np.pi/180:
+                yield (ra_cone, dec_cone)
+
+
+def angular_distance(ra, dec, ra_cone, dec_cone):
+    """For two sets of coordinates, find angular_distance between them in radians."""
+    ra_diff = ra - ra_cone
+    if ra_diff < 0:
+        ra_diff += 360
+    # using vincenty formula from https://en.wikipedia.org/wiki/Great-circle_distance
+    ra_diff_rad = np.deg2rad(ra_diff)
+    dec_rad = np.deg2rad(dec)
+    dec_cone_rad = np.deg2rad(dec_cone)
+    ang_dist = np.arctan(np.sqrt((np.cos(dec_cone_rad) * np.sin(ra_diff_rad))**2+(np.cos(dec_rad)*np.sin(dec_cone_rad)-np.sin(dec_rad)*np.cos(dec_cone_rad)*np.cos(ra_diff_rad))**2)/(np.sin(dec_rad)*np.sin(dec_cone_rad)+np.cos(dec_rad)*np.cos(dec_cone_rad)*np.cos(ra_diff_rad)))
+
+    return ang_dist
 
 
 def unmask(data):

@@ -10,16 +10,14 @@ Date: 22-08-2019 14:16
 
 import os
 import datetime
-import glob
 import warnings
+import numpy as np
 from astroquery.utils.tap.model.modelutils import read_results_table_from_file
-from filelock import FileLock
-from astropy.io.votable.tree import Table
 try:
-    from the_search.utils import gaia_search
+    from the_search.utils import gaia_search, angular_distance
     from the_search.plots import pm_histogram, parallax_histogram, quiver_plot, mag_v_color
 except ModuleNotFoundError:
-    from .utils import gaia_search
+    from .utils import gaia_search, angular_distance
     from .plots import pm_histogram, parallax_histogram, quiver_plot, mag_v_color
 
 warnings.filterwarnings("ignore", module='astropy.*')
@@ -88,7 +86,12 @@ class Dwarf:
         self.gaia_data[radius] = data
         self.log.append(f'For radius {radius}; table loaded from {table}')
 
-    def accepted(self, plot, output=False, log=True, verbose=True, summary=''):
+    def search_loaded_gaia_table(self, radius, table):
+        """For a given GAIA table, search the region for a given radius."""
+        valid_rows = np.less(angular_distance(self.ra, self.dec, table['ra'].data, table['dec'].data), radius*np.pi/180)
+        self.gaia_data[radius] = table[valid_rows]
+
+    def accepted(self, plot=False, output=False, log=True, verbose=True, summary=''):
         """Celebrate a possible dwarf candidate."""
         self.log.append('\n\nACCEPTED')
         self.log.append('Summary: ' + summary)
@@ -107,10 +110,12 @@ class Dwarf:
             print(f'Dwarf {self.name} ACCEPTED')
 
         if verbose is False:
-            lock = FileLock("candidate_coords.txt.lock")
-            with lock:
-                with open('candidate_coords.txt', 'a') as outfile:
-                    outfile.write(str(round(float(self.ra)/100, 2)) + ' ' + str(round(float(self.dec)/100, 2)) + '\n')
+            if log is True:
+                with open(f'candidates/log_{self.name}.txt', 'w') as outfile:
+                    outfile.write("\n".join(self.log))
+            with open('candidate_coords.txt', 'a') as outfile:
+                outfile.write(str(round(float(self.ra)/100, 2)) + ' ' + str(round(float(self.dec)/100, 2)) + '\n')
+
             for item in os.walk(self.path, topdown=False):
                 for file in item[2]:
                     os.remove(item[0] + '/' + file)
@@ -118,6 +123,9 @@ class Dwarf:
                     os.rmdir(item[0] + '/' + folder)
 
             os.rmdir(self.path)
+        elif log is True:
+            with open(f'{self.path}/log_{self.name}.txt', 'w') as outfile:
+                outfile.write("\n".join(self.log))
 
     def rejected(self, output=False, log=True, summary=''):
         """Delete rejected dwarf data."""

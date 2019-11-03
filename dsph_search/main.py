@@ -102,13 +102,18 @@ def new_main():
     """Search region of sky."""
     region_ra, region_dec = 170, 40
     region_radius = 10
+    radii = [(1.5, 0.5), (1.0, 0.1)]
 
     job = gaia_region_search(region_ra, region_dec)
     gaia_table = job.get_results()
 
     for coords in get_cone_in_region(region_ra, region_dec, region_radius, num_cones=10000):
         dwa = Dwarf(*coords)
-        cuts.poisson_overdensity_test(dwa)
+
+        for large, small in radii:
+            dwa.search_loaded_gaia_table(large, gaia_table)
+            dwa.search_loaded_gaia_table(small, gaia_table)
+        cuts.poisson_overdensity_test(dwa, gaia_table, radii)
 
         message = ''
         for test, test_name in zip(dwa.tests, ['poisson overdensity test']):
