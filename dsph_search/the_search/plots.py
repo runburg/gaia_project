@@ -177,6 +177,7 @@ def all_sky(candidate_list):
 
     # setup a MWSkyMap instance
     fig = MWSkyMap(projection='hammer')
+    # fig, axs = plt.subplots()
 
     # alpha value for the milkyway image
     fig.imalpha = 1.
@@ -187,9 +188,19 @@ def all_sky(candidate_list):
     # use mw_scatter instead of scatter because we want a colorbar
     fig.mw_scatter(candidate_list[:, 0]*u.degree, candidate_list[:, 1]*u.degree, "xkcd:mauve")
 
-    fig.savefig(file='./dsph_search/all_sky_candidates.pdf')
+    # axs.plot(candidate_list[:, 0], candidate_list[:, 1], 'b.')
+
+    known = np.loadtxt('/Users/runburg/github/gaia_project/dsph_search/the_search/tuning/tuning_known_dwarfs.txt', delimiter=',', dtype=str)
+
+    ra_known = known[:,1].astype(np.float)
+    dec_known = known[:,2].astype(np.float)
+
+    fig.s = 10
+    fig.mw_scatter(ra_known*u.degree, dec_known*u.degree, 'xkcd:coral')
+
+    fig.savefig('/Users/runburg/github/gaia_project/dsph_search/all_sky_candidates.pdf')
 
 
 if __name__ == '__main__':
-    coords = np.loadtxt("./dsph_search/candidate_coords.txt", delimiter=" ")
+    coords = np.loadtxt("/Users/runburg/github/gaia_project/dsph_search/candidate_coords.txt", delimiter=" ", dtype=float)
     all_sky(coords)
