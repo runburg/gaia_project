@@ -11,9 +11,10 @@ Date: 22-08-2019 14:30
 import warnings
 from random import random
 import astropy.units as u
-from astropy.coordinates import SkyCoord
+from astropy.coordinates import SkyCoord, Angle
 from astroquery.gaia import Gaia
 import numpy as np
+from regions import CircleSkyRegion
 
 
 def gaia_search(ra, dec, name, output_path, radius=0.5, sigma=3, pm_threshold=5, bp_rp_threshold=1.6, dump_to_file=True):
@@ -27,7 +28,7 @@ def gaia_search(ra, dec, name, output_path, radius=0.5, sigma=3, pm_threshold=5,
                                 gaia_source.bp_rp, gaia_source.phot_g_mean_mag \
                                 FROM gaiadr2.gaia_source \
                                 WHERE \
-                                CONTAINS(POINT('ICRS',gaiadr2.gaia_source.ra,gaiadr2.gaia_source.dec),CIRCLE('ICRS',{coords.ra.degree},{coords.dec.degree},{radius}))=1 AND  (gaiadr2.gaia_source.parallax - gaiadr2.gaia_source.parallax_error * {sigma} <= 0) AND (SQRT(POWER(gaiadr2.gaia_source.pmra, 2) + POWER(gaiadr2.gaia_source.pmdec, 2)) <= {pm_threshold}) AND (gaiadr2.gaia_source.bp_rp <= {bp_rp_threshold})", dump_to_file=dump_to_file, output_file=f'{output_path}/vots/{name}_{round(radius*100)}.vot')
+                                CONTAINS(POINT('ICRS',gaiadr2.gaia_source.ra,gaiadr2.gaia_source.dec),CIRCLE('ICRS',{coords.ra.degree},{coords.dec.degree},{radius}))=1 AND  (gaiadr2.gaia_source.parallax - gaiadr2.gaia_source.parallax_error * {sigma} <= 0) AND (SQRT(POWER(gaiadr2.gaia_source.pmra, 2) + POWER(gaiadr2.gaia_source.pmdec, 2)) <= {pm_threshold}) AND (gaiadr2.gaia_source.bp_rp <= {bp_rp_threshold})", dump_to_file=dump_to_file, output_file=f'{output_path}/vots/{name}_{round(radius*100)}.vot', verbose=False)
 
     return job
 
@@ -45,7 +46,7 @@ def random_cones_outside_galactic_plane(limit=15):
     else:
         b += limit
 
-    c_gal = SkyCoord(l=l * u.degree, b=b * u.degree, frame='galactic')
+    c_gal = SkyCoord(l, b, unit='deg', frame='galactic')
     icrs_coords = (c_gal.icrs.ra.value, c_gal.icrs.dec.value)
 
     return icrs_coords
@@ -72,9 +73,13 @@ def fibonnaci_sphere(num_points, limit=16, point_start=0, point_end=None):
         phi = 180 * (1 + 5**0.5) * point
 
         if abs(theta) > limit:
-            c_gal = SkyCoord(l=phi * u.degree, b=theta * u.degree, frame='galactic')
+            c_gal = SkyCoord(phi, theta, unit='deg', frame='galactic')
             icrs_coords = (c_gal.icrs.ra.value, c_gal.icrs.dec.value)
-            yield icrs_coords
+
+            lmc_coords = SkyCoord(80.89, -69.76, unit='deg')
+            lmc = CircleSkyRegion(lmc_coords, Angle(5.5, 'deg'))
+            if icrs_coords not in lmc:
+                yield icrs_coords
 
 
 if __name__ == '__main__':
