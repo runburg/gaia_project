@@ -13,9 +13,9 @@ import warnings
 import numpy as np
 from the_search.dwarf import Dwarf
 from the_search import cuts
-from the_search.utils import random_cones_outside_galactic_plane, fibonnaci_sphere
+from the_search.utils import random_cones_outside_galactic_plane, fibonnaci_sphere, get_cone_in_region, gaia_region_search
 
-warnings.filterwarnings("ignore", module='astropy.*')
+warnings.filterwarnings("ignore")
 
 
 def create_sample_dwarfs():
@@ -86,7 +86,6 @@ def look_at_tuned_parameter_values(plot=False):
     #     if plot is True:
     #         dwarf.accepted(plot)
 
-
     # print(f'Random pass rate \t{randompass}/{len(rando)}')
     print(params)
 
@@ -99,11 +98,34 @@ def write_candidate_coords():
             outfile.write(str(round(float(ra)/100, 2)) + ' ' + str(round(float(dec)/100, 2)) + '\n')
 
 
+def new_main():
+    """Search region of sky."""
+    region_ra, region_dec = 170, 40
+    region_radius = 10
+
+    job = gaia_region_search(region_ra, region_dec)
+    gaia_table = job.get_results()
+
+    for coords in get_cone_in_region(region_ra, region_dec, region_radius, num_cones=10000):
+        dwa = Dwarf(*coords)
+        cuts.poisson_overdensity_test(dwa)
+
+        message = ''
+        for test, test_name in zip(dwa.tests, ['poisson overdensity test']):
+            if test is False:
+                message += test_name + 'FAIL'
+            else:
+                message += test_name + 'PASS'
+        if all(dwa.tests):
+            dwa.accepted(plot=False, output=False, summary=message, log=True, verbose=False)
+        else:
+            dwa.rejected(summary=message, log=False)
+
+
 def main(num_cones, point_start, point_end, plot=False):
     """Run through num_cones to look for candidates."""
     # for _ in range(num_cones):
     #     dwa = Dwarf(*random_cones_outside_galactic_plane())
-    params = {'test_area': 18, 'test_percentage': 0.3860391143213926, 'num_maxima': 8, 'density_tolerance': 1.262830538392538}
     for coords in fibonnaci_sphere(num_points=num_cones, point_start=point_start, point_end=point_end):
         dwa = Dwarf(*coords)
         cuts.proper_motion_test(dwa, **params)
@@ -116,7 +138,7 @@ def main(num_cones, point_start, point_end, plot=False):
             else:
                 message += test_name + 'PASS'
         if all(dwa.tests):
-            dwa.accepted(plot, output=False, summary=message, log=False, verbose=False)
+            dwa.accepted(plot=plot, output=False, summary=message, log=False, verbose=False)
         else:
             dwa.rejected(summary=message, log=False)
 
@@ -125,7 +147,7 @@ def main(num_cones, point_start, point_end, plot=False):
 
 # params = {'test_area': 14, 'test_percentage': 0.32151337896836803, 'num_maxima': 8, 'density_tolerance': 1.269830538392538}
 
-params = {'test_area': 16, 'test_percentage': 0.4067369094279682, 'num_maxima': 8, 'density_tolerance': 1.269830538392538}
+params = {'test_area': 18, 'test_percentage': 0.4547369094279682, 'num_maxima': 8, 'density_tolerance': 1.261830538392538}
 # params = {'test_area': 42, 'test_percentage': 0.3380960890954652, 'num_maxima': 8, 'density_tolerance': 1.239830538392538}
 
 if __name__ == "__main__":
