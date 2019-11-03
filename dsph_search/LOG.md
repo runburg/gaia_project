@@ -28,4 +28,11 @@ Project outline:
   - *proper_motion_test()* tests for dwarf candidacy by analyzing the object in proper motion parameter space
 
 
-  29-08-2019 14:23
+18-10-2019 18:27
+ - don't include logs or candidate files in repo
+
+02-11-2019 15:01
+  - start poisson_patch branch
+  - the idea is to use poisson statistics (rather than simulated annealing and ratio) to find overdensities
+  - pm plots are being abandoned for now since we have no clear way to discriminate from 0 (& behavior near the poles is inconvenient)
+  - need to write poisson cut in *cuts.py*

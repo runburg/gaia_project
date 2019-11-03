@@ -132,3 +132,8 @@ def angular_density_test(dwarf, radii=None, print_to_stdout=False, density_toler
     return False
 
     # print(f'{dwarf.name}\t density ratio  {densities[-1]/densities[0]}\t {densities[-1]/densities[-2]}\t{densities[-2]/densities[0]}')
+
+
+def poisson_overdensity_test(dwarf, table, radii):
+    """Look for overdensities in cone using Poisson statistics."""
+    
