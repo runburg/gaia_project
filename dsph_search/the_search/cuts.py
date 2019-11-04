@@ -134,6 +134,27 @@ def angular_density_test(dwarf, radii=None, print_to_stdout=False, density_toler
     # print(f'{dwarf.name}\t density ratio  {densities[-1]/densities[0]}\t {densities[-1]/densities[-2]}\t{densities[-2]/densities[0]}')
 
 
-def poisson_overdensity_test(dwarf, table, radii):
+def poisson_overdensity_test(dwarf, table, table_radius, print_to_stdout=False):
     """Look for overdensities in cone using Poisson statistics."""
-    
+    test_lengths = {radius: len(dwa_table) for (radius, dwa_table) in dwarf.gaia_data.items()}
+    test_lengths[table_radius] = len(table)
+
+    test_cases = [(radius1, radius2) for radius1 in [table_radius, *dwarf.gaia_data.keys()] for radius2 in [table_radius, *dwarf.gaia_data.keys()] if radius1 < radius2]
+
+    for (radius1, radius2) in test_cases:
+        poisson_variance = np.floor(test_lengths[radius2] * radius1**2/radius2**2)
+        print(f"{test_lengths[radius1]} compared to {4 * poisson_variance}")
+        if test_lengths[radius1] > 4 * poisson_variance:
+            log_message = f"success at {radius1, radius2} with var {poisson_variance} and result {test_lengths[radius1]}"
+            if print_to_stdout is True:
+                print(f'{dwarf.name}, poisson density test: \tPASS')
+                print(log_message)
+            dwarf.log.append('PASS' + log_message)
+            dwarf.tests.append(True)
+            return True
+
+        # if print_to_stdout is True:
+        #     print(f'{dwarf.name}, poisson density test: \tFAIL')
+        # dwarf.log.append('FAIL' + log_message)
+    dwarf.tests.append(False)
+    return False
