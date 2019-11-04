@@ -7,16 +7,14 @@ Date: 22-08-2019 14:03
 
 """
 
-import os
 import glob
 import warnings
 import numpy as np
-import time
-from astroquery.gaia import Gaia
+import sys
 from astropy.table import Table
 from the_search.dwarf import Dwarf
 from the_search import cuts
-from the_search.utils import random_cones_outside_galactic_plane, fibonnaci_sphere, get_cone_in_region, gaia_region_search, outside_of_galactic_plane
+from the_search.utils import fibonnaci_sphere, get_cone_in_region, gaia_region_search, outside_of_galactic_plane
 
 warnings.filterwarnings("ignore")
 
@@ -101,26 +99,36 @@ def write_candidate_coords():
             outfile.write(str(round(float(ra)/100, 2)) + ' ' + str(round(float(dec)/100, 2)) + '\n')
 
 
-def new_main():
+def new_main(param_args):
     """Search region of sky."""
-    region_ra, region_dec = 250, 60
-    region_radius = 15
-    # 15 degree close to galactic plane takes ~60 min
-    radii = [1.5, 1.0, 0.5]
-    outfile = f'regions/region_ra{round(region_ra*100,2)}_dec{round(region_dec*100,2)}_rad{round(region_radius*100,2)}.vot'
+    # set parameters of search
+    if len(param_args) > 1:
+        region_ra, region_dec, region_radius, num_cones, *radii = [float(arf) for arf in param_args[1:]]
+        num_cones = int(num_cones)
+    else:
+        region_ra, region_dec = 250, 60
+        region_radius = 15
+        # 15 degree close to galactic plane takes ~60 min
+        num_cones = 10000000
+        radii = [1.5, 1.0, 0.5]
+
+    # standard paths
+    infile = f'regions/region_ra{round(region_ra*100)}_dec{round(region_dec*100)}_rad{round(region_radius*100)}.vot'
+    outfile = f'region_candidates/region_ra{round(region_ra*100)}_dec{round(region_dec*100)}_rad{round(region_radius*100)}_candidates.txt'
+    # print(infile)
 
     try:
-        gaia_table = Table.read(outfile, format='votable')
+        gaia_table = Table.read(infile, format='votable')
         print("table loaded from regions")
-        print(outfile)
+        print(infile)
         print(len(gaia_table))
     except FileNotFoundError:
         job = gaia_region_search(region_ra, region_dec, radius=region_radius)
         gaia_table = job.get_results()
         gaia_table = gaia_table[[outside_of_galactic_plane(ra, dec) for (ra, dec) in zip(gaia_table['ra'], gaia_table['dec'])]]
-        gaia_table.write(outfile, overwrite='True')
+        gaia_table.write(infile, overwrite='True')
 
-    for coords in get_cone_in_region(region_ra, region_dec, region_radius, num_cones=10000000):
+    for coords in get_cone_in_region(region_ra, region_dec, region_radius, num_cones=num_cones):
         print(f"found coords {coords}")
         dwa = Dwarf(*coords)
 
@@ -138,7 +146,7 @@ def new_main():
             else:
                 message += test_name + 'PASS'
         if all(dwa.tests):
-            dwa.accepted(plot=True, output=True, summary=message, log=True, verbose=True)
+            dwa.accepted(plot=True, output=False, summary=message, log=True, verbose=True, coord_file_path=outfile)
         else:
             dwa.rejected(summary=message, log=False)
             print("failed")
@@ -178,7 +186,7 @@ if __name__ == "__main__":
     # create_sample_dwarfs()
     # d = load_sample_dwarfs()
     # look_at_tuned_parameter_values()
-    new_main()
+    new_main(sys.argv)
     # dra = Dwarf(260.05972916666667, 57.92121944444444, name='Draco')
     # dra.load_gaia_table('./candidates/Draco/vots/Draco_500.vot')
     # print(dra.gaia_data[-1][-1][[1,2,3]])
