@@ -91,10 +91,13 @@ class Dwarf:
         valid_rows = np.less([angular_distance(self.ra, self.dec, ra_obj, dec_obj) for (ra_obj, dec_obj) in zip(table['ra'].data, table['dec'].data)], radius*np.pi/180)
         self.gaia_data[radius] = table[valid_rows]
 
-    def accepted(self, plot=False, output=False, log=True, verbose=True, summary=''):
+    def accepted(self, plot=False, output=False, log=True, verbose=True, summary='', coord_file_path="./"):
         """Celebrate a possible dwarf candidate."""
         self.log.append('\n\nACCEPTED')
         self.log.append('Summary: ' + summary)
+
+        with open(coord_file_path, 'a') as outfile:
+            outfile.write(str(round(float(self.ra)/100, 2)) + ' ' + str(round(float(self.dec)/100, 2)) + '\n')
 
         if plot is True:
             parallax_histogram(self)
@@ -109,8 +112,6 @@ class Dwarf:
             if log is True:
                 with open(f'candidates/log_{self.name}.txt', 'w') as outfile:
                     outfile.write("\n".join(self.log))
-            with open('candidate_coords.txt', 'a') as outfile:
-                outfile.write(str(round(float(self.ra)/100, 2)) + ' ' + str(round(float(self.dec)/100, 2)) + '\n')
 
             for item in os.walk(self.path, topdown=False):
                 for file in item[2]:
