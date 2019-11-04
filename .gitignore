@@ -1,5 +1,5 @@
 */__pycache__/*
-*.vot
 *.pyc
 */dead_logs/*
 *.log
+dsph_search/the_search/tuning/test_candidates/*/vots/*.vot
