@@ -11,12 +11,9 @@ Date: 22-08-2019 14:30
 import warnings
 from random import random
 from time import sleep
-import astropy.units as u
-from astropy.coordinates import SkyCoord, Angle
+from astropy.coordinates import SkyCoord
 from astroquery.gaia import Gaia
 import numpy as np
-from regions import CircleSkyRegion
-
 
 
 def gaia_search(ra, dec, name, output_path, radius=0.5, sigma=3, pm_threshold=5, bp_rp_threshold=2, dump_to_file=True):
@@ -95,7 +92,7 @@ def get_cone_in_region(ra, dec, region_radius, max_radius=1.5, limit=15, num_con
                 yield (phi, theta)
 
 
-def outside_of_galactic_plane(ra, dec, limit):
+def outside_of_galactic_plane(ra, dec, limit=15):
     """Check that coordinates are outside (up to limit) the galactic plane."""
     c_icrs = SkyCoord(ra, dec, unit='deg', frame='icrs')
     if abs(c_icrs.galactic.l.value) > limit:
