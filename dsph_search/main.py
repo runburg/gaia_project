@@ -11,9 +11,12 @@ import os
 import glob
 import warnings
 import numpy as np
+import time
+from astroquery.gaia import Gaia
+from astropy.table import Table
 from the_search.dwarf import Dwarf
 from the_search import cuts
-from the_search.utils import random_cones_outside_galactic_plane, fibonnaci_sphere, get_cone_in_region, gaia_region_search
+from the_search.utils import random_cones_outside_galactic_plane, fibonnaci_sphere, get_cone_in_region, gaia_region_search, outside_of_galactic_plane
 
 warnings.filterwarnings("ignore")
 
@@ -100,20 +103,33 @@ def write_candidate_coords():
 
 def new_main():
     """Search region of sky."""
-    region_ra, region_dec = 170, 40
-    region_radius = 10
-    radii = [(1.5, 0.5), (1.0, 0.1)]
+    region_ra, region_dec = 250, 60
+    region_radius = 15
+    # 15 degree close to galactic plane takes ~60 min
+    radii = [1.5, 1.0, 0.5]
+    outfile = f'the_search/regions/region_ra{round(region_ra*100,2)}_dec{round(region_dec*100,2)}_rad{round(region_radius*100,2)}.vot'
 
-    job = gaia_region_search(region_ra, region_dec)
-    gaia_table = job.get_results()
+    try:
+        gaia_table = Table.read(outfile, format='votable')
+        print("table loaded from regions")
+        print(outfile)
+        print(len(gaia_table))
+    except FileNotFoundError:
+        job = gaia_region_search(region_ra, region_dec, radius=region_radius)
+        gaia_table = job.get_results()
+        gaia_table = gaia_table[[outside_of_galactic_plane(ra, dec) for (ra, dec) in zip(gaia_table['ra'], gaia_table['dec'])]]
+        gaia_table.write(outfile, overwrite='True')
 
-    for coords in get_cone_in_region(region_ra, region_dec, region_radius, num_cones=10000):
+    for coords in get_cone_in_region(region_ra, region_dec, region_radius, num_cones=10000000):
+        print(f"found coords {coords}")
         dwa = Dwarf(*coords)
 
-        for large, small in radii:
-            dwa.search_loaded_gaia_table(large, gaia_table)
-            dwa.search_loaded_gaia_table(small, gaia_table)
-        cuts.poisson_overdensity_test(dwa, gaia_table, radii)
+        for radius in radii:
+            dwa.search_loaded_gaia_table(radius, gaia_table)
+
+        # print("filled tables")
+        cuts.poisson_overdensity_test(dwa, gaia_table, region_radius)
+        # print("finished cut")
 
         message = ''
         for test, test_name in zip(dwa.tests, ['poisson overdensity test']):
@@ -122,12 +138,13 @@ def new_main():
             else:
                 message += test_name + 'PASS'
         if all(dwa.tests):
-            dwa.accepted(plot=False, output=False, summary=message, log=True, verbose=False)
+            dwa.accepted(plot=True, output=True, summary=message, log=True, verbose=True)
         else:
             dwa.rejected(summary=message, log=False)
+            print("failed")
 
 
-def main(num_cones, point_start, point_end, plot=False):
+def main(num_cones=1000, point_start=0, point_end=None, plot=False):
     """Run through num_cones to look for candidates."""
     # for _ in range(num_cones):
     #     dwa = Dwarf(*random_cones_outside_galactic_plane())
@@ -160,7 +177,8 @@ if __name__ == "__main__":
     # write_candidate_coords()
     # create_sample_dwarfs()
     # d = load_sample_dwarfs()
-    look_at_tuned_parameter_values()
+    # look_at_tuned_parameter_values()
+    new_main()
     # dra = Dwarf(260.05972916666667, 57.92121944444444, name='Draco')
     # dra.load_gaia_table('./candidates/Draco/vots/Draco_500.vot')
     # print(dra.gaia_data[-1][-1][[1,2,3]])
