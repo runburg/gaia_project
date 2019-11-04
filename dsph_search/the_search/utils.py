@@ -51,11 +51,10 @@ def random_cones_outside_galactic_plane(limit=15):
     return icrs_coords
 
 
-def gaia_region_search(ra, dec, radius=10, sigma=3, pm_threshold=5, bp_rp_threshold=2, limit=15,  dump_to_file=True):
+def gaia_region_search(ra, dec, outfile, radius=10, sigma=3, pm_threshold=5, bp_rp_threshold=2, limit=15,  dump_to_file=True):
     """Given coordinates, search gaia around a region and populate cones within that region."""
     warnings.filterwarnings("ignore", module='astropy.*')
     coords = SkyCoord(ra, dec, frame='icrs', unit='deg')
-    outfile = f'the_search/regions/region_ra{round(ra*100,2)}_dec{round(dec*100,2)}_rad{round(radius*100,2)}.vot'
     job = Gaia.launch_job_async(f"SELECT TOP 10000000 \
                                 gaia_source.source_id,gaia_source.ra,gaia_source.ra_error,gaia_source.dec, \
                                 gaia_source.dec_error,gaia_source.parallax,gaia_source.parallax_error, \

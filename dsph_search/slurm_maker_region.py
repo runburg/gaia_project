@@ -19,34 +19,32 @@ for num, coords in enumerate(coords_list):
     args_string = " ".join(args)
 
     with open(f'./searchslurm{num}.slurm', 'w') as outfile:
-        outfile.write(f'''
-        #!/bin/bash
-        #SBATCH --job-name=the_search_{num}
-        #SBATCH --partition=shared
-        ## 3 day max run time for public partitions, except 4 hour max runtime for the sandbox partition
-        #SBATCH --time=01-00:00:00 ## time format is DD-HH:MM:SS
-        ## task-per-node x cpus-per-task should not typically exceed core count on an individual node
-        #SBATCH --nodes=1
-        #SBATCH --tasks-per-node=1
-        #SBATCH --cpus-per-task=1
-        #SBATCH --mem=6400 ## max amount of memory per node you require
+        outfile.write(f'''#!/bin/bash
+#SBATCH --job-name=the_search_{num}
+#SBATCH --partition=shared
+## 3 day max run time for public partitions, except 4 hour max runtime for the sandbox partition
+#SBATCH --time=02-00:00:00 ## time format is DD-HH:MM:SS
+## task-per-node x cpus-per-task should not typically exceed core count on an individual node
+#SBATCH --nodes=1
+#SBATCH --tasks-per-node=1
+#SBATCH --cpus-per-task=2
+#SBATCH --mem=8G ## max amount of memory per node you require
 
-        ##SBATCH --core-spec=0 ## Uncomment to allow jobs to request all cores on a node
+##SBATCH --core-spec=0 ## Uncomment to allow jobs to request all cores on a node
 
-        #SBATCH --error=error_{num}_%A.err ## %A - filled with jobid
-        #SBATCH --output=out_{num}_%A.out ## %A - filled with jobid
-        ## Useful for remote notification
-        ##SBATCH --mail-type=BEGIN,END,FAIL,REQUEUE,TIME_LIMIT_80
-        ##SBATCH --mail-user=runburg@hawaii.edu
+#SBATCH --error=error_{num}_%A.err ## %A - filled with jobid
+#SBATCH --output=out_{num}_%A.out ## %A - filled with jobid
+## Useful for remote notification
+##SBATCH --mail-type=BEGIN,END,FAIL,REQUEUE,TIME_LIMIT_80
+##SBATCH --mail-user=runburg@hawaii.edu
 
-        source ~/.bash_profile
+source ~/.bash_profile
 
-        module load lang/Python/3.7.2-intel-2018.5.274
+module load lang/Python/3.7.2-intel-2018.5.274
 
-        pip3 install --user numpy
-        pip3 install --user matplotlib
-        pip3 install --user astropy
-        pip3 install --user astroquery
-        ''')
-
+pip3 install --user numpy
+pip3 install --user matplotlib
+pip3 install --user astropy
+pip3 install --user astroquery
+''')
         outfile.write(f"python3 main.py {args_string}")

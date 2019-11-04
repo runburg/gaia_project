@@ -123,7 +123,7 @@ def new_main(param_args):
         print(infile)
         print(len(gaia_table))
     except FileNotFoundError:
-        job = gaia_region_search(region_ra, region_dec, radius=region_radius)
+        job = gaia_region_search(region_ra, region_dec, outfile=outfile, radius=region_radius)
         gaia_table = job.get_results()
         gaia_table = gaia_table[[outside_of_galactic_plane(ra, dec) for (ra, dec) in zip(gaia_table['ra'], gaia_table['dec'])]]
         gaia_table.write(infile, overwrite='True')
