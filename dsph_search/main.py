@@ -107,7 +107,7 @@ def new_main():
     region_radius = 15
     # 15 degree close to galactic plane takes ~60 min
     radii = [1.5, 1.0, 0.5]
-    outfile = f'the_search/regions/region_ra{round(region_ra*100,2)}_dec{round(region_dec*100,2)}_rad{round(region_radius*100,2)}.vot'
+    outfile = f'regions/region_ra{round(region_ra*100,2)}_dec{round(region_dec*100,2)}_rad{round(region_radius*100,2)}.vot'
 
     try:
         gaia_table = Table.read(outfile, format='votable')
