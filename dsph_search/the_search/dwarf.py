@@ -88,17 +88,13 @@ class Dwarf:
 
     def search_loaded_gaia_table(self, radius, table):
         """For a given GAIA table, search the region for a given radius."""
-        valid_rows = np.less(angular_distance(self.ra, self.dec, table['ra'].data, table['dec'].data), radius*np.pi/180)
+        valid_rows = np.less([angular_distance(self.ra, self.dec, ra_obj, dec_obj) for (ra_obj, dec_obj) in zip(table['ra'].data, table['dec'].data)], radius*np.pi/180)
         self.gaia_data[radius] = table[valid_rows]
 
     def accepted(self, plot=False, output=False, log=True, verbose=True, summary=''):
         """Celebrate a possible dwarf candidate."""
         self.log.append('\n\nACCEPTED')
         self.log.append('Summary: ' + summary)
-
-        if log is True:
-            with open(f'{self.path}/log_{self.name}.txt', 'w') as outfile:
-                outfile.write("\n".join(self.log))
 
         if plot is True:
             parallax_histogram(self)
