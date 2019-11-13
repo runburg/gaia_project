@@ -115,7 +115,7 @@ def new_main(param_args):
     # standard paths
     infile = f'regions/region_ra{round(region_ra*100)}_dec{round(region_dec*100)}_rad{round(region_radius*100)}.vot'
     outfile = f'region_candidates/region_ra{round(region_ra*100)}_dec{round(region_dec*100)}_rad{round(region_radius*100)}_candidates.txt'
-    # print(infile)
+    print(infile)
 
     try:
         gaia_table = Table.read(infile, format='votable')
@@ -123,10 +123,12 @@ def new_main(param_args):
         print(infile)
         print(len(gaia_table))
     except FileNotFoundError:
-        job = gaia_region_search(region_ra, region_dec, outfile=outfile, radius=region_radius)
+        job = gaia_region_search(region_ra, region_dec, outfile=infile, radius=region_radius)
         gaia_table = job.get_results()
+        print("Finished querying Gaia")
         gaia_table = gaia_table[[outside_of_galactic_plane(ra, dec) for (ra, dec) in zip(gaia_table['ra'], gaia_table['dec'])]]
-        gaia_table.write(infile, overwrite='True')
+        gaia_table.write(infile, overwrite='True', format='votable')
+        print("Finished filtering Gaia table")
 
     for coords in get_cone_in_region(region_ra, region_dec, region_radius, num_cones=num_cones):
         print(f"found coords {coords}")
@@ -147,6 +149,7 @@ def new_main(param_args):
                 message += test_name + 'PASS'
         if all(dwa.tests):
             dwa.accepted(plot=True, output=False, summary=message, log=True, verbose=True, coord_file_path=outfile)
+            print("passed!")
         else:
             dwa.rejected(summary=message, log=False)
             print("failed")
