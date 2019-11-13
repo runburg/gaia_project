@@ -93,8 +93,11 @@ class Dwarf:
             valid_rows = np.less(distance_table, radius*np.pi/180)
             self.gaia_data[radius] = table[valid_rows]
 
-    def accepted(self, plot=False, output=False, log=True, verbose=True, summary='', coord_file_path="./"):
+    def accepted(self, plot=False, output=False, log=True, verbose=True, summary='', coord_file_path=None):
         """Celebrate a possible dwarf candidate."""
+        if coord_file_path is None:
+            coord_file_path = f"./accepted_{self.name}"
+
         self.log.append('\n\nACCEPTED')
         self.log.append('Summary: ' + summary)
 
