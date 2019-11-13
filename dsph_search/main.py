@@ -132,8 +132,7 @@ def new_main(param_args):
         print(f"found coords {coords}")
         dwa = Dwarf(*coords)
 
-        for radius in radii:
-            dwa.search_loaded_gaia_table(radius, gaia_table)
+        dwa.search_loaded_gaia_table(radii, gaia_table)
 
         # print("filled tables")
         cuts.poisson_overdensity_test(dwa, gaia_table, region_radius)
