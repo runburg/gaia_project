@@ -8,15 +8,15 @@ Date: 27-09-2019 13:10
 
 """
 
-coords_list = [(250, 60), (42, 53), (1, -60), (340, 5), (37, -80)]
-region_radius = 15
+coords_list = [(260, 60), (100, -50), (0, -60), (341, 5.7), (37, -80)]
+region_radius = 5
 # 15 degree close to galactic plane takes ~60 min
 num_cones = 10000000
 radii = [1.5, 1.0, 0.5]
 
 for num, coords in enumerate(coords_list):
     args = [*coords, region_radius, num_cones, *radii]
-    args_string = " ".join(args)
+    args_string = " ".join([str(arg) for arg in args])
 
     with open(f'./searchslurm{num}.slurm', 'w') as outfile:
         outfile.write(f'''#!/bin/bash
@@ -46,5 +46,7 @@ pip3 install --user numpy
 pip3 install --user matplotlib
 pip3 install --user astropy
 pip3 install --user astroquery
+echo "Finished installing packages"
 ''')
-        outfile.write(f"python3 main.py {args_string}")
+        outfile.write(f"python3 -vu main.py {args_string}")
+
