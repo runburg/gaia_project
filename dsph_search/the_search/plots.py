@@ -11,6 +11,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.cm as cm
 import matplotlib as mpl
+import glob
 
 
 def colorbar_for_subplot(fig, axs, cmap, image):
@@ -169,11 +170,10 @@ def mag_v_color(dwarf):
     fig.savefig(f'{dwarf.path}/plots/colormag.pdf', bbox_inches='tight')
 
 
-def all_sky(candidate_list):
+def all_sky():
     """Create all sky plot of dwarf candidates."""
     from mw_plot import MWSkyMap
     from astropy import units as u
-    from astropy.coordinates import SkyCoord
 
     # setup a MWSkyMap instance
     fig = MWSkyMap(projection='hammer')
@@ -185,22 +185,99 @@ def all_sky(candidate_list):
     # setup colormap
     fig.cmap = 'jet'
 
-    # use mw_scatter instead of scatter because we want a colorbar
-    fig.mw_scatter(candidate_list[:, 0]*u.degree, candidate_list[:, 1]*u.degree, "xkcd:mauve")
-
-    # axs.plot(candidate_list[:, 0], candidate_list[:, 1], 'b.')
+    colors = ['xkcd:mauve', 'xkcd:coral', 'xkcd:pinkish purple', 'xkcd:tangerine', 'xkcd:vermillion', 'xkcd:tomato']
 
     known = np.loadtxt('/Users/runburg/github/gaia_project/dsph_search/the_search/tuning/tuning_known_dwarfs.txt', delimiter=',', dtype=str)
 
-    ra_known = known[:,1].astype(np.float)
-    dec_known = known[:,2].astype(np.float)
+    ra_known = known[:, 1].astype(np.float)
+    dec_known = known[:, 2].astype(np.float)
 
-    fig.s = 10
-    fig.mw_scatter(ra_known*u.degree, dec_known*u.degree, 'xkcd:coral')
+    fig.s = 20
+    fig.mw_scatter(ra_known*u.degree, dec_known*u.degree, 'xkcd:light grey blue')
+
+    for color, file in zip(colors, glob.glob('region_candidates/*.txt')):
+        candidate_list = np.loadtxt(file, delimiter=" ")
+        file = file.split('_')
+        ra = file[1].strip('ra').astype(np.float)/100
+        dec = file[2].strip('dec').astype(np.float)/100
+        radius = file[3].strip('rad').astype(np.float)/100
+
+        circle_points = get_points_of_circle(ra, dec, radius)
+
+        # use mw_scatter instead of scatter because we want a background
+        fig.s = 1
+        fig.mw_scatter(circle_points[:, 0]*u.degree, circle_points[:, 1]*u.degree, lighten_color(color, amount=1.5))
+
+        fig.s = 10
+        fig.mw_scatter(candidate_list[:, 0]*u.degree, candidate_list[:, 1]*u.degree, color)
 
     fig.savefig('/Users/runburg/github/gaia_project/dsph_search/all_sky_candidates.pdf')
 
 
+def get_points_of_circle(ra_center, dec_center, radius):
+    """Get coordinates of circle for plotting."""
+    n = 200
+    ra = np.linspace(0, 360, num=n)
+    dec = 90 - np.ones(n)*radius
+
+    coords = [np.array([raa, decc]) for (raa, decc) in zip(ra, dec)]
+    coords_prime = np.ones(len(coords))
+
+    for i, (phi, theta) in enumerate(coords):
+        # https://en.wikipedia.org/wiki/Rodrigues%27_rotation_formula
+        a = spherical_to_cartesian(phi, theta)
+        b = spherical_to_cartesian(ra, dec)
+        k = np.cross(a, b) / np.linalg.norm(np.cross(a, b))
+        rotation_angle = np.arccos(a.dot(b)/np.linalg.norm(a)/np.linalg.norm(b))
+        rotated_vector = a + np.sin(rotation_angle)*np.cross(k, a) + (1-np.cos(rotation_angle))*np.cross(k, np.cross(k, a))
+        coords_prime[i] = cartesian_to_spherical(rotated_vector)
+
+    return coords_prime
+
+
+def icrs_to_galactic(ra_icrs, dec_icrs):
+    """Return galactic coordinates."""
+    from astropy.coordinates import SkyCoord
+
+    coords = SkyCoord(ra_icrs, dec_icrs, unit='deg', frame='icrs')
+    return np.array([coords.galactic.b.value, coords.galactic.l.value]).T
+
+
+def spherical_to_cartesian(ra, dec):
+    """Get cartesian values from spherical."""
+    ra_rad = ra * np.pi/180
+    dec_rad = np.pi/2 - dec * np.pi/180
+    return np.array([np.sin(dec_rad)*np.cos(ra_rad), np.sin(dec_rad)*np.sin(ra_rad), np.cos(dec_rad)])
+
+
+def cartesian_to_spherical(vec):
+    """Get spherical values from cartesian."""
+    ra_rad = np.arctan(vec[1]/vec[0])
+    dec_rad = np.arctan(vec[2]/np.linalg.norm(vec))
+    return np.array([ra_rad * np.pi/180, 90 - dec_rad * np.pi/180]).T
+
+
+def lighten_color(color, amount=0.5):
+    """
+    Lightens the given color by multiplying (1-luminosity) by the given amount.
+
+    Input can be matplotlib color string, hex string, or RGB tuple. Make amount > 1 to darken.
+
+    Examples:
+    >> lighten_color('g', 0.3)
+    >> lighten_color('#F034A3', 0.6)
+    >> lighten_color((.3,.55,.1), 0.5)
+
+    """
+    import matplotlib.colors as mc
+    import colorsys
+    try:
+        c = mc.cnames[color]
+    except KeyError:
+        c = color
+    c = colorsys.rgb_to_hls(*mc.to_rgb(c))
+    return colorsys.hls_to_rgb(c[0], 1 - amount * (1 - c[1]), c[2])
+
+
 if __name__ == '__main__':
-    coords = np.loadtxt("/Users/runburg/github/gaia_project/dsph_search/candidate_coords.txt", delimiter=" ", dtype=float)
-    all_sky(coords)
+    all_sky()
