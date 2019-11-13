@@ -86,10 +86,12 @@ class Dwarf:
         self.gaia_data[radius] = data
         self.log.append(f'For radius {radius}; table loaded from {table}')
 
-    def search_loaded_gaia_table(self, radius, table):
+    def search_loaded_gaia_table(self, radii, table):
         """For a given GAIA table, search the region for a given radius."""
-        valid_rows = np.less([angular_distance(self.ra, self.dec, ra_obj, dec_obj) for (ra_obj, dec_obj) in zip(table['ra'].data, table['dec'].data)], radius*np.pi/180)
-        self.gaia_data[radius] = table[valid_rows]
+        distance_table = [angular_distance(self.ra, self.dec, ra_obj, dec_obj) for (ra_obj, dec_obj) in zip(table['ra'].data, table['dec'].data)]
+        for radius in radii:
+            valid_rows = np.less(distance_table, radius*np.pi/180)
+            self.gaia_data[radius] = table[valid_rows]
 
     def accepted(self, plot=False, output=False, log=True, verbose=True, summary='', coord_file_path="./"):
         """Celebrate a possible dwarf candidate."""
