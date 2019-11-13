@@ -8,7 +8,7 @@ Date: 27-09-2019 13:10
 
 """
 
-coords_list = [(260, 60), (100, -50), (0, -60), (341, 5.7), (37, -80)]
+coords_list = [(260, 60), (100, -50), (0, -60), (341, 5.7), (37, -80), (159, 51), (152, 10), (15, -35)]
 region_radius = 5
 # 15 degree close to galactic plane takes ~60 min
 num_cones = 10000000
@@ -49,4 +49,3 @@ pip3 install --user astroquery
 echo "Finished installing packages"
 ''')
         outfile.write(f"python3 -vu main.py {args_string}")
-
