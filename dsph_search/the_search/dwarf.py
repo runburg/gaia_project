@@ -102,7 +102,7 @@ class Dwarf:
         self.log.append('Summary: ' + summary)
 
         with open(coord_file_path, 'a') as outfile:
-            outfile.write(str(round(float(self.ra)/100, 2)) + ' ' + str(round(float(self.dec)/100, 2)) + '\n')
+            outfile.write(str(round(float(self.ra), 2)) + ' ' + str(round(float(self.dec), 2)) + '\n')
 
         if plot is True:
             parallax_histogram(self)
