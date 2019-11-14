@@ -7,7 +7,7 @@ Date: 27-09-2019 13:10
 
 
 """
-
+ #               Draco  | Carina |  Tuc IV/III | Pisces II | Hydrus I | Ursa Major | Leo I | Sculptor
 coords_list = [(260, 60), (100, -50), (0, -60), (341, 5.7), (37, -80), (159, 51), (152, 10), (15, -35)]
 region_radius = 5
 # 15 degree close to galactic plane takes ~60 min
