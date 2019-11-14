@@ -8,4 +8,4 @@ do
   sbatch ${file}
 done
 
-# rm *.slurm
+rm *.slurm
