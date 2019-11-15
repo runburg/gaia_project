@@ -107,7 +107,7 @@ def new_main(param_args):
         num_cones = int(num_cones)
     else:
         region_ra, region_dec = 250, 60
-        region_radius = 15
+        region_radius = 5
         # 15 degree close to galactic plane takes ~60 min
         num_cones = 10000000
         radii = [1.5, 1.0, 0.5]
@@ -115,6 +115,10 @@ def new_main(param_args):
     # standard paths
     infile = f'regions/region_ra{round(region_ra*100)}_dec{round(region_dec*100)}_rad{round(region_radius*100)}.vot'
     outfile = f'region_candidates/region_ra{round(region_ra*100)}_dec{round(region_dec*100)}_rad{round(region_radius*100)}_candidates.txt'
+    
+    with open(outfile, 'a') as fil:
+        fil.write(f'# successful candidates for region at ({region_ra}, {region_dec}) and radius {region_radius}')
+
     print(infile)
 
     try:
@@ -147,11 +151,7 @@ def new_main(param_args):
             else:
                 message += test_name + 'PASS'
         if all(dwa.tests):
-<<<<<<< HEAD
-            dwa.accepted(plot=True, output=False, summary=message, log=True, verbose=True, coord_file_path=outfile)
-=======
-            dwa.accepted(plot=False, output=False, summary=message, log=True, verbose=True, coord_file_path=outfile)
->>>>>>> 45cf07ad8e4e00f3e161b16e169b2f73c20415b3
+            dwa.accepted(plot=False, output=False, summary=message, log=False, verbose=False, coord_file_path=outfile)
             print("passed!")
         else:
             dwa.rejected(summary=message, log=False)
