@@ -134,7 +134,7 @@ def angular_density_test(dwarf, radii=None, print_to_stdout=False, density_toler
     # print(f'{dwarf.name}\t density ratio  {densities[-1]/densities[0]}\t {densities[-1]/densities[-2]}\t{densities[-2]/densities[0]}')
 
 
-def poisson_overdensity_test(dwarf, table, table_radius, sigma=2, print_to_stdout=False):
+def poisson_overdensity_test(dwarf, table, table_radius, sigma=1.5, print_to_stdout=False):
     """Look for overdensities in cone using Poisson statistics."""
     # Get object counts for all available tables
     test_lengths = {radius: len(dwa_table) for (radius, dwa_table) in dwarf.gaia_data.items()}

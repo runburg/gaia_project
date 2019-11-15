@@ -7,14 +7,22 @@ Date: 27-09-2019 13:10
 
 
 """
+import numpy as np
+
  #               Draco  | Carina |  Tuc IV/III | Pisces II | Hydrus I | Ursa Major | Leo I | Sculptor
-coords_list = [(260, 60), (100, -50), (0, -60), (341, 5.7), (37, -80), (159, 51), (152, 10), (15, -35)]
+# coords_list = [(260, 60), (100, -50), (0, -60), (341, 5.7), (37, -80), (159, 51), (152, 10), (15, -35), (32, 35), (175, -18), (175, -0.5), (210, 15), (159, 51), (130, 62), (150, 15), (35, 20), (15, 20), (185, -30), (298, -22), (319, -51)]
+known = np.loadtxt('./the_search/tuning/tuning_known_dwarfs.txt', delimiter=',', dtype=str)
+
+# labels = [f"$\mathrm{{{know}}}$" for know in known[:, 0]]
+ra_known = known[:, 1].astype(np.float) + np.random.randint(-2, 3, size=len(known))
+dec_known = known[:, 2].astype(np.float) + np.random.randint(-2, 3, size=len(ra_known))
+
 region_radius = 5
 # 15 degree close to galactic plane takes ~60 min
-num_cones = 10000000
+num_cones = 7500000
 radii = [1.5, 1.0, 0.5]
 
-for num, coords in enumerate(coords_list):
+for num, coords in enumerate(zip(ra_known, dec_known)):
     args = [*coords, region_radius, num_cones, *radii]
     args_string = " ".join([str(arg) for arg in args])
 
