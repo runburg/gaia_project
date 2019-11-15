@@ -147,7 +147,11 @@ def new_main(param_args):
             else:
                 message += test_name + 'PASS'
         if all(dwa.tests):
+<<<<<<< HEAD
             dwa.accepted(plot=True, output=False, summary=message, log=True, verbose=True, coord_file_path=outfile)
+=======
+            dwa.accepted(plot=False, output=False, summary=message, log=True, verbose=True, coord_file_path=outfile)
+>>>>>>> 45cf07ad8e4e00f3e161b16e169b2f73c20415b3
             print("passed!")
         else:
             dwa.rejected(summary=message, log=False)
