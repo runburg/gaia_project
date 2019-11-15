@@ -187,52 +187,121 @@ def all_sky():
 
     colors = ['xkcd:mauve', 'xkcd:coral', 'xkcd:pinkish purple', 'xkcd:tangerine', 'xkcd:vermillion', 'xkcd:tomato']
 
-    known = np.loadtxt('/Users/runburg/github/gaia_project/dsph_search/the_search/tuning/tuning_known_dwarfs.txt', delimiter=',', dtype=str)
+    known = np.loadtxt('./dsph_search/the_search/tuning/tuning_known_dwarfs.txt', delimiter=',', dtype=str)
 
     ra_known = known[:, 1].astype(np.float)
     dec_known = known[:, 2].astype(np.float)
 
-    fig.s = 20
-    fig.mw_scatter(ra_known*u.degree, dec_known*u.degree, 'xkcd:light grey blue')
-
-    for color, file in zip(colors, glob.glob('region_candidates/*.txt')):
+    for color, file in zip(colors, glob.glob('./dsph_search/region_candidates/*.txt')):
         candidate_list = np.loadtxt(file, delimiter=" ")
+        print(len(candidate_list))
         file = file.split('_')
-        ra = file[1].strip('ra').astype(np.float)/100
-        dec = file[2].strip('dec').astype(np.float)/100
-        radius = file[3].strip('rad').astype(np.float)/100
-
+        ra = float(file[3].strip('ra'))/100
+        dec = float(file[4].strip('dec'))/100
+        radius = float(file[5].strip('rad'))/100
+        print( ra, dec, radius)
         circle_points = get_points_of_circle(ra, dec, radius)
 
         # use mw_scatter instead of scatter because we want a background
         fig.s = 1
         fig.mw_scatter(circle_points[:, 0]*u.degree, circle_points[:, 1]*u.degree, lighten_color(color, amount=1.5))
 
-        fig.s = 10
-        fig.mw_scatter(candidate_list[:, 0]*u.degree, candidate_list[:, 1]*u.degree, color)
+        if len(candidate_list) > 0:
+            fig.s = 1
+            fig.mw_scatter(candidate_list[:, 0]*u.degree, candidate_list[:, 1]*u.degree, color)
 
-    fig.savefig('/Users/runburg/github/gaia_project/dsph_search/all_sky_candidates.pdf')
+    fig.s = 10
+    fig.mw_scatter(ra_known*u.degree, dec_known*u.degree, 'xkcd:light grey blue')
+
+    fig.savefig('./dsph_search/all_sky_candidates.pdf')
+
+
+def new_all_sky():
+    "Plot candidates without Milky Way background."
+    import astropy.coordinates as coord
+    from astropy import units as u
+
+    fig = plt.figure(figsize=(20, 10))
+    ax = fig.add_subplot(111, projection="hammer")
+    ax.set_facecolor("xkcd:black")
+    ax.grid(color=lighten_color('xkcd:greyish blue', amount=1.5), zorder=0)
+    ax.tick_params(axis='x', colors='xkcd:white')
+
+    colors = ['xkcd:mauve', 'xkcd:coral', 'xkcd:pinkish purple', 'xkcd:tangerine', 'xkcd:vermillion', 'xkcd:tomato', 'xkcd:salmon', 'xkcd:dark peach', 'xkcd:marigold']
+
+    known = np.loadtxt('./dsph_search/the_search/tuning/tuning_known_dwarfs.txt', delimiter=',', dtype=str)
+
+    labels = [f"$\mathrm{{{know}}}$" for know in known[:, 0]]
+    ra_known = known[:, 1].astype(np.float)
+    dec_known = known[:, 2].astype(np.float)
+
+    ra = coord.Angle(ra_known*u.degree)
+    ra = ra.wrap_at(180*u.degree)
+    dec = coord.Angle(dec_known*u.degree)
+    for (l, r, d) in zip(labels, ra, dec):
+        ax.scatter(r.radian, d.radian, color='xkcd:light grey blue', marker=l, s=700, zorder=100)
+    print(len(glob.glob('./dsph_search/region_candidates/*.txt')))
+
+    for color, file in zip(colors, glob.glob('./dsph_search/region_candidates/*.txt')):
+        candidate_list = np.loadtxt(file, delimiter=" ")
+        print(len(candidate_list))
+        file = file.split('_')
+        ra = float(file[3].strip('ra'))/100
+        dec = float(file[4].strip('dec'))/100
+        radius = float(file[5].strip('rad'))/100
+        print( ra, dec, radius)
+        circle_points = get_points_of_circle(ra, dec, radius)
+
+        ra = coord.Angle(circle_points[:, 0]*u.degree)
+        ra = ra.wrap_at(180*u.degree)
+        dec = coord.Angle(circle_points[:, 1]*u.degree)
+        ax.scatter(ra.radian, dec.radian, color=lighten_color(color, amount=1.5), s=1, zorder=50)
+
+        if len(candidate_list) > 0:
+            ra = coord.Angle(candidate_list[:, 0]*u.degree)
+            ra = ra.wrap_at(180*u.degree)
+            dec = coord.Angle(candidate_list[:, 1]*u.degree)
+            ax.scatter(ra.radian, dec.radian, color=color, s=2, zorder=500)
+
+    fig.savefig('./dsph_search/all_sky_candidates.pdf')
 
 
 def get_points_of_circle(ra_center, dec_center, radius):
     """Get coordinates of circle for plotting."""
-    n = 200
-    ra = np.linspace(0, 360, num=n)
-    dec = 90 - np.ones(n)*radius
-
-    coords = [np.array([raa, decc]) for (raa, decc) in zip(ra, dec)]
-    coords_prime = np.ones(len(coords))
-
-    for i, (phi, theta) in enumerate(coords):
-        # https://en.wikipedia.org/wiki/Rodrigues%27_rotation_formula
-        a = spherical_to_cartesian(phi, theta)
-        b = spherical_to_cartesian(ra, dec)
-        k = np.cross(a, b) / np.linalg.norm(np.cross(a, b))
-        rotation_angle = np.arccos(a.dot(b)/np.linalg.norm(a)/np.linalg.norm(b))
-        rotated_vector = a + np.sin(rotation_angle)*np.cross(k, a) + (1-np.cos(rotation_angle))*np.cross(k, np.cross(k, a))
-        coords_prime[i] = cartesian_to_spherical(rotated_vector)
-
-    return coords_prime
+    n = 100
+    coord_gen = np.linspace(0, 2*np.pi, num=n)
+    x = radius * np.cos(coord_gen)
+    y = radius * np.sin(coord_gen)
+    coords_prime = []
+    for xx, yy in zip(x, y):
+        coords_prime.append((ra_center + xx, dec_center + yy))
+    # flag_neg = False
+    # if dec_center < 0:
+    #     dec_center *= -1
+    #     flag_neg = True
+    # ra = np.linspace(0, 360, num=n)
+    # dec = np.ones(n)*radius
+    #
+    # a = spherical_to_cartesian(0, 0)
+    # b = spherical_to_cartesian(ra_center, dec_center)
+    # k = np.cross(a, b) / np.linalg.norm(np.cross(a, b))
+    # rotation_angle = (90 - dec_center)*np.pi/180
+    #
+    # coords = np.array([[raa, decc] for (raa, decc) in zip(ra, dec)])
+    # coords_prime = np.copy(coords)
+    # print(coords_prime)
+    # for i, (phi, theta) in enumerate(coords):
+    #     # https://en.wikipedia.org/wiki/Rodrigues%27_rotation_formula
+    #     vect = spherical_to_cartesian(phi, theta)
+    #     rotated_vector = vect * np.cos(rotation_angle) + np.cross(k, vect)*np.sin(rotation_angle) + np.dot(k, vect) * (1-np.cos(rotation_angle))*vect
+    #     coords_prime[i] = cartesian_to_spherical(rotated_vector)
+    #
+    #
+    # if flag_neg is True:
+    #     coords_prime[:, 1] = coords_prime[:, 1] - 90
+    #
+    print(coords_prime)
+    return np.array(coords_prime)
 
 
 def icrs_to_galactic(ra_icrs, dec_icrs):
@@ -252,9 +321,11 @@ def spherical_to_cartesian(ra, dec):
 
 def cartesian_to_spherical(vec):
     """Get spherical values from cartesian."""
-    ra_rad = np.arctan(vec[1]/vec[0])
-    dec_rad = np.arctan(vec[2]/np.linalg.norm(vec))
-    return np.array([ra_rad * np.pi/180, 90 - dec_rad * np.pi/180]).T
+    ra_rad = np.arctan2(vec[1], vec[0])
+    dec_rad = np.arccos(vec[2]/np.linalg.norm(vec))
+    if ra_rad < 0:
+        ra_rad += 2*np.pi
+    return np.array([ra_rad * 180/np.pi, 90 - dec_rad * 180/np.pi]).T
 
 
 def lighten_color(color, amount=0.5):
@@ -280,4 +351,6 @@ def lighten_color(color, amount=0.5):
 
 
 if __name__ == '__main__':
-    all_sky()
+    new_all_sky()
+    # all_sky()
+    # get_points_of_circle(30, 60, 5)
