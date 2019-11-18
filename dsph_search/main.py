@@ -56,7 +56,7 @@ def look_at_tuned_parameter_values(plot=False):
     """Check params from tuning."""
     dwarflist = []
     rando = []
-    for dwa in np.loadtxt('the_search/tuning/tuning_known_dwarfs.txt', dtype=str, delimiter=','):
+    for dwa in np.loadtxt('the_search/tuning/tuning_known_dwarfs_old_names.txt', dtype=str, delimiter=','):
         dwarflist.append([dwa[1].astype(np.float), dwa[2].astype(np.float), dwa[0]])
     for ran in np.loadtxt('the_search/tuning/tuning_random.txt', delimiter=','):
         rando.append([ran[0].astype(np.float), ran[1].astype(np.float)])
@@ -115,7 +115,7 @@ def new_main(param_args):
     # standard paths
     infile = f'regions/region_ra{round(region_ra*100)}_dec{round(region_dec*100)}_rad{round(region_radius*100)}.vot'
     outfile = f'region_candidates/region_ra{round(region_ra*100)}_dec{round(region_dec*100)}_rad{round(region_radius*100)}_candidates.txt'
-    
+
     with open(outfile, 'a') as fil:
         fil.write(f'# successful candidates for region at ({region_ra}, {region_dec}) and radius {region_radius}')
 
@@ -191,8 +191,8 @@ if __name__ == "__main__":
     # write_candidate_coords()
     # create_sample_dwarfs()
     # d = load_sample_dwarfs()
-    # look_at_tuned_parameter_values()
-    new_main(sys.argv)
+    look_at_tuned_parameter_values()
+    # new_main(sys.argv)
     # dra = Dwarf(260.05972916666667, 57.92121944444444, name='Draco')
     # dra.load_gaia_table('./candidates/Draco/vots/Draco_500.vot')
     # print(dra.gaia_data[-1][-1][[1,2,3]])
