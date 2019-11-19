@@ -17,7 +17,7 @@ import numpy as np
 # dec_known = known[:, 2].astype(np.float) + np.random.randint(-2, 3, size=len(ra_known))
 # ##
 
-label = "Sculptor"
+labels = "Sculptor"
 ra_known = 015.0392
 dec_known =  -33.7089
 

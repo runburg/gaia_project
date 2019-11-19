@@ -121,6 +121,7 @@ def new_main(param_args):
 
     print(infile)
 
+    # first try to find file
     try:
         gaia_table = Table.read(infile, format='votable')
         print("table loaded from regions")
@@ -135,7 +136,7 @@ def new_main(param_args):
         print("Finished filtering Gaia table")
 
     for coords in get_cone_in_region(region_ra, region_dec, region_radius, num_cones=num_cones):
-        print(f"found coords {coords}")
+        # print(f"found coords {coords}")
         dwa = Dwarf(*coords)
 
         dwa.search_loaded_gaia_table(radii, gaia_table)
@@ -152,10 +153,10 @@ def new_main(param_args):
                 message += test_name + 'PASS'
         if all(dwa.tests):
             dwa.accepted(plot=False, output=False, summary=message, log=False, verbose=False, coord_file_path=outfile)
-            print("passed!")
+            # print("passed!")
         else:
             dwa.rejected(summary=message, log=False)
-            print("failed")
+            # print("failed")
 
 
 def main(num_cones=1000, point_start=0, point_end=None, plot=False):
@@ -187,12 +188,13 @@ params = {'test_area': 18, 'test_percentage': 0.4547369094279682, 'num_maxima': 
 # params = {'test_area': 42, 'test_percentage': 0.3380960890954652, 'num_maxima': 8, 'density_tolerance': 1.239830538392538}
 
 if __name__ == "__main__":
+    new_main(sys.argv)
+
     # main(num_cones=10000, point_start=0, point_end=None)
     # write_candidate_coords()
     # create_sample_dwarfs()
     # d = load_sample_dwarfs()
-    look_at_tuned_parameter_values()
-    # new_main(sys.argv)
+    # look_at_tuned_parameter_values()
     # dra = Dwarf(260.05972916666667, 57.92121944444444, name='Draco')
     # dra.load_gaia_table('./candidates/Draco/vots/Draco_500.vot')
     # print(dra.gaia_data[-1][-1][[1,2,3]])

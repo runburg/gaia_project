@@ -147,7 +147,7 @@ def poisson_overdensity_test(dwarf, table, table_radius, sigma=1.5, print_to_std
     for (radius1, radius2) in test_cases:
         # mean is standard deviation
         poisson_sd = np.floor(test_lengths[radius2] * radius1**2/radius2**2)
-        print(f"{test_lengths[radius1]} compared to {sigma * poisson_sd} for {(radius1, radius2)}")
+        # print(f"{test_lengths[radius1]} compared to {sigma * poisson_sd} for {(radius1, radius2)}")
         if test_lengths[radius1] > sigma*poisson_sd:
             log_message = f"success at {radius1, radius2} with sd {poisson_sd} and result {test_lengths[radius1]-poisson_sd}"
             if print_to_stdout is True:
