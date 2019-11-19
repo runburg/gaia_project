@@ -56,9 +56,13 @@ def look_at_tuned_parameter_values(plot=False):
     """Check params from tuning."""
     dwarflist = []
     rando = []
+<<<<<<< HEAD
     for dwa in np.loadtxt('the_search/tuning/tuning_known_dwarfs_old_names.txt', dtype=str, delimiter=','):
+=======
+    for dwa in np.loadtxt('./dsph_search/the_search/tuning/tuning_known_dwarfs.txt', dtype=str, delimiter=','):
+>>>>>>> c5a23791202de08c5bedd19a2c4b28d7f2697365
         dwarflist.append([dwa[1].astype(np.float), dwa[2].astype(np.float), dwa[0]])
-    for ran in np.loadtxt('the_search/tuning/tuning_random.txt', delimiter=','):
+    for ran in np.loadtxt('./dsph_search/the_search/tuning/tuning_random.txt', delimiter=','):
         rando.append([ran[0].astype(np.float), ran[1].astype(np.float)])
 
     # Execute cuts.
@@ -66,7 +70,7 @@ def look_at_tuned_parameter_values(plot=False):
     set_of_dwarfs = [dwarflist, rando]
     for list_of_dwarfs, known, label in zip(set_of_dwarfs, [True, False], ['Known', 'Random']):
         dwarfpass = 0
-        for dwarf in load_sample_dwarfs(list_of_dwarfs, known=known, path='the_search/tuning/test_candidates'):
+        for dwarf in load_sample_dwarfs(list_of_dwarfs, known=known, path='./dsph_search/the_search/tuning/test_candidates'):
             for cut in cutlist:
                 pass1 = cuts.proper_motion_test(dwarf, cut=cut, print_to_stdout=True, **params)
                 pass2 = cuts.angular_density_test(dwarf, print_to_stdout=True, **params)
