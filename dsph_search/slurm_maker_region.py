@@ -17,10 +17,10 @@ labels = known[:, 0]
 ra_known = known[:, 1].astype(np.float) + np.random.randint(-2, 3, size=len(known))
 dec_known = known[:, 2].astype(np.float) + np.random.randint(-2, 3, size=len(ra_known))
 
-region_radius = 5
+region_radius = 3.16
 # 15 degree close to galactic plane takes ~60 min
 num_cones = 7500000
-radii = [1.5, 1.0, 0.5]
+radii = [1.0, 0.316, 0.1, 0.0316, 0.01]
 
 for num, (lab, *coords) in enumerate(zip(labels, ra_known, dec_known)):
     args = [*coords, region_radius, num_cones, *radii]
