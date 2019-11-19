@@ -220,6 +220,7 @@ def new_all_sky():
     "Plot candidates without Milky Way background."
     import astropy.coordinates as coord
     from astropy import units as u
+    from matplotlib import cm
 
     fig = plt.figure(figsize=(20, 10))
     ax = fig.add_subplot(111, projection="hammer")
@@ -227,7 +228,7 @@ def new_all_sky():
     ax.grid(color=lighten_color('xkcd:greyish blue', amount=1.5), zorder=0)
     ax.tick_params(axis='x', colors='xkcd:white')
 
-    colors = ['xkcd:mauve', 'xkcd:coral', 'xkcd:pinkish purple', 'xkcd:tangerine', 'xkcd:vermillion', 'xkcd:tomato', 'xkcd:salmon', 'xkcd:dark peach', 'xkcd:marigold']
+    # colors = ['xkcd:mauve', 'xkcd:coral', 'xkcd:pinkish purple', 'xkcd:tangerine', 'xkcd:vermillion', 'xkcd:tomato', 'xkcd:salmon', 'xkcd:dark peach', 'xkcd:marigold']
 
     known = np.loadtxt('./dsph_search/the_search/tuning/tuning_known_dwarfs.txt', delimiter=',', dtype=str)
 
@@ -240,16 +241,18 @@ def new_all_sky():
     dec = coord.Angle(dec_known*u.degree)
     for (l, r, d) in zip(labels, ra, dec):
         ax.scatter(r.radian, d.radian, color='xkcd:light grey blue', marker=l, s=700, zorder=100)
-    print(len(glob.glob('./dsph_search/region_candidates/*.txt')))
+    # print(len(glob.glob('./dsph_search/region_candidates/*.txt')))
 
-    for color, file in zip(colors, glob.glob('./dsph_search/region_candidates/*.txt')):
+    file_list = glob.glob('./dsph_search/region_candidates/*.txt')
+    colors = [cm.Wistia(i) for i in np.linspace(0, 1, num=len(file_list))]
+    for color, file in zip(colors, file_list):
         candidate_list = np.loadtxt(file, delimiter=" ")
-        print(len(candidate_list))
+        # print(len(candidate_list))
         file = file.split('_')
         ra = float(file[3].strip('ra'))/100
         dec = float(file[4].strip('dec'))/100
         radius = float(file[5].strip('rad'))/100
-        print( ra, dec, radius)
+        # print( ra, dec, radius)
         circle_points = get_points_of_circle(ra, dec, radius)
 
         ra = coord.Angle(circle_points[:, 0]*u.degree)
@@ -300,7 +303,7 @@ def get_points_of_circle(ra_center, dec_center, radius):
     # if flag_neg is True:
     #     coords_prime[:, 1] = coords_prime[:, 1] - 90
     #
-    print(coords_prime)
+    # print(coords_prime)
     return np.array(coords_prime)
 
 
