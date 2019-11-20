@@ -67,28 +67,77 @@ def gaia_region_search(ra, dec, outfile, radius=10, sigma=3, pm_threshold=5, bp_
     return job
 
 
-def get_cone_in_region(ra, dec, region_radius, max_radius=1.5, limit=15, num_cones=1000000000):
+def azimuthal_equidistant_coordinates(gaia_table, region_ra, region_dec):
+    """Return cartesian coordinates from GAIA table using azimuthal equidistant projection."""
+    # http://mathworld.wolfram.com/AzimuthalEquidistantProjection.html
+
+    ra_rad = np.deg2rad(region_ra)
+    dec_rad = np.deg2rad(region_dec)
+
+    ra_gaia_rad = np.deg2rad(gaia_table['ra'])
+    dec_gaia_rad = np.deg2rad(gaia_table['dec'])
+
+    c = np.arccos(np.sin(dec_rad)*np.sin(dec_gaia_rad)+np.cos(dec_rad)*np.cos(dec_gaia_rad)*np.cos(ra_gaia_rad-ra_rad))
+
+    k_prime = c / np.sin(c)
+
+    x = k_prime * np.cos(dec_gaia_rad) * np.sin(ra_gaia_rad - ra_rad)
+    y = k_prime * (np.cos(dec_rad)*np.sin(dec_gaia_rad) - np.sin(dec_rad)*np.cos(dec_gaia_rad)*np.cos(ra_gaia_rad-ra_rad))
+
+    return x, y
+
+
+def inverse_azimuthal_equidistant_coordinates(x, y, region_ra, region_dec):
+    """Given (x, y) positions from AEP, return (ra, dec)."""
+    # http://mathworld.wolfram.com/AzimuthalEquidistantProjection.html
+    ra_rad = np.deg2rad(region_ra)
+    dec_rad = np.deg2rad(region_dec)
+
+    c = np.sqrt(x**2 + y**2)
+
+    phi = np.arcsin(np.cos(c)*np.sin(dec_rad) + y/c * np.sin(c)*np.cos(dec_rad))
+    lamb = ra_rad + np.arctan2(-x*np.sin(c), (c*np.cos(dec_rad)*np.cos(c) - y*np.sin(dec_rad)*np.sin(c)))
+
+    return np.rad2deg(lamb), np.rad2deg(phi)
+
+
+def get_cone_in_region(ra, dec, region_radius, max_radius=1, limit=15, num_cones=10000):
     """Generate cones given a circular region of region_radius that won't bleed out of the region."""
-    for point in range(num_cones):
-        if point % 1000000 == 0:
-            print(f"At cone {point}")
-        point += 0.5
+    sample_region_size = int(np.sqrt(num_cones))
+    sample_range_locations = np.linspace(-region_radius+max_radius, region_radius+max_radius, num=sample_region_size)
 
-        # equally spaced coordinates in degrees
-        theta = 180/np.pi * (np.arccos(1 - 2 * point / num_cones) - np.pi/2)
-        phi = (180 * (1 + 5**0.5) * point) % 360
+    x_center = np.sin(np.deg2rad(dec))*np.cos(np.deg2rad(ra))
+    y_center = np.sin(np.deg2rad(dec))*np.sin(np.deg2rad(ra))
+    z_center = np.cos(np.deg2rad(dec))
 
-        # if out of declination range, continue
-        if abs(dec - theta) > region_radius - max_radius:
-            continue
-        else:
-            ang_dist = angular_distance(ra, dec, phi, theta)
-            # if outside region, continue
-            if ang_dist > (region_radius - max_radius) * np.pi/180:
-                continue
-            elif outside_of_galactic_plane(phi, theta) is True:
-                # if outside of galactic plane
-                yield (phi, theta)
+    x_locations = x_center + sample_range_locations
+    y_locations = y_center + sample_range_locations
+    z_locations = np.sqrt((max_radius-region_radius)**2-x_locations**2-y_locations**2)
+
+    theta = np.rad2deg(np.arccos(z_locations/np.sqrt(x_locations**2+y_locations**2+z_locations**2)))
+    phi = np.rad2deg(np.arctan2(y_locations, x_locations))
+
+    print([(ph, th) for ph,th in zip(theta, phi)])
+    # for point in range(num_cones):
+    #     if point % 1000000 == 0:
+    #         print(f"At cone {point}")
+    #     point += 0.5
+    #
+    #     # equally spaced coordinates in degrees
+    #     theta = 180/np.pi * (np.arccos(1 - 2 * point / num_cones) - np.pi/2)
+    #     phi = (180 * (1 + 5**0.5) * point) % 360
+    #
+    #     # if out of declination range, continue
+    #     if abs(dec - theta) > region_radius - max_radius:
+    #         continue
+    #     else:
+    #         ang_dist = angular_distance(ra, dec, phi, theta)
+    #         # if outside region, continue
+    #         if ang_dist > (region_radius - max_radius) * np.pi/180:
+    #             continue
+    #         elif outside_of_galactic_plane(phi, theta) is True:
+    #             # if outside of galactic plane
+    #             yield (phi, theta)
 
 
 def outside_of_galactic_plane(ra, dec, limit=15):
@@ -110,7 +159,7 @@ def angular_distance(ra, dec, ra_cone, dec_cone):
     ra_diff_rad = abs(np.deg2rad(ra_diff))
     dec_rad = np.deg2rad(dec)
     dec_cone_rad = np.deg2rad(dec_cone)
-    # ang_dist = np.arctan(np.sqrt((np.cos(dec_cone_rad) * np.sin(ra_diff_rad))**2 + (np.cos(dec_rad)*np.sin(dec_cone_rad)-np.sin(dec_rad)*np.cos(dec_cone_rad)*np.cos(ra_diff_rad))**2) /(np.sin(dec_rad)*np.sin(dec_cone_rad)+np.cos(dec_rad)*np.cos(dec_cone_rad)*np.cos(ra_diff_rad)))
+    # # ang_dist = np.arctan(np.sqrt((np.cos(dec_cone_rad) * np.sin(ra_diff_rad))**2 + (np.cos(dec_rad)*np.sin(dec_cone_rad)-np.sin(dec_rad)*np.cos(dec_cone_rad)*np.cos(ra_diff_rad))**2) /(np.sin(dec_rad)*np.sin(dec_cone_rad)+np.cos(dec_rad)*np.cos(dec_cone_rad)*np.cos(ra_diff_rad)))
     ang_dist = np.arccos(np.sin(dec_rad)*np.sin(dec_cone_rad) +np.cos(dec_rad)*np.cos(dec_cone_rad)*np.cos(ra_diff_rad))
 
     return ang_dist
@@ -163,6 +212,7 @@ def fibonnaci_sphere(num_points, limit=16, point_start=0, point_end=None):
 
 
 if __name__ == '__main__':
-    gaia_region_search(90, 90)
-    for _ in range(20):
-        print('{}, {}'.format(*random_cones_outside_galactic_plane()))
+    # gaia_region_search(90, 90)
+    # for _ in range(20):
+    #     print('{}, {}'.format(*random_cones_outside_galactic_plane()))
+    get_cone_in_region(10, 20, 5, num_cones=20)

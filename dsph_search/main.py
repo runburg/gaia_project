@@ -14,7 +14,8 @@ import sys
 from astropy.table import Table
 from the_search.dwarf import Dwarf
 from the_search import cuts
-from the_search.utils import fibonnaci_sphere, get_cone_in_region, gaia_region_search, outside_of_galactic_plane
+from the_search.utils import fibonnaci_sphere, get_cone_in_region, gaia_region_search, outside_of_galactic_plane, azimuthal_equidistant_coordinates, inverse_azimuthal_equidistant_coordinates
+from the_search.plots import get_points_of_circle
 
 warnings.filterwarnings("ignore")
 
@@ -119,44 +120,75 @@ def new_main(param_args):
     with open(outfile, 'a') as fil:
         fil.write(f'# successful candidates for region at ({region_ra}, {region_dec}) and radius {region_radius}')
 
-    print(infile)
-
     # first try to find file
     try:
         gaia_table = Table.read(infile, format='votable')
-        print("table loaded from regions")
-        print(infile)
-        print(len(gaia_table))
+        print(f"Table loaded from: {infile}")
+        print(f"Number of objects: {len(gaia_table)}")
     except FileNotFoundError:
         job = gaia_region_search(region_ra, region_dec, outfile=infile, radius=region_radius)
         gaia_table = job.get_results()
         print("Finished querying Gaia")
         gaia_table = gaia_table[[outside_of_galactic_plane(ra, dec) for (ra, dec) in zip(gaia_table['ra'], gaia_table['dec'])]]
-        gaia_table.write(infile, overwrite='True', format='votable')
         print("Finished filtering Gaia table")
+        gaia_table['x'], gaia_table['y'] = azimuthal_equidistant_coordinates(gaia_table, region_ra, region_dec)
+        print("Finished calculating x-y values done")
+        print(f"Table dumped to: {infile}")
+        print(f"Number of objects: {len(gaia_table)}")
+        gaia_table.write(infile, overwrite='True', format='votable')
 
-    for coords in get_cone_in_region(region_ra, region_dec, region_radius, num_cones=num_cones):
-        # print(f"found coords {coords}")
-        dwa = Dwarf(*coords)
 
-        dwa.search_loaded_gaia_table(radii, gaia_table)
+    import matplotlib.pyplot as plt
+    # # test_cases = [(radius1, radius2) for radius1 in radii for radius2 in radii+[region_radius] if radius1 < radius2]
+    # # print(test_cases)
+    for radius in radii:
+        poisson_sd = len(gaia_table) * radius**2/region_radius**2
 
-        # print("filled tables")
-        cuts.poisson_overdensity_test(dwa, gaia_table, region_radius)
-        # print("finished cut")
+        histo, xedges, yedges = np.histogram2d(gaia_table['x'], gaia_table['y'], bins=region_radius//radius)
+        bin_width = (xedges[1]-xedges[0])/2
 
-        message = ''
-        for test, test_name in zip(dwa.tests, ['poisson overdensity test']):
-            if test is False:
-                message += test_name + 'FAIL'
-            else:
-                message += test_name + 'PASS'
-        if all(dwa.tests):
-            dwa.accepted(plot=False, output=False, summary=message, log=False, verbose=False, coord_file_path=outfile)
-            # print("passed!")
-        else:
-            dwa.rejected(summary=message, log=False)
-            # print("failed")
+        passing_indices_y, passing_indices_x = np.argwhere(np.less(poisson_sd*4, histo) == 1).T
+        passing_ra, passing_dec = inverse_azimuthal_equidistant_coordinates(xedges[passing_indices_x]+bin_width, yedges[passing_indices_y]+bin_width, region_ra, region_dec)
+
+        with open(outfile, 'w') as outfl:
+            for ra, dec in zip(passing_ra, passing_dec):
+                outfl.write(f"{ra} {dec}")
+
+    for radius in radii:
+        fig, ax = plt.subplots()
+        ax.hist2d(gaia_table['x'], gaia_table['y'], bins=region_radius//radius)
+        fig.savefig(f'sculptor_plots/sculptor_histo_{radius}.pdf')
+
+    fig, ax = plt.subplots()
+    ax.scatter(passing_ra, passing_dec, s=1)
+    ax.set_xlim(left=12.4, right=17.5)
+    ax.set_ylim(bottom=-30.5, top=-36.9)
+    # ax.scatter(*get_points_of_circle(region_ra, region_dec, region_radius).T, s=1)
+    fig.savefig('sculptor_plots/sculptor_passing_coords_001.pdf')
+
+
+    # for coords in get_cone_in_region(region_ra, region_dec, region_radius, num_cones=num_cones):
+    #     # print(f"found coords {coords}")
+    #     dwa = Dwarf(*coords)
+    #
+    #     dwa.search_loaded_gaia_table(radii, gaia_table)
+    #
+    #     # print("filled tables")
+    #     cuts.poisson_overdensity_test(dwa, gaia_table, region_radius)
+    #     # print("finished cut")
+    #
+    #     message = ''
+    #     for test, test_name in zip(dwa.tests, ['poisson overdensity test']):
+    #         if test is False:
+    #             message += test_name + 'FAIL'
+    #         else:
+    #             message += test_name + 'PASS'
+    #     if all(dwa.tests):
+    #         dwa.accepted(plot=False, output=False, summary=message, log=False, verbose=False, coord_file_path=outfile)
+    #         # print("passed!")
+    #     else:
+    #         dwa.rejected(summary=message, log=False)
+    #         # print("failed")
 
 
 def main(num_cones=1000, point_start=0, point_end=None, plot=False):
@@ -188,7 +220,10 @@ params = {'test_area': 18, 'test_percentage': 0.4547369094279682, 'num_maxima': 
 # params = {'test_area': 42, 'test_percentage': 0.3380960890954652, 'num_maxima': 8, 'density_tolerance': 1.239830538392538}
 
 if __name__ == "__main__":
+    import time
+    start_time = time.time()
     new_main(sys.argv)
+    print("--- %s seconds ---" % (time.time() - start_time))
 
     # main(num_cones=10000, point_start=0, point_end=None)
     # write_candidate_coords()
