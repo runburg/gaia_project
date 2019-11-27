@@ -15,7 +15,7 @@ from astropy.table import Table
 from the_search.dwarf import Dwarf
 from the_search import cuts
 from the_search.utils import fibonnaci_sphere, get_cone_in_region, gaia_region_search, outside_of_galactic_plane, azimuthal_equidistant_coordinates, inverse_azimuthal_equidistant_coordinates
-from the_search.plots import get_points_of_circle
+from the_search.plots import get_points_of_circle, convolved_histograms, convolved_histograms_1d, new_all_sky
 
 warnings.filterwarnings("ignore")
 
@@ -104,7 +104,8 @@ def new_main(param_args):
     """Search region of sky."""
     # set parameters of search
     if len(param_args) > 1:
-        region_ra, region_dec, region_radius, num_cones, *radii = [float(arf) for arf in param_args[1:]]
+        name = param_args[1]
+        region_ra, region_dec, region_radius, num_cones, *radii = [float(arf) for arf in param_args[2:]]
         num_cones = int(num_cones)
     else:
         region_ra, region_dec = 250, 60
@@ -112,6 +113,9 @@ def new_main(param_args):
         # 15 degree close to galactic plane takes ~60 min
         num_cones = 10000000
         radii = [1.5, 1.0, 0.5]
+
+    minimum_count = 2
+    sigma_threshhold = 3
 
     # standard paths
     infile = f'regions/region_ra{round(region_ra*100)}_dec{round(region_dec*100)}_rad{round(region_radius*100)}.vot'
@@ -129,7 +133,7 @@ def new_main(param_args):
         job = gaia_region_search(region_ra, region_dec, outfile=infile, radius=region_radius)
         gaia_table = job.get_results()
         print("Finished querying Gaia")
-        gaia_table = gaia_table[[outside_of_galactic_plane(ra, dec) for (ra, dec) in zip(gaia_table['ra'], gaia_table['dec'])]]
+        gaia_table = gaia_table[outside_of_galactic_plane(gaia_table['ra'], gaia_table['dec'])]
         print("Finished filtering Gaia table")
         gaia_table['x'], gaia_table['y'] = azimuthal_equidistant_coordinates(gaia_table, region_ra, region_dec)
         print("Finished calculating x-y values done")
@@ -137,35 +141,65 @@ def new_main(param_args):
         print(f"Number of objects: {len(gaia_table)}")
         gaia_table.write(infile, overwrite='True', format='votable')
 
+    # ## NEW STUFF
+    from astropy import convolution
 
-    import matplotlib.pyplot as plt
-    # # test_cases = [(radius1, radius2) for radius1 in radii for radius2 in radii+[region_radius] if radius1 < radius2]
-    # # print(test_cases)
+    # bin data at finest resolution
+    min_radius = min(radii)
+    histo, xedges, yedges = np.histogram2d(gaia_table['x'], gaia_table['y'], bins=region_radius//min_radius)
+    # print(histo.shape)
+    # put bins in degrees
+    xedges *= 180/np.pi
+    yedges *= 180/np.pi
+
+    # set bins for plotting
+    X, Y = np.meshgrid(xedges, yedges)
+    histo_mask = np.less(X[:-1, :-1]**2 + Y[:-1, :-1]**2, region_radius**2)
+
+    # convolve the histogram with different size tophats
+    convolved_data = []
     for radius in radii:
-        poisson_sd = len(gaia_table) * radius**2/region_radius**2
+        convolution_kernel = convolution.Tophat2DKernel(radius//min_radius)
+        # not_mask = np.logical_not(histo_mask)
+        histo_mask = np.less(X[:-1, :-1]**2 + Y[:-1, :-1]**2, region_radius**2)
+        convolved_array = np.multiply(convolution.convolve(histo, convolution_kernel), histo_mask)
+        # print(convolved_array.shape)
+        convolved_data.append((radius, convolved_array))
+        print(f"finished {radius}")
 
-        histo, xedges, yedges = np.histogram2d(gaia_table['x'], gaia_table['y'], bins=region_radius//radius)
-        bin_width = (xedges[1]-xedges[0])/2
+    passing_xy = cuts.histogram_overdensity_test(convolved_data, (xedges, yedges, histo), region_ra, region_dec, outfile, histo_mask, num_sigma=2, repetition=2)
 
-        passing_indices_y, passing_indices_x = np.argwhere(np.less(poisson_sd*4, histo) == 1).T
-        passing_ra, passing_dec = inverse_azimuthal_equidistant_coordinates(xedges[passing_indices_x]+bin_width, yedges[passing_indices_y]+bin_width, region_ra, region_dec)
+    # plot the convolved data
+    convolved_histograms(convolved_data, (X, Y, histo), passingxy=passing_xy, name=name, region_radius=region_radius)
+    convolved_histograms_1d(convolved_data, (X, Y, histo), name=name, mask=histo_mask, region_radius=region_radius)
 
-        with open(outfile, 'w') as outfl:
-            for ra, dec in zip(passing_ra, passing_dec):
-                outfl.write(f"{ra} {dec}")
+    # ## END NEW STUFF
 
-    for radius in radii:
-        fig, ax = plt.subplots()
-        ax.hist2d(gaia_table['x'], gaia_table['y'], bins=region_radius//radius)
-        fig.savefig(f'sculptor_plots/sculptor_histo_{radius}.pdf')
-
-    fig, ax = plt.subplots()
-    ax.scatter(passing_ra, passing_dec, s=1)
-    ax.set_xlim(left=12.4, right=17.5)
-    ax.set_ylim(bottom=-30.5, top=-36.9)
-    # ax.scatter(*get_points_of_circle(region_ra, region_dec, region_radius).T, s=1)
-    fig.savefig('sculptor_plots/sculptor_passing_coords_001.pdf')
-
+####
+    # for radius in radii:
+    #     poisson_sd = np.sqrt(len(gaia_table) * radius**2/region_radius**2)
+    #     print(poisson_sd)
+    #     histo, xedges, yedges = np.histogram2d(gaia_table['x'], gaia_table['y'], bins=region_radius//radius)
+    #     bin_width = (xedges[1]-xedges[0])/2
+    #
+    #     passing_indices_y, passing_indices_x = np.argwhere(np.logical_and(np.less(poisson_sd*sigma_threshhold, histo), histo > minimum_count)).T
+    #     passing_ra, passing_dec = inverse_azimuthal_equidistant_coordinates(xedges[passing_indices_x]+bin_width, yedges[passing_indices_y]+bin_width, region_ra, region_dec)
+    #
+    #     with open(outfile, 'w') as outfl:
+    #         for ra, dec in zip(passing_ra, passing_dec):
+    #             outfl.write(f"{ra} {dec}")
+    #
+    # for radius in radii:
+    #     fig, ax = plt.subplots()
+    #     ax.hist2d(gaia_table['x'], gaia_table['y'], bins=region_radius//radius)
+    #     fig.savefig(f'sculptor_plots/sculptor_histo_{radius}.pdf')
+    #
+    # fig, ax = plt.subplots()
+    # ax.scatter(passing_ra, passing_dec, s=1)
+    # ax.set_xlim(left=12.4, right=17.5)
+    # ax.set_ylim(bottom=-30.5, top=-36.9)
+    # # ax.scatter(*get_points_of_circle(region_ra, region_dec, region_radius).T, s=1)
+    # fig.savefig('sculptor_plots/sculptor_passing_coords_001.pdf')
 
     # for coords in get_cone_in_region(region_ra, region_dec, region_radius, num_cones=num_cones):
     #     # print(f"found coords {coords}")
@@ -188,7 +222,47 @@ def new_main(param_args):
     #         # print("passed!")
     #     else:
     #         dwa.rejected(summary=message, log=False)
-    #         # print("failed")
+    #        # print("failed")
+####
+
+def random_poisson(param_args):
+    """Generate random poisson GAIA data for testing."""
+    import matplotlib.pyplot as plt
+    # # test_cases = [(radius1, radius2) for radius1 in radii for radius2 in radii+[region_radius] if radius1 < radius2]
+    # # print(test_cases)
+
+    region_ra, region_dec, region_radius, num_cones, *radii = [float(arf) for arf in param_args[1:]]
+
+    radii = [0.01, 0.005, 0.001, 0.0005, 0.0001]
+    region_radius = 0.05
+    num_pts = 20000
+
+    sigma_threshhold = 5
+    minimum_count = 3
+    x = np.random.uniform(-region_radius, region_radius, num_pts)
+    y = np.random.uniform(-region_radius, region_radius, num_pts)
+
+    for radius in radii:
+        poisson_sd = np.sqrt(num_pts * radius**2/region_radius**2)
+        print(poisson_sd)
+        histo, xedges, yedges = np.histogram2d(x, y, bins=region_radius//radius)
+        bin_width = (xedges[1]-xedges[0])/2
+        passing_indices_y, passing_indices_x = np.argwhere((histo > poisson_sd*sigma_threshhold) & (histo > minimum_count)).T
+        passing_ra, passing_dec = xedges[passing_indices_x]+bin_width, yedges[passing_indices_y]+bin_width
+
+        # with open(outfile, 'w') as outfl:
+        #     for ra, dec in zip(passing_ra, passing_dec):
+        #         outfl.write(f"{ra} {dec}")
+
+    for radius in radii:
+        fig, ax = plt.subplots()
+        ax.hist2d(x, y, bins=region_radius//radius)
+        fig.savefig(f'poisson_simulation/poisson_plot_{radius}.pdf')
+
+    fig, ax = plt.subplots()
+    ax.scatter(passing_ra, passing_dec, s=1)
+    # ax.scatter(*get_points_of_circle(region_ra, region_dec, region_radius).T, s=1)
+    fig.savefig('poisson_simulation/poisson_passing_coords_001.pdf')
 
 
 def main(num_cones=1000, point_start=0, point_end=None, plot=False):
@@ -222,7 +296,28 @@ params = {'test_area': 18, 'test_percentage': 0.4547369094279682, 'num_maxima': 
 if __name__ == "__main__":
     import time
     start_time = time.time()
-    new_main(sys.argv)
+    # random_poisson(sys.argv)
+    if len(sys.argv) < 2:
+        names = ['Crater2', 'Sculptor', 'Draco', 'HydrusI']
+        coords = [(177.3100, -18.413), (15.0392, -33.7089), (260.059728, 57.921219), (37.3890, -79.3089)]
+        region_radius = 1
+        radii = [0.316, 0.1, 0.0316, 0.01]
+        num_cones = 10
+
+        dwarfs = np.loadtxt('./the_search/tuning/tuning_known_dwarfs.txt', delimiter=",", dtype=str)
+        # for name, (ra, dec) in zip(names, coords):
+        for name, ra, dec in dwarfs[:]:
+            print(name)
+            ra = float(ra)
+            dec = float(dec)
+            param_args = [0, name, ra, dec, region_radius, num_cones] + radii
+            new_main(param_args)
+            print(f"finished with dwarf {name}\n\n\n")
+
+        new_all_sky(region_radius)
+    else:
+        new_main(sys.argv)
+
     print("--- %s seconds ---" % (time.time() - start_time))
 
     # main(num_cones=10000, point_start=0, point_end=None)
