@@ -12,6 +12,11 @@ import matplotlib.pyplot as plt
 import matplotlib.cm as cm
 import matplotlib as mpl
 import glob
+try:
+    from utils import inverse_azimuthal_equidistant_coordinates
+except ModuleNotFoundError:
+    from .utils import inverse_azimuthal_equidistant_coordinates
+# from the_search.utils import inverse_azimuthal_equidistant_coordinates
 
 
 def colorbar_for_subplot(fig, axs, cmap, image):
@@ -37,25 +42,88 @@ def trim_axes(axes, N):
     return [axes]
 
 
-def plot_setup(rows, cols, d=0, buffer=(0.3, 0.3)):
+def plot_setup(rows, cols, d=0, buffer=(0.4, 0.4)):
     """Set mpl parameters for beautification."""
     # setup plot
     plt.close('all')
-    mpl.rcParams['axes.labelsize'] = 'large'
-    mpl.rcParams['ytick.labelsize'] = 'x-small'
-    mpl.rcParams['xtick.labelsize'] = 'x-small'
-    # mpl.rcParams['figure.subplot.wspace'] = buffer[0]
-    # mpl.rcParams['figure.subplot.hspace'] = buffer[1]
+    mpl.rcParams['axes.labelsize'] = 'medium'
+    mpl.rcParams['ytick.labelsize'] = 'xx-small'
+    mpl.rcParams['xtick.labelsize'] = 'xx-small'
+    mpl.rcParams['figure.subplot.wspace'] = buffer[0]
+    mpl.rcParams['figure.subplot.hspace'] = buffer[1]
 
     plt.rc('text', usetex=True)
     plt.rc('font', family='serif')
 
-    figsize = (6 * cols + buffer[0], 5.5 * rows + buffer[1])
+    figsize = (4 * cols + buffer[0], 3.5 * rows + buffer[1])
     fig, axs = plt.subplots(nrows=rows, ncols=cols, figsize=figsize)
     if d != 0:
         axs = trim_axes(axs, d)
 
     return fig, axs
+
+
+def convolved_histograms(convolved_data, histo_data, passingxy=None, name='dwarf', region_radius=0):
+    """Make 2d histogram of convolved data."""
+    from matplotlib import cm, colors
+
+    X, Y, histo = histo_data
+
+    cols = 2
+    d = len(convolved_data) + 1
+    rows = d//2 + d % 2
+
+    fig, axs = plot_setup(rows, cols, d)
+    # fig.tight_layout()
+
+    vmin = 0
+    vmax = np.amax(histo)/10
+    cmap = cm.magma
+    normalize = colors.Normalize(vmin=vmin, vmax=vmax)
+
+    for ax, (radius, convolved_array) in zip(axs, convolved_data):
+        ax.pcolormesh(X, Y, convolved_array.T, norm=normalize, cmap=cmap)
+        ax.set_title(f"2D tophat, width={2*radius}")
+
+        if passingxy is not None:
+            ax.scatter(passingxy[0], passingxy[1], s=1, color='xkcd:bright teal')
+
+    axs.flatten()[-1].pcolormesh(X, Y, histo.T, norm=normalize, cmap=cmap)
+    axs.flatten()[-1].set_title("2D histogram, not convolved")
+
+    fig.suptitle(f"Convolved histogram for {name}")
+    fig.colorbar(cm.ScalarMappable(norm=normalize, cmap=cmap), ax=axs.ravel().tolist())
+    fig.savefig(f'./dwarf_histos/{name}_histo_{round(region_radius*100)}.png')
+
+
+def convolved_histograms_1d(convolved_data, histo_data, name='dwarf', mask=None, region_radius=0):
+    """Make 2d histogram of convolved data."""
+    from matplotlib import cm, colors
+
+    X, Y, histo = histo_data
+
+    cols = 2
+    d = len(convolved_data) + 1
+    rows = d//2 + d % 2
+
+    fig, axs = plot_setup(rows, cols, d)
+    # fig.tight_layout()
+
+    vmin = 0
+    vmax = np.amax(histo)/10
+    cmap = cm.magma
+    normalize = colors.Normalize(vmin=vmin, vmax=vmax)
+
+    for ax, (radius, convolved_array) in zip(axs, convolved_data):
+        hist_data, bins, _ = ax.hist(convolved_array.flatten()[mask.flatten()], density=False, bins=101)
+        ax.set_yscale('log')
+        ax.set_title(f"Bin counts,  conv. width={2*radius}")
+
+    axs.flatten()[-1].pcolormesh(X, Y, histo.T, norm=normalize, cmap=cmap)
+    axs.flatten()[-1].set_title("2D histogram, not convolved")
+
+    fig.suptitle(f"1D Histrogram for {name}")
+    fig.savefig(f'./dwarf_histos/{name}_histo_1d_{round(region_radius*100)}.png')
 
 
 def string_name(dwarf):
@@ -192,7 +260,7 @@ def all_sky():
     ra_known = known[:, 1].astype(np.float)
     dec_known = known[:, 2].astype(np.float)
 
-    for color, file in zip(colors, glob.glob('./dsph_search/region_candidates/*.txt')):
+    for color, file in zip(colors, glob.glob('./dsph_search/region_candidates/*632*.txt')):
         candidate_list = np.loadtxt(file, delimiter=" ")
         print(len(candidate_list))
         file = file.split('_')
@@ -216,7 +284,7 @@ def all_sky():
     fig.savefig('./dsph_search/all_sky_candidates.pdf')
 
 
-def new_all_sky():
+def new_all_sky(region_radius):
     "Plot candidates without Milky Way background."
     import astropy.coordinates as coord
     from astropy import units as u
@@ -228,9 +296,35 @@ def new_all_sky():
     ax.grid(color=lighten_color('xkcd:greyish blue', amount=1.5), zorder=0)
     ax.tick_params(axis='x', colors='xkcd:white')
 
+    # plot galactic plane
+    ra_gal = np.linspace(0, 360, num=500)
+    dec_gal = np.ones(500)*15
+    ra_icrs, dec_icrs = galactic_to_icrs(ra_gal, dec_gal)
+    ra_icrs = coord.Angle(ra_icrs, unit='deg').wrap_at(180*u.degree)
+    dec_icrs = coord.Angle(dec_icrs, unit='deg')
+    ax.scatter(ra_icrs.radian, dec_icrs.radian, color='xkcd:steel gray', s=1, zorder=-1000)
+    ra_icrs, dec_icrs = galactic_to_icrs(ra_gal, -dec_gal)
+    ra_icrs = coord.Angle(ra_icrs, unit='deg').wrap_at(180*u.degree)
+    dec_icrs = coord.Angle(dec_icrs, unit='deg')
+    ax.scatter(ra_icrs.radian, dec_icrs.radian, color='xkcd:steel gray', s=1, zorder=-1000)
+
+    # plot LMC
+    ra_lmc, dec_lmc = get_points_of_circle(80.89, -69.76, 5)
+    ra_lmc = coord.Angle(ra_lmc, unit='deg').wrap_at(180*u.degree)
+    dec_lmc = coord.Angle(dec_lmc, unit='deg')
+    ax.scatter(ra_lmc.radian, dec_lmc.radian, color='xkcd:steel gray', s=1, zorder=-1000)
+
+    # plot SMC
+    ra_smc, dec_smc = get_points_of_circle(13.16, -72.8, 2)
+    ra_smc = coord.Angle(ra_smc, unit='deg').wrap_at(180*u.degree)
+    dec_smc = coord.Angle(dec_smc, unit='deg')
+    ax.scatter(ra_smc.radian, dec_smc.radian, color='xkcd:steel gray', s=1, zorder=-1000)
     # colors = ['xkcd:mauve', 'xkcd:coral', 'xkcd:pinkish purple', 'xkcd:tangerine', 'xkcd:vermillion', 'xkcd:tomato', 'xkcd:salmon', 'xkcd:dark peach', 'xkcd:marigold']
 
-    known = np.loadtxt('./dsph_search/the_search/tuning/tuning_known_dwarfs.txt', delimiter=',', dtype=str)
+    try:
+        known = np.loadtxt('./the_search/tuning/tuning_known_dwarfs.txt', delimiter=',', dtype=str)
+    except OSError:
+        known = np.loadtxt('./dsph_search/the_search/tuning/tuning_known_dwarfs.txt', delimiter=',', dtype=str)
 
     labels = [f"$\mathrm{{{know}}}$" for know in known[:, 0]]
     ra_known = known[:, 1].astype(np.float)
@@ -243,68 +337,50 @@ def new_all_sky():
         ax.scatter(r.radian, d.radian, color='xkcd:light grey blue', marker=l, s=700, zorder=100)
     # print(len(glob.glob('./dsph_search/region_candidates/*.txt')))
 
-    file_list = glob.glob('./dsph_search/region_candidates/*.txt')
+    file_list = glob.glob(f'./dsph_search/region_candidates/*rad{round(region_radius*100, 2)}*.txt')
     colors = [cm.Wistia(i) for i in np.linspace(0, 1, num=len(file_list))]
     for color, file in zip(colors, file_list):
         candidate_list = np.loadtxt(file, delimiter=" ")
+        # print(file)
         # print(len(candidate_list))
         file = file.split('_')
         ra = float(file[3].strip('ra'))/100
         dec = float(file[4].strip('dec'))/100
         radius = float(file[5].strip('rad'))/100
         # print( ra, dec, radius)
-        circle_points = get_points_of_circle(ra, dec, radius)
+        circle_ra, circle_dec = get_points_of_circle(ra, dec, radius)
 
-        ra = coord.Angle(circle_points[:, 0]*u.degree)
+        ra = coord.Angle(circle_ra*u.degree)
         ra = ra.wrap_at(180*u.degree)
-        dec = coord.Angle(circle_points[:, 1]*u.degree)
-        ax.scatter(ra.radian, dec.radian, color=lighten_color(color, amount=1.5), s=1, zorder=50)
+        dec = coord.Angle(circle_dec*u.degree)
+        ax.scatter(ra.radian, dec.radian, color=lighten_color(color, amount=1.6), s=0.1, zorder=50)
 
-        if len(candidate_list) > 0:
+        if len(candidate_list) > 1:
+            try:
+                ra = coord.Angle(candidate_list[:, 0]*u.degree)
+            except IndexError:
+                candidate_list = np.array([candidate_list])
             ra = coord.Angle(candidate_list[:, 0]*u.degree)
             ra = ra.wrap_at(180*u.degree)
             dec = coord.Angle(candidate_list[:, 1]*u.degree)
             ax.scatter(ra.radian, dec.radian, color=color, s=2, zorder=500)
 
-    fig.savefig('./dsph_search/all_sky_candidates.pdf')
+    try:
+        fig.savefig(f'./all_sky_candidates_{round(region_radius*100, 2)}.png')
+    except OSError:
+        fig.savefig(f'./dsph_search/all_sky_candidates_{round(region_radius*100, 2)}.png')
 
 
 def get_points_of_circle(ra_center, dec_center, radius):
     """Get coordinates of circle for plotting."""
-    n = 100
+    n = 200
     coord_gen = np.linspace(0, 2*np.pi, num=n)
+
+    radius = np.deg2rad(radius)
     x = radius * np.cos(coord_gen)
     y = radius * np.sin(coord_gen)
-    coords_prime = []
-    for xx, yy in zip(x, y):
-        coords_prime.append((ra_center + xx, dec_center + yy))
-    # flag_neg = False
-    # if dec_center < 0:
-    #     dec_center *= -1
-    #     flag_neg = True
-    # ra = np.linspace(0, 360, num=n)
-    # dec = np.ones(n)*radius
-    #
-    # a = spherical_to_cartesian(0, 0)
-    # b = spherical_to_cartesian(ra_center, dec_center)
-    # k = np.cross(a, b) / np.linalg.norm(np.cross(a, b))
-    # rotation_angle = (90 - dec_center)*np.pi/180
-    #
-    # coords = np.array([[raa, decc] for (raa, decc) in zip(ra, dec)])
-    # coords_prime = np.copy(coords)
-    # print(coords_prime)
-    # for i, (phi, theta) in enumerate(coords):
-    #     # https://en.wikipedia.org/wiki/Rodrigues%27_rotation_formula
-    #     vect = spherical_to_cartesian(phi, theta)
-    #     rotated_vector = vect * np.cos(rotation_angle) + np.cross(k, vect)*np.sin(rotation_angle) + np.dot(k, vect) * (1-np.cos(rotation_angle))*vect
-    #     coords_prime[i] = cartesian_to_spherical(rotated_vector)
-    #
-    #
-    # if flag_neg is True:
-    #     coords_prime[:, 1] = coords_prime[:, 1] - 90
-    #
-    # print(coords_prime)
-    return np.array(coords_prime)
+
+    return inverse_azimuthal_equidistant_coordinates(x, y, ra_center, dec_center)
 
 
 def icrs_to_galactic(ra_icrs, dec_icrs):
@@ -313,6 +389,14 @@ def icrs_to_galactic(ra_icrs, dec_icrs):
 
     coords = SkyCoord(ra_icrs, dec_icrs, unit='deg', frame='icrs')
     return np.array([coords.galactic.b.value, coords.galactic.l.value]).T
+
+
+def galactic_to_icrs(ra_gal, dec_gal):
+    """Return galactic coordinates."""
+    from astropy.coordinates import SkyCoord
+
+    coords = SkyCoord(ra_gal, dec_gal, unit='deg', frame='galactic')
+    return np.array([coords.icrs.ra, coords.icrs.dec])
 
 
 def spherical_to_cartesian(ra, dec):
@@ -354,6 +438,6 @@ def lighten_color(color, amount=0.5):
 
 
 if __name__ == '__main__':
-    new_all_sky()
+    new_all_sky(1)
     # all_sky()
     # get_points_of_circle(30, 60, 5)
