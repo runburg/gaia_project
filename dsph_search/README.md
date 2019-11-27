@@ -54,13 +54,13 @@ The algorithm consists of two parts: querying GAIA and applying the tests.
 
 # Change in Methodology
 This branch changes and optimizes the approach used to search for dSphs. Now, the process looks like:
-    1. GAIA data for a region is downloaded.
-    2. Within this region, the GAIA objects are binned for the entire region using a sufficiently small bin size (0.02 deg usually).
-    3. The histogram is convolved with a tophat of varying radial size (can also convolve with a 2d Gaussian kernel, but it is more computationally expensive).
-    4. The convolved histogram is searched for overdensities (based on Poisson statistics, num_sigma=2). If the same bin has an overdensity in a few (repitition=2) of the convolved histograms, it is considered a dwarf candidate. Both of these parameters can be adjusted.
+ 1. GAIA data for a region is downloaded.
+ 2. Within this region, the GAIA objects are binned for the entire region using a sufficiently small bin size (0.02 deg usually).
+ 3. The histogram is convolved with a tophat of varying radial size (can also convolve with a 2d Gaussian kernel, but it is more computationally expensive).
+ 4. The convolved histogram is searched for overdensities (based on Poisson statistics, num_sigma=2). If the same bin has an overdensity in a few (repitition=2) of the convolved histograms, it is considered a dwarf candidate. Both of these parameters can be adjusted.
     
 **Some initial observations:**
-    - Nearby bright objects frequently prevent detection, so faint objects favor a smaller test region radius to be detected (HyiI).
-    - The stripiness of GAIA might mess with statistics (LeoT).
-    - Many of the known dwarfs seem to be near a bright object (RetII, Scl).
-    - I'm not sure what's happening with SgrII.
+- Nearby bright objects frequently prevent detection, so faint objects favor a smaller test region radius to be detected (HyiI).
+- The stripiness of GAIA might mess with statistics (LeoT).
+- Many of the known dwarfs seem to be near a bright object (RetII, Scl).
+- I'm not sure what's happening with SgrII.
