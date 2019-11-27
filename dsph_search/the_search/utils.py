@@ -77,7 +77,7 @@ def azimuthal_equidistant_coordinates(gaia_table, region_ra, region_dec):
     ra_gaia_rad = np.deg2rad(gaia_table['ra'])
     dec_gaia_rad = np.deg2rad(gaia_table['dec'])
 
-    c = np.arccos(np.sin(dec_rad)*np.sin(dec_gaia_rad)+np.cos(dec_rad)*np.cos(dec_gaia_rad)*np.cos(ra_gaia_rad-ra_rad))
+    c = np.arccos(np.sin(dec_rad)*np.sin(dec_gaia_rad) + np.cos(dec_rad)*np.cos(dec_gaia_rad)*np.cos(ra_gaia_rad-ra_rad))
 
     k_prime = c / np.sin(c)
 
@@ -96,7 +96,7 @@ def inverse_azimuthal_equidistant_coordinates(x, y, region_ra, region_dec):
     c = np.sqrt(x**2 + y**2)
 
     phi = np.arcsin(np.cos(c)*np.sin(dec_rad) + y/c * np.sin(c)*np.cos(dec_rad))
-    lamb = ra_rad + np.arctan2(-x*np.sin(c), (c*np.cos(dec_rad)*np.cos(c) - y*np.sin(dec_rad)*np.sin(c)))
+    lamb = ra_rad + np.arctan2(x*np.sin(c), (c*np.cos(dec_rad)*np.cos(c) - y*np.sin(dec_rad)*np.sin(c)))
 
     return np.rad2deg(lamb), np.rad2deg(phi)
 
@@ -143,10 +143,7 @@ def get_cone_in_region(ra, dec, region_radius, max_radius=1, limit=15, num_cones
 def outside_of_galactic_plane(ra, dec, limit=15):
     """Check that coordinates are outside (up to limit) the galactic plane."""
     c_icrs = SkyCoord(ra, dec, unit='deg', frame='icrs')
-    if abs(c_icrs.galactic.l.value) > limit:
-        return True
-    else:
-        return False
+    return np.abs(c_icrs.galactic.b.value) > limit
 
 
 def angular_distance(ra, dec, ra_cone, dec_cone):
