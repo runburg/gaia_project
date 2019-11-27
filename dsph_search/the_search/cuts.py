@@ -8,6 +8,10 @@ Date: 22-08-2019 14:31
 
 """
 import numpy as np
+try:
+    from utils import inverse_azimuthal_equidistant_coordinates
+except ModuleNotFoundError:
+    from .utils import inverse_azimuthal_equidistant_coordinates
 
 
 def cut_on_pm(table, cut=5):
@@ -162,3 +166,30 @@ def poisson_overdensity_test(dwarf, table, table_radius, sigma=1.5, print_to_std
         # dwarf.log.append('FAIL' + log_message)
     dwarf.tests.append(False)
     return False
+
+
+def histogram_overdensity_test(convolved_data, histo_data, region_ra, region_dec, outfile, mask, num_sigma=2, repetition=2):
+    """Return coordinates with overdensities for all convolutions."""
+    X, Y, histo = histo_data
+    passing = np.zeros(histo.shape)
+    min_radius = convolved_data[-1][0]
+
+    for radius, convolved_array in convolved_data:
+        hist_data, bins = np.histogram(convolved_array.flatten()[mask.flatten()], density=False, bins=101)
+        midpoints = 0.5*(bins[1:] + bins[:-1])
+        mean = np.average(midpoints, weights=hist_data)
+        sd = np.sqrt(np.average((midpoints - mean)**2, weights=hist_data))
+        # print("sd", sd)
+
+        passing += np.less(mean + 2 * sd, convolved_array)
+        unique, counts = np.unique(passing, return_counts=True)
+        # print(f"radius is {radius} with counts {counts}")
+
+    passing_indices_x, passing_indices_y = np.argwhere(passing > repetition).T
+    passing_ra, passing_dec = inverse_azimuthal_equidistant_coordinates(np.deg2rad(X[passing_indices_x] + min_radius/2), np.deg2rad(Y[passing_indices_y]+min_radius/2), region_ra, region_dec)
+
+    with open(outfile, 'w') as outfl:
+        for ra, dec in zip(passing_ra, passing_dec):
+            outfl.write(f"{ra} {dec}\n")
+
+    return X[passing_indices_x] + min_radius/2, Y[passing_indices_y]+min_radius/2
