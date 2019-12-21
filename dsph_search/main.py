@@ -14,7 +14,7 @@ import sys
 from astropy.table import Table
 from the_search.dwarf import Dwarf
 from the_search import cuts
-from the_search.utils import fibonnaci_sphere, get_cone_in_region, gaia_region_search, outside_of_galactic_plane, azimuthal_equidistant_coordinates, inverse_azimuthal_equidistant_coordinates
+from the_search.utils import fibonnaci_sphere, get_cone_in_region, gaia_region_search, outside_of_galactic_plane, azimuthal_equidistant_coordinates, inverse_azimuthal_equidistant_coordinates, get_window_function
 from the_search.plots import get_points_of_circle, convolved_histograms, convolved_histograms_1d, new_all_sky
 
 warnings.filterwarnings("ignore")
@@ -286,6 +286,86 @@ def main(num_cones=1000, point_start=0, point_end=None, plot=False):
             dwa.rejected(summary=message, log=False)
 
 
+def main_4d(param_args):
+    """Search region of sky."""
+    # set parameters of search
+    if len(param_args) > 1:
+        name = param_args[1]
+        region_ra, region_dec, region_radius, num_cones, radii, pm_spacing = param_args[2:]
+        num_cones = int(num_cones)
+    else:
+        region_ra, region_dec = 250, 60
+        region_radius = 5
+        # 15 degree close to galactic plane takes ~60 min
+        num_cones = 10000000
+        radii = [1.5, 1.0, 0.5]
+
+    minimum_count = 2
+    sigma_threshhold = 3
+    pm_threshhold = 5
+
+    # standard paths
+    infile = f'regions/region_ra{round(region_ra*100)}_dec{round(region_dec*100)}_rad{round(region_radius*100)}.vot'
+    outfile = f'region_candidates/region_ra{round(region_ra*100)}_dec{round(region_dec*100)}_rad{round(region_radius*100)}_candidates.txt'
+
+    with open(outfile, 'a') as fil:
+        fil.write(f'# successful candidates for region at ({region_ra}, {region_dec}) and radius {region_radius}')
+
+    # first try to find file
+    try:
+        gaia_table = Table.read(infile, format='votable')
+        print(f"Table loaded from: {infile}")
+        print(f"Number of objects: {len(gaia_table)}")
+    except FileNotFoundError:
+        job = gaia_region_search(region_ra, region_dec, outfile=infile, radius=region_radius)
+        gaia_table = job.get_results()
+        print("Finished querying Gaia")
+        gaia_table = gaia_table[outside_of_galactic_plane(gaia_table['ra'], gaia_table['dec'])]
+        print("Finished filtering Gaia table")
+        gaia_table['x'], gaia_table['y'] = azimuthal_equidistant_coordinates(gaia_table, region_ra, region_dec)
+        print("Finished calculating x-y values done")
+        print(f"Table dumped to: {infile}")
+        print(f"Number of objects: {len(gaia_table)}")
+        gaia_table.write(infile, overwrite='True', format='votable')
+
+    # ## NEW STUFF
+    # from astropy import convolution
+    from scipy.signal import convolve
+
+    # bin data at finest resolution
+    min_radius = min(radii)
+    min_pm_spacing = min(pm_spacing)
+    print(min_radius, min_pm_spacing)
+
+    bins = [region_radius//min_radius]*2 + [pm_threshhold//min_pm_spacing]*2
+    data_4d = np.array([gaia_table['x'], gaia_table['y'], gaia_table['ra'], gaia_table['dec']]).T
+    histo, edges = np.histogramdd(data_4d, bins=bins)
+    print(histo.shape)
+
+    # put bins in degrees
+    edges[0] *= 180/np.pi
+    edges[1] *= 180/np.pi
+
+    # set bins for plotting
+    X, Y = np.meshgrid(edges[0], edges[1])
+    print(X.shape)
+    # histo_mask = np.less(X[:-1, :-1]**2 + Y[:-1, :-1]**2, region_radius**2)
+
+    # convolve the histogram with different size tophats
+    convolved_data = []
+    for radius, pm_space in zip(radii, pm_spacing):
+        window_function = get_window_function(radius//min_radius, pm_space//min_pm_spacing)
+        convolved_array = convolve(histo, window_function)
+        convolved_data.append((radius, convolved_array))
+        print(f"finished {radius}")
+
+    # passing_xy = cuts.histogram_overdensity_test(convolved_data, (xedges, yedges, histo), region_ra, region_dec, outfile, histo_mask, num_sigma=2, repetition=2)
+    #
+    # # plot the convolved data
+    # convolved_histograms(convolved_data, (X, Y, histo), passingxy=passing_xy, name=name, region_radius=region_radius)
+    # convolved_histograms_1d(convolved_data, (X, Y, histo), name=name, mask=histo_mask, region_radius=region_radius)
+
+
 # params = {'test_area': 10, 'test_percentage': 0.179376451145657, 'num_maxima': 8, 'density_tolerance': 1.362830538392538}
 
 # params = {'test_area': 14, 'test_percentage': 0.32151337896836803, 'num_maxima': 8, 'density_tolerance': 1.269830538392538}
@@ -302,6 +382,7 @@ if __name__ == "__main__":
         coords = [(177.3100, -18.413), (15.0392, -33.7089), (260.059728, 57.921219), (37.3890, -79.3089)]
         region_radius = 1
         radii = [0.316, 0.1, 0.0316, 0.01]
+        pm_spacing = np.array(radii) * 10
         num_cones = 10
 
         dwarfs = np.loadtxt('./the_search/tuning/tuning_known_dwarfs.txt', delimiter=",", dtype=str)
@@ -310,8 +391,8 @@ if __name__ == "__main__":
             print(name)
             ra = float(ra)
             dec = float(dec)
-            param_args = [0, name, ra, dec, region_radius, num_cones] + radii
-            new_main(param_args)
+            param_args = [0, name, ra, dec, region_radius, num_cones] + [radii] + [pm_spacing]
+            main_4d(param_args)
             print(f"finished with dwarf {name}\n\n\n")
 
         new_all_sky(region_radius)
