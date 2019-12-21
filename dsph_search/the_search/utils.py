@@ -32,6 +32,24 @@ def gaia_search(ra, dec, name, output_path, radius=0.5, sigma=3, pm_threshold=5,
     return job
 
 
+def get_window_function(spa_dim, pm_dim):
+    """Return a window function for a 4d convolution."""
+    # ensure int
+    spa_dim = int(spa_dim)
+    pm_dim = int(pm_dim)
+
+    # create 4d ellipse in histogram space
+    a = np.ones((spa_dim*2+1, spa_dim*2+1, pm_dim*2+1, pm_dim*2+1))
+    for i in np.arange(-spa_dim, 1+spa_dim):
+        for j in np.arange(-spa_dim, spa_dim+1):
+            for k in np.arange(-pm_dim, pm_dim+1):
+                for l in np.arange(-pm_dim, pm_dim+1):
+                    if (i/spa_dim)**2 + (j/spa_dim)**2 + (k/pm_dim)**2 + (l/pm_dim)**2 > 1:
+                        a[i+spa_dim, j+spa_dim, k+pm_dim, l+pm_dim] = 0
+
+    return a
+
+
 def random_cones_outside_galactic_plane(limit=15):
     """Check if in plane and return new coordinates if not."""
     # galactic longitude
@@ -62,7 +80,7 @@ def gaia_region_search(ra, dec, outfile, radius=10, sigma=3, pm_threshold=5, bp_
                                 gaia_source.bp_rp, gaia_source.phot_g_mean_mag \
                                 FROM gaiadr2.gaia_source \
                                 WHERE \
-                                CONTAINS(POINT('ICRS',gaiadr2.gaia_source.ra,gaiadr2.gaia_source.dec),CIRCLE('ICRS',{coords.ra.degree},{coords.dec.degree},{radius}))=1 AND  (gaiadr2.gaia_source.parallax - gaiadr2.gaia_source.parallax_error * {sigma} <= 0) AND (SQRT(POWER(gaiadr2.gaia_source.pmra, 2) + POWER(gaiadr2.gaia_source.pmdec, 2)) <= {pm_threshold}) AND (gaiadr2.gaia_source.bp_rp <= {bp_rp_threshold})", dump_to_file=dump_to_file, output_file=outfile, verbose=True)
+                                CONTAINS(POINT('ICRS',gaiadr2.gaia_source.ra,gaiadr2.gaia_source.dec),BOX('ICRS',{coords.ra.degree},{coords.dec.degree},{2*radius},{2*radius}))=1 AND  (gaiadr2.gaia_source.parallax - gaiadr2.gaia_source.parallax_error * {sigma} <= 0) AND (SQRT(POWER(gaiadr2.gaia_source.pmra, 2) + POWER(gaiadr2.gaia_source.pmdec, 2)) <= {pm_threshold}) AND (gaiadr2.gaia_source.bp_rp <= {bp_rp_threshold})", dump_to_file=dump_to_file, output_file=outfile, verbose=True)
 
     return job
 
@@ -117,7 +135,7 @@ def get_cone_in_region(ra, dec, region_radius, max_radius=1, limit=15, num_cones
     theta = np.rad2deg(np.arccos(z_locations/np.sqrt(x_locations**2+y_locations**2+z_locations**2)))
     phi = np.rad2deg(np.arctan2(y_locations, x_locations))
 
-    print([(ph, th) for ph,th in zip(theta, phi)])
+    print([(ph, th) for ph, th in zip(theta, phi)])
     # for point in range(num_cones):
     #     if point % 1000000 == 0:
     #         print(f"At cone {point}")
@@ -157,7 +175,7 @@ def angular_distance(ra, dec, ra_cone, dec_cone):
     dec_rad = np.deg2rad(dec)
     dec_cone_rad = np.deg2rad(dec_cone)
     # # ang_dist = np.arctan(np.sqrt((np.cos(dec_cone_rad) * np.sin(ra_diff_rad))**2 + (np.cos(dec_rad)*np.sin(dec_cone_rad)-np.sin(dec_rad)*np.cos(dec_cone_rad)*np.cos(ra_diff_rad))**2) /(np.sin(dec_rad)*np.sin(dec_cone_rad)+np.cos(dec_rad)*np.cos(dec_cone_rad)*np.cos(ra_diff_rad)))
-    ang_dist = np.arccos(np.sin(dec_rad)*np.sin(dec_cone_rad) +np.cos(dec_rad)*np.cos(dec_cone_rad)*np.cos(ra_diff_rad))
+    ang_dist = np.arccos(np.sin(dec_rad)*np.sin(dec_cone_rad) + np.cos(dec_rad)*np.cos(dec_cone_rad)*np.cos(ra_diff_rad))
 
     return ang_dist
 
