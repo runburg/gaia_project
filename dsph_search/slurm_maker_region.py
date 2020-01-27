@@ -8,6 +8,7 @@ Date: 27-09-2019 13:10
 
 """
 import numpy as np
+import glob
 
 # ## For all known dwarfs
 # known = np.loadtxt('./dsph_search/the_search/tuning/tuning_known_dwarfs.txt', delimiter=',', dtype=str)
@@ -16,22 +17,18 @@ import numpy as np
 # ra_known = known[:, 1].astype(np.float) + np.random.randint(-2, 3, size=len(known))
 # dec_known = known[:, 2].astype(np.float) + np.random.randint(-2, 3, size=len(ra_known))
 # ##
-
-labels = "Sculptor"
-ra_known = 015.0392
-dec_known =  -33.7089
-
+file_list = glob.glob("./region_list/*.txt")
 region_radius = 3.16
 radii = [1.0, 0.316, 0.1, 0.0316, 0.01]
-num_cones = 7500000
 
-for num, (lab, *coords) in enumerate(zip(labels, ra_known, dec_known)):
-    args = [*coords, region_radius, num_cones, *radii]
+for infile in file_list:
+    name = infile.split("/")[-1].strip(".txt")
+    args = [infile, region_radius, radii]
     args_string = " ".join([str(arg) for arg in args])
 
-    with open(f'./searchslurm{num}.slurm', 'w') as outfile:
+    with open(f'./searchslurm{name}.slurm', 'w') as outfile:
         outfile.write(f'''#!/bin/bash
-#SBATCH --job-name=the_search_{num}
+#SBATCH --job-name=the_search_{name}
 #SBATCH --partition=shared
 ## 3 day max run time for public partitions, except 4 hour max runtime for the sandbox partition
 #SBATCH --time=02-00:00:00 ## time format is DD-HH:MM:SS
@@ -43,8 +40,8 @@ for num, (lab, *coords) in enumerate(zip(labels, ra_known, dec_known)):
 
 ##SBATCH --core-spec=0 ## Uncomment to allow jobs to request all cores on a node
 
-#SBATCH --error=error_{num}_%A_{lab}.err ## %A - filled with jobid
-#SBATCH --output=out_{num}_%A_{lab}.out ## %A - filled with jobid
+#SBATCH --error={name}.err ## %A - filled with jobid
+#SBATCH --output={name}.log ## %A - filled with jobid
 ## Useful for remote notification
 ##SBATCH --mail-type=BEGIN,END,FAIL,REQUEUE,TIME_LIMIT_80
 ##SBATCH --mail-user=runburg@hawaii.edu

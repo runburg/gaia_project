@@ -168,28 +168,88 @@ def poisson_overdensity_test(dwarf, table, table_radius, sigma=1.5, print_to_std
     return False
 
 
-def histogram_overdensity_test(convolved_data, histo_data, region_ra, region_dec, outfile, mask, num_sigma=2, repetition=2):
+def histogram_overdensity_test(convolved_data, histo_shape, region_ra, region_dec, outfile, mask, num_sigma=2, repetition=2):
     """Return coordinates with overdensities for all convolutions."""
-    X, Y, histo = histo_data
-    passing = np.zeros(histo.shape)
-    min_radius = convolved_data[-1][0]
+    # Create zero array to search for overdensities
+    passing = np.zeros(histo_shape)
 
+    # For every radius probed, calculate the mean and sd of the histogram bins.
     for radius, convolved_array in convolved_data:
         hist_data, bins = np.histogram(convolved_array.flatten()[mask.flatten()], density=False, bins=101)
         midpoints = 0.5*(bins[1:] + bins[:-1])
         mean = np.average(midpoints, weights=hist_data)
         sd = np.sqrt(np.average((midpoints - mean)**2, weights=hist_data))
-        # print("sd", sd)
 
+        # Add the overdensities to the test array
         passing += np.less(mean + 2 * sd, convolved_array)
         unique, counts = np.unique(passing, return_counts=True)
         # print(f"radius is {radius} with counts {counts}")
 
+    # Passing candidates occur {repetition} times in the convolved data
     passing_indices_x, passing_indices_y = np.argwhere(passing > repetition).T
+
+    return passing_indices_x, passing_indices_y
+
+
+def pm_overdensity_test(convolved_data, histo_shape, region_ra, region_dec, outfile, mask, num_sigma=2, repetition=2):
+    """Return coordinates with overdensities for all convolutions."""
+    # Create zero array to search for overdensities
+    passing = np.zeros(histo_shape)
+
+    # For every radius probed, calculate the mean and sd of the histogram bins.
+    for radius, convolved_array in convolved_data:
+        hist_data, bins = np.histogram(convolved_array.flatten()[mask.flatten()], density=False, bins=101)
+        midpoints = 0.5*(bins[1:] + bins[:-1])
+        mean = np.average(midpoints, weights=hist_data)
+        sd = np.sqrt(np.average((midpoints - mean)**2, weights=hist_data))
+
+        # Add the overdensities to the test array
+        passing += np.less(mean + num_sigma * sd, convolved_array)
+        unique, counts = np.unique(passing, return_counts=True)
+        # print(f"radius is {radius} with counts {counts}")
+
+    # Passing candidates occur {repetition} times in the convolved data
+    passing_indices_x, passing_indices_y = np.argwhere(passing > repetition).T
+
+    if len(passing_indices_x) > 0:
+        return True
+
+    return False
+
+
+############ WORKING
+def overdensity_4d_test(convolved_data, histo_data, region_ra, region_dec, outfile, num_sigma=2, repetition=0, bins=101):
+    """Return coordinates with overdensities in 4d pm-radec space for all convolutions."""
+    X, Y, histo = histo_data
+    passing = np.zeros(convolved_data[0][1].shape)
+    min_radius = convolved_data[-1][0]
+
+    for radius, convolved_array in convolved_data:
+        hist_data, bins = np.histogram(convolved_array.flatten(), density=False, bins=bins)
+        # print(hist_data)
+        # print("bins", bins)
+        midpoints = 0.5*(bins[2:] + bins[1:-1])
+        mean = np.average(midpoints, weights=hist_data[1:])
+        sd = np.sqrt(np.average((midpoints - mean)**2, weights=hist_data[1:]))
+        print('for radius ', radius, " the value is ", mean, " +/- ", sd)
+        # print("sd", sd)
+
+        # print("passing ", passing.shape)
+        # print("convolved array ", convolved_array.shape)
+        passing += np.less(mean + num_sigma * sd, convolved_array)
+        # print(np.amax(hist_data[1:]))
+        # print(np.amax(passing))
+        # unique, counts = np.unique(passing, return_counts=True)
+        # print(f"radius is {radius} with counts {counts}")
+
+    passing_indices_x, passing_indices_y, *passing_pm = np.argwhere(passing > repetition).T
+    print(len(passing.flatten()), len(passing_indices_x))
     passing_ra, passing_dec = inverse_azimuthal_equidistant_coordinates(np.deg2rad(X[passing_indices_x] + min_radius/2), np.deg2rad(Y[passing_indices_y]+min_radius/2), region_ra, region_dec)
 
     with open(outfile, 'w') as outfl:
         for ra, dec in zip(passing_ra, passing_dec):
             outfl.write(f"{ra} {dec}\n")
+
+    print("output to ", outfile)
 
     return X[passing_indices_x] + min_radius/2, Y[passing_indices_y]+min_radius/2

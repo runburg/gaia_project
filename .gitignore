@@ -3,4 +3,11 @@
 */dead_logs/*
 *.log
 dsph_search/the_search/tuning/test_candidates/*/vots/*.vot
-.DS_Store
+*.DS_Store
+dsph_search/regions/*
+dsph_search/region_candidates/*
+dsph_search/poisson_simulation/*
+dsph_search/dwarf_histos/*
+dsph_search/.ipynb_checkpoints/*
+dsph_search/.DS_Store*
+dsph_search/regions/*

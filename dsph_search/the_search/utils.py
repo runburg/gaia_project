@@ -27,9 +27,67 @@ def gaia_search(ra, dec, name, output_path, radius=0.5, sigma=3, pm_threshold=5,
                                 gaia_source.bp_rp, gaia_source.phot_g_mean_mag \
                                 FROM gaiadr2.gaia_source \
                                 WHERE \
-                                CONTAINS(POINT('ICRS',gaiadr2.gaia_source.ra,gaiadr2.gaia_source.dec),CIRCLE('ICRS',{coords.ra.degree},{coords.dec.degree},{radius}))=1 AND  (gaiadr2.gaia_source.parallax - gaiadr2.gaia_source.parallax_error * {sigma} <= 0) AND (SQRT(POWER(gaiadr2.gaia_source.pmra, 2) + POWER(gaiadr2.gaia_source.pmdec, 2)) <= {pm_threshold}) AND (gaiadr2.gaia_source.bp_rp <= {bp_rp_threshold})", dump_to_file=dump_to_file, output_file=f'{output_path}/vots/{name}_{round(radius*100)}.vot', verbose=True)
+                                CONTAINS(POINT('ICRS',gaiadr2.gaia_source.ra,gaiadr2.gaia_source.dec),BOX('ICRS',{coords.ra.degree},{coords.dec.degree},{2*radius},{2*radius}))=1 AND  (gaiadr2.gaia_source.parallax - gaiadr2.gaia_source.parallax_error * {sigma} <= 0) AND (gaiadr2.gaia_source.bp_rp <= {bp_rp_threshold})", dump_to_file=dump_to_file, output_file=f'{output_path}/vots/{name}_{round(radius*100)}.vot', verbose=True)
 
     return job
+
+
+def convolve_spatial_histo(gaia_table, region_radius, radii):
+    """Convolve the spatial histogram of GAIA data with bin sizes given in radii."""
+    from astropy import convolution
+
+    # Bin data at finest resolution
+    min_radius = min(radii)
+    histo, xedges, yedges = np.histogram2d(gaia_table['x'], gaia_table['y'], bins=region_radius//min_radius)
+    # print(histo.shape)
+    # put bins in degrees
+    xedges *= 180/np.pi
+    yedges *= 180/np.pi
+
+    # Set bins for plotting
+    X, Y = np.meshgrid(xedges, yedges)
+    histo_mask = np.less(X[:-1, :-1]**2 + Y[:-1, :-1]**2, region_radius**2)
+
+    # Convolve the histogram with different size tophats
+    convolved_data = []
+    for radius in radii:
+        convolution_kernel = convolution.Tophat2DKernel(radius//min_radius)
+        histo_mask = np.less(X[:-1, :-1]**2 + Y[:-1, :-1]**2, region_radius**2)
+        convolved_array = np.multiply(convolution.convolve(histo, convolution_kernel), histo_mask)
+
+        # All convolved data is stored here
+        convolved_data.append((radius, convolved_array))
+
+        print(f"finished {radius}")
+
+    return convolved_data, xedges, yedges, X, Y, histo, histo_mask
+
+
+def convolve_pm_histo(gaia_table, region_radius, radii):
+    """Convolve the pm histogram of GAIA data with bin sizes given in radii."""
+    from astropy import convolution
+
+    # Bin data at finest resolution
+    min_radius = min(radii)
+    histo, xedges, yedges = np.histogram2d(gaia_table['pmra'], gaia_table['pmdec'], bins=5//min_radius)
+
+    # Set bins for plotting
+    X, Y = np.meshgrid(xedges, yedges)
+    histo_mask = np.less(X[:-1, :-1]**2 + Y[:-1, :-1]**2, region_radius**2)
+
+    # Convolve the histogram with different size tophats
+    convolved_data = []
+    for radius in radii:
+        convolution_kernel = convolution.Tophat2DKernel(radius//min_radius)
+        histo_mask = np.less(X[:-1, :-1]**2 + Y[:-1, :-1]**2, region_radius**2)
+        convolved_array = np.multiply(convolution.convolve(histo, convolution_kernel), histo_mask)
+
+        # All convolved data is stored here
+        convolved_data.append((radius, convolved_array))
+
+        print(f"finished {radius}")
+
+    return convolved_data, xedges, yedges, X, Y, histo, histo_mask
 
 
 def get_window_function(spa_dim, pm_dim):
@@ -105,18 +163,50 @@ def azimuthal_equidistant_coordinates(gaia_table, region_ra, region_dec):
     return x, y
 
 
-def inverse_azimuthal_equidistant_coordinates(x, y, region_ra, region_dec):
+def inverse_azimuthal_equidistant_coordinates(x, y, ra_rad, dec_rad):
     """Given (x, y) positions from AEP, return (ra, dec)."""
     # http://mathworld.wolfram.com/AzimuthalEquidistantProjection.html
-    ra_rad = np.deg2rad(region_ra)
-    dec_rad = np.deg2rad(region_dec)
-
     c = np.sqrt(x**2 + y**2)
 
     phi = np.arcsin(np.cos(c)*np.sin(dec_rad) + y/c * np.sin(c)*np.cos(dec_rad))
-    lamb = ra_rad + np.arctan2(x*np.sin(c), (c*np.cos(dec_rad)*np.cos(c) - y*np.sin(dec_rad)*np.sin(c)))
+    if dec_rad == np.pi/2:
+        lamb = ra_rad + np.arctan2(-x, y)
+    elif dec_rad == -np.pi/2:
+        lamb = ra_rad + np.arctan2(x, y)
+    else:
+        lamb = ra_rad + np.arctan2(x*np.sin(c), (c*np.cos(dec_rad)*np.cos(c) - y*np.sin(dec_rad)*np.sin(c)))
 
     return np.rad2deg(lamb), np.rad2deg(phi)
+
+
+def generate_full_sky_cones(cone_radius, galactic_plane=15, output_directory='./region_list/'):
+    """Generate full sky coverage of candidate cones."""
+    angle = 90 - galactic_plane
+    deg_values = np.arange(-angle, angle, cone_radius)
+    x, y = np.meshgrid(deg_values, deg_values)
+
+    x = np.concatenate((x.flatten(), (x + cone_radius/2)[:, :-1].flatten()))
+    y = np.concatenate((y.flatten(), (y + cone_radius/2)[:-1, :].flatten()))
+
+    inside_of_circle = np.less(x**2+y**2, angle**2)
+    x = x[inside_of_circle]
+    y = y[inside_of_circle]
+
+    # NORTHERN HEMISPHERE
+    ra, dec = inverse_azimuthal_equidistant_coordinates(np.deg2rad(x), np.deg2rad(y), 0, np.pi/2)
+    # SOUTHERN HEMISPHERE
+    ra2, dec2 = inverse_azimuthal_equidistant_coordinates(np.deg2rad(x), np.deg2rad(y), 0, -np.pi/2)
+
+    ra = np.concatenate((ra, ra2))
+    dec = np.concatenate((dec, dec2))
+
+    print(ra)
+
+    candidate_per_file = 250
+    for i in range(1, len(ra)//candidate_per_file+1):
+        with open(output_directory + f"region{i}.txt", 'w') as outfile:
+            outfile.write("# candidates for full sky search of dsph\n")
+            np.savetxt(outfile, np.array([ra[candidate_per_file*(i-1):candidate_per_file*i], dec[candidate_per_file*(i-1):candidate_per_file*i]]).T, delimiter=" ", comments='#')
 
 
 def get_cone_in_region(ra, dec, region_radius, max_radius=1, limit=15, num_cones=10000):
@@ -230,4 +320,6 @@ if __name__ == '__main__':
     # gaia_region_search(90, 90)
     # for _ in range(20):
     #     print('{}, {}'.format(*random_cones_outside_galactic_plane()))
-    get_cone_in_region(10, 20, 5, num_cones=20)
+    # get_cone_in_region(10, 20, 5, num_cones=20)
+    # print(inverse_azimuthal_equidistant_coordinates(np.array([0]), np.array([0.0001]), 0.001, -np.pi/2))
+    generate_full_sky_cones(3.16)
