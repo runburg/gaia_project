@@ -344,7 +344,9 @@ def main(param_args):
     import time
     start_time = time.time()
 
-    _, input_file, region_radius, radii = param_args
+    _, input_file, region_radius, *radii = param_args
+    radii = [float(radius) for radius in radii]
+    region_radius = float(region_radius)
 
     count_pass_spatial = 0
     count_pass_pm = 0

@@ -23,7 +23,7 @@ radii = [1.0, 0.316, 0.1, 0.0316, 0.01]
 
 for infile in file_list:
     name = infile.split("/")[-1].strip(".txt")
-    args = [infile, region_radius, radii]
+    args = [infile, region_radius] + radii
     args_string = " ".join([str(arg) for arg in args])
 
     with open(f'./searchslurm{name}.slurm', 'w') as outfile:
