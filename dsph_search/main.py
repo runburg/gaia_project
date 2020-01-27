@@ -268,7 +268,7 @@ def main_4d(param_args):
     convolved_histograms_1d(convolved_data, (X, Y, histo), name=name, mask=histo_mask, region_radius=region_radius)
 
 
-def cone_search(*, region_ra, region_dec, region_radius, radii, pm_radii, name=None, minimum_count=3, sigma_threshhold=3, FLAG_search_pm_space=True):
+def cone_search(*, region_ra, region_dec, region_radius, radii, pm_radii, name=None, minimum_count=3, sigma_threshhold=3, FLAG_search_pm_space=True, FLAG_plot=True):
     """Search region of sky."""
     # Give a default name based on position
     if name is None:
@@ -328,8 +328,9 @@ def cone_search(*, region_ra, region_dec, region_radius, radii, pm_radii, name=N
     passing_ra, passing_dec = inverse_azimuthal_equidistant_coordinates(np.deg2rad(passing_x), np.deg2rad(passing_y), np.deg2rad(region_ra), np.deg2rad(region_dec))
 
     # plot the convolved data
-    convolved_histograms(convolved_data, (X, Y, histo), passingxy=[passing_x, passing_y], name=name, region_radius=region_radius)
-    convolved_histograms_1d(convolved_data, (X, Y, histo), name=name, mask=histo_mask, region_radius=region_radius)
+    if FLAG_plot is True:
+        convolved_histograms(convolved_data, (X, Y, histo), passingxy=[passing_x, passing_y], name=name, region_radius=region_radius)
+        convolved_histograms_1d(convolved_data, (X, Y, histo), name=name, mask=histo_mask, region_radius=region_radius)
 
     # Write successful sky coordinates
     with open(outfile, 'a') as outfl:
