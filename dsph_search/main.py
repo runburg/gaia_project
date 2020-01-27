@@ -377,6 +377,7 @@ def main(param_args):
             count_pass_spatial += 1
         if pm_pass is True and sp_pass is True:
             count_pass_pm += 1
+            print(f"Success: both tests passed")
             with open("successful_candidates.txt", 'a') as outfile:
                 outfile.write(f"{ra} {dec}\n")
         count_total += 1
