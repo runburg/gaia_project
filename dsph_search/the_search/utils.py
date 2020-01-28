@@ -197,16 +197,24 @@ def generate_full_sky_cones(cone_radius, galactic_plane=15, output_directory='./
     # SOUTHERN HEMISPHERE
     ra2, dec2 = inverse_azimuthal_equidistant_coordinates(np.deg2rad(x), np.deg2rad(y), 0, -np.pi/2)
 
-    ra = np.concatenate((ra, ra2))
-    dec = np.concatenate((dec, dec2))
+    ra_gal = np.concatenate((ra, ra2))
+    dec_gal = np.concatenate((dec, dec2))
 
-    print(ra)
+    ra, dec = galactic_to_icrs(ra_gal, dec_gal)
 
     candidate_per_file = 250
     for i in range(1, len(ra)//candidate_per_file+1):
         with open(output_directory + f"region{i}.txt", 'w') as outfile:
             outfile.write("# candidates for full sky search of dsph\n")
             np.savetxt(outfile, np.array([ra[candidate_per_file*(i-1):candidate_per_file*i], dec[candidate_per_file*(i-1):candidate_per_file*i]]).T, delimiter=" ", comments='#')
+
+
+def galactic_to_icrs(ra_gal, dec_gal):
+    """Return galactic coordinates."""
+    from astropy.coordinates import SkyCoord
+
+    coords = SkyCoord(ra_gal, dec_gal, unit='deg', frame='galactic')
+    return coords.icrs.ra, coords.icrs.dec
 
 
 def get_cone_in_region(ra, dec, region_radius, max_radius=1, limit=15, num_cones=10000):
