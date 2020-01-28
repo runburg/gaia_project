@@ -305,7 +305,7 @@ def cone_search(*, region_ra, region_dec, region_radius, radii, pm_radii, name=N
     convolved_data, xedges, yedges, X, Y, histo, histo_mask = convolve_spatial_histo(gaia_table, region_radius, radii)
 
     # Get passing candidate coordinates in projected (non-sky) coordinates
-    passing_indices_x, passing_indices_y = cuts.histogram_overdensity_test(convolved_data, histo.shape, region_ra, region_dec, outfile, histo_mask, num_sigma=sigma_threshhold, repetition=minimum_count)
+    passing_indices_x, passing_indices_y = cuts.histogram_overdensity_test(convolved_data, histo.shape, region_ra, region_dec, outfile, histo_mask, num_sigma=(sigma_threshhold-1), repetition=minimum_count)
 
     min_radius = min(radii)
     passing_x = xedges[passing_indices_x] + min_radius/2  # coordinate of center of bins
@@ -365,7 +365,7 @@ def main(param_args):
                      "radii": radii,
                      "pm_radii": radii,
                      "minimum_count": 3,
-                     "sigma_threshhold": 2,
+                     "sigma_threshhold": 3,
                      "name": name,
                      "FLAG_search_pm_space": True,
                      "FLAG_plot": False
