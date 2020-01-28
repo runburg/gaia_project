@@ -56,4 +56,4 @@ pip3 install --user astropy
 pip3 install --user astroquery
 echo "Finished installing packages"
 ''')
-        outfile.write(f"python3 -vu main.py {args_string}")
+        outfile.write(f"python3 -u main.py {args_string}")

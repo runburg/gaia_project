@@ -177,7 +177,11 @@ def histogram_overdensity_test(convolved_data, histo_shape, region_ra, region_de
     for radius, convolved_array in convolved_data:
         hist_data, bins = np.histogram(convolved_array.flatten()[mask.flatten()], density=False, bins=101)
         midpoints = 0.5*(bins[1:] + bins[:-1])
-        mean = np.average(midpoints, weights=hist_data)
+        try:
+            mean = np.average(midpoints, weights=hist_data)
+        except ZeroDivisionError:
+            print("Error with normalization")
+            print(hist_data)
         sd = np.sqrt(np.average((midpoints - mean)**2, weights=hist_data))
 
         # Add the overdensities to the test array
@@ -199,8 +203,13 @@ def pm_overdensity_test(convolved_data, histo_shape, region_ra, region_dec, outf
     # For every radius probed, calculate the mean and sd of the histogram bins.
     for radius, convolved_array in convolved_data:
         hist_data, bins = np.histogram(convolved_array.flatten()[mask.flatten()], density=False, bins=101)
+        hist_data.dtype = np.float64
         midpoints = 0.5*(bins[1:] + bins[:-1])
-        mean = np.average(midpoints, weights=hist_data)
+        try:
+            mean = np.average(midpoints, weights=hist_data)
+        except ZeroDivisionError:
+            print("Error with normalization")
+            print(hist_data)
         sd = np.sqrt(np.average((midpoints - mean)**2, weights=hist_data))
 
         # Add the overdensities to the test array
@@ -228,6 +237,7 @@ def overdensity_4d_test(convolved_data, histo_data, region_ra, region_dec, outfi
         hist_data, bins = np.histogram(convolved_array.flatten(), density=False, bins=bins)
         # print(hist_data)
         # print("bins", bins)
+        hist_data.dtype = np.float64
         midpoints = 0.5*(bins[2:] + bins[1:-1])
         mean = np.average(midpoints, weights=hist_data[1:])
         sd = np.sqrt(np.average((midpoints - mean)**2, weights=hist_data[1:]))
