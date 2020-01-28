@@ -365,7 +365,7 @@ def main(param_args):
                      "radii": radii,
                      "pm_radii": radii,
                      "minimum_count": 3,
-                     "sigma_threshhold": 3,
+                     "sigma_threshhold": 2,
                      "name": name,
                      "FLAG_search_pm_space": True,
                      "FLAG_plot": False
