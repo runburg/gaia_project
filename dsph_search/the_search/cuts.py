@@ -182,6 +182,7 @@ def histogram_overdensity_test(convolved_data, histo_shape, region_ra, region_de
         except ZeroDivisionError:
             print("Error with normalization")
             print(hist_data)
+            mean = 0
         sd = np.sqrt(np.average((midpoints - mean)**2, weights=hist_data))
 
         # Add the overdensities to the test array
@@ -210,6 +211,7 @@ def pm_overdensity_test(convolved_data, histo_shape, region_ra, region_dec, outf
         except ZeroDivisionError:
             print("Error with normalization")
             print(hist_data)
+            mean = 0
         sd = np.sqrt(np.average((midpoints - mean)**2, weights=hist_data))
 
         # Add the overdensities to the test array
@@ -263,3 +265,4 @@ def overdensity_4d_test(convolved_data, histo_data, region_ra, region_dec, outfi
     print("output to ", outfile)
 
     return X[passing_indices_x] + min_radius/2, Y[passing_indices_y]+min_radius/2
+
