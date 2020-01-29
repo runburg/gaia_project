@@ -10,7 +10,8 @@ Date: 22-08-2019 14:03
 import glob
 import warnings
 import numpy as np
-import sys
+import sys, os
+from zipfile import ZipFile, ZIP_DEFLATED
 from astropy.table import Table
 from the_search.dwarf import Dwarf
 from the_search import cuts
@@ -278,13 +279,12 @@ def cone_search(*, region_ra, region_dec, region_radius, radii, pm_radii, name=N
     infile = f'regions/region_ra{round(region_ra*100)}_dec{round(region_dec*100)}_rad{round(region_radius*100)}.vot'
     outfile = f'region_candidates/region_ra{round(region_ra*100)}_dec{round(region_dec*100)}_rad{round(region_radius*100)}_candidates.txt'
 
-    # Create output file
-    with open(outfile, 'w') as fil:
-        fil.write(f'# successful candidates for region at ({region_ra}, {region_dec}) and radius {region_radius}')
-
     # first try to find existing input file
     try:
-        gaia_table = Table.read(infile, format='votable')
+        with ZipFile(infile + '.zip') as myzip:
+            print(myzip.namelist())
+            with myzip.open(infile.split("/")[-1]) as myfile:
+                gaia_table = Table.read(myfile, format='votable')
         print(f"Table loaded from: {infile}")
         print(f"Number of objects: {len(gaia_table)}")
     except FileNotFoundError:
@@ -297,9 +297,12 @@ def cone_search(*, region_ra, region_dec, region_radius, radii, pm_radii, name=N
         # x-y values are projected coordinates (i.e. not sky coordinates)
         gaia_table['x'], gaia_table['y'] = azimuthal_equidistant_coordinates(gaia_table, region_ra, region_dec)
         print("Finished calculating x-y values done")
-        print(f"Table dumped to: {infile}")
+        print(f"Table dumped to: {infile}.zip")
         print(f"Number of objects: {len(gaia_table)}")
         gaia_table.write(infile, overwrite='True', format='votable')
+        with ZipFile(infile + '.zip', 'w') as myzip:
+            myzip.write(infile, arcname=infile.split("/")[-1], compress_type=ZIP_DEFLATED)
+        os.remove(infile)
 
     # Get the convolved data for all radii
     convolved_data, xedges, yedges, X, Y, histo, histo_mask = convolve_spatial_histo(gaia_table, region_radius, radii)
@@ -321,21 +324,23 @@ def cone_search(*, region_ra, region_dec, region_radius, radii, pm_radii, name=N
         convolved_data_pm, _, _, _, _, histog, histog_mask = convolve_pm_histo(gaia_table, region_radius, radii)
         pm_test_result = cuts.pm_overdensity_test(convolved_data_pm, histog.shape, region_ra, region_dec, outfile, histog_mask, num_sigma=sigma_threshhold, repetition=minimum_count)
 
-    if pm_test_result is False:
-        passing_x, passing_y = [], []
+    if pm_test_result is True:
+        # Coordinate transform back to coordinates on the sky
+        passing_ra, passing_dec = inverse_azimuthal_equidistant_coordinates(np.deg2rad(passing_x), np.deg2rad(passing_y), np.deg2rad(region_ra), np.deg2rad(region_dec))
 
-    # Coordinate transform back to coordinates on the sky
-    passing_ra, passing_dec = inverse_azimuthal_equidistant_coordinates(np.deg2rad(passing_x), np.deg2rad(passing_y), np.deg2rad(region_ra), np.deg2rad(region_dec))
+        # plot the convolved data
+        if FLAG_plot is True:
+            convolved_histograms(convolved_data, (X, Y, histo), passingxy=[passing_x, passing_y], name=name, region_radius=region_radius)
+            convolved_histograms_1d(convolved_data, (X, Y, histo), name=name, mask=histo_mask, region_radius=region_radius)
 
-    # plot the convolved data
-    if FLAG_plot is True:
-        convolved_histograms(convolved_data, (X, Y, histo), passingxy=[passing_x, passing_y], name=name, region_radius=region_radius)
-        convolved_histograms_1d(convolved_data, (X, Y, histo), name=name, mask=histo_mask, region_radius=region_radius)
+        # Create output file
+        with open(outfile, 'w') as fil:
+            fil.write(f'# successful candidates for region at ({region_ra}, {region_dec}) and radius {region_radius}')
 
-    # Write successful sky coordinates
-    with open(outfile, 'a') as outfl:
-        for ra, dec in zip(passing_ra, passing_dec):
-            outfl.write(f"{ra} {dec}\n")
+        # Write successful sky coordinates
+        with open(outfile, 'a') as outfl:
+            for ra, dec in zip(passing_ra, passing_dec):
+                outfl.write(f"{ra} {dec}\n")
 
     return od_test_result, pm_test_result
 
@@ -354,6 +359,7 @@ def main(param_args):
     count_total = 0
 
     dwarfs = np.loadtxt(input_file, delimiter=" ", dtype=np.float64, comments='#')
+    print(dwarfs)
     for i, (ra, dec) in enumerate(dwarfs[:]):
         ra = float(ra)
         dec = float(dec)
