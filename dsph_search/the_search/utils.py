@@ -193,6 +193,7 @@ def generate_full_sky_cones(cone_radius, galactic_plane=15, hemi='north', output
     y = y[inside_of_circle]
 
     # NORTHERN HEMISPHERE
+    ra, dec, ra2, dec2 = [], [], [], []
     if hemi == 'north' or hemi == 'both':
         ra, dec = inverse_azimuthal_equidistant_coordinates(np.deg2rad(x), np.deg2rad(y), 0, np.pi/2)
     # SOUTHERN HEMISPHERE
