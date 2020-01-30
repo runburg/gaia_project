@@ -9,6 +9,7 @@ Date: 27-09-2019 13:10
 """
 import numpy as np
 import glob
+from the_search.utils import generate_full_sky_cones
 
 # ## For all known dwarfs
 # known = np.loadtxt('./dsph_search/the_search/tuning/tuning_known_dwarfs.txt', delimiter=',', dtype=str)
@@ -17,8 +18,11 @@ import glob
 # ra_known = known[:, 1].astype(np.float) + np.random.randint(-2, 3, size=len(known))
 # dec_known = known[:, 2].astype(np.float) + np.random.randint(-2, 3, size=len(ra_known))
 # ##
-file_list = glob.glob("./region_list/*.txt")
 region_radius = 3.16
+
+generate_full_sky_cones(region_radius, galactic_plane=15, hemi='north', output_directory='./region_list/')
+
+file_list = glob.glob("./region_list/*.txt")
 radii = [1.0, 0.316, 0.1, 0.0316, 0.01]
 
 for infile in file_list:
