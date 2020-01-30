@@ -179,7 +179,7 @@ def inverse_azimuthal_equidistant_coordinates(x, y, ra_rad, dec_rad):
     return np.rad2deg(lamb), np.rad2deg(phi)
 
 
-def generate_full_sky_cones(cone_radius, galactic_plane=15, output_directory='./region_list/'):
+def generate_full_sky_cones(cone_radius, galactic_plane=15, hemi='north', output_directory='./region_list/'):
     """Generate full sky coverage of candidate cones."""
     angle = 90 - galactic_plane
     deg_values = np.arange(-angle, angle, cone_radius)
@@ -193,9 +193,11 @@ def generate_full_sky_cones(cone_radius, galactic_plane=15, output_directory='./
     y = y[inside_of_circle]
 
     # NORTHERN HEMISPHERE
-    ra, dec = inverse_azimuthal_equidistant_coordinates(np.deg2rad(x), np.deg2rad(y), 0, np.pi/2)
+    if hemi == 'north' or hemi == 'both':
+        ra, dec = inverse_azimuthal_equidistant_coordinates(np.deg2rad(x), np.deg2rad(y), 0, np.pi/2)
     # SOUTHERN HEMISPHERE
-    ra2, dec2 = inverse_azimuthal_equidistant_coordinates(np.deg2rad(x), np.deg2rad(y), 0, -np.pi/2)
+    if hemi == 'south' or hemi == 'both':
+        ra2, dec2 = inverse_azimuthal_equidistant_coordinates(np.deg2rad(x), np.deg2rad(y), 0, -np.pi/2)
 
     ra_gal = np.concatenate((ra, ra2))
     dec_gal = np.concatenate((dec, dec2))
