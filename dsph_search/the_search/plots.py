@@ -300,8 +300,10 @@ def new_all_sky(region_radius):
     from astropy import units as u
     from matplotlib import cm
 
-    FLAG_plot_circles = False
-    FLAG_plot_region = True
+    FLAG_plot_circles = True
+    FLAG_plot_region = False
+    FLAG_regions_from_file = True
+    success_file = "successful_candidates_north.txt"
 
     region_rad_str = str(round(region_radius*100))
     # set up plot
@@ -368,7 +370,11 @@ def new_all_sky(region_radius):
     ##############################
     # Look for files of candidate coordinates
     # print("searching", f'./region_candidates/*rad{round(region_radius*100, 2):3.0d}*.txt')
-    file_list = glob.glob(f'./region_candidates/*rad{region_rad_str}*.txt')
+    if FLAG_regions_from_file is True:
+        suc_coords = np.loadtxt(success_file, dtype=np.float, delimiter=" ")
+        file_list = [f'./region_candidates/region_ra{int(round(ra*100))}_dec{int(round(dec*100))}_rad{region_rad_str}_candidates.txt' for (ra, dec) in suc_coords]
+    else:
+        file_list = glob.glob(f'./region_candidates/*rad{region_rad_str}*.txt')
     # print("found", len(file_list), "file(s)")
     # print(file_list[1].split("_"))
 

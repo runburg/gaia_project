@@ -164,7 +164,7 @@ def azimuthal_equidistant_coordinates(gaia_table, region_ra, region_dec):
 
 
 def inverse_azimuthal_equidistant_coordinates(x, y, ra_rad, dec_rad):
-    """Given (x, y) positions from AEP, return (ra, dec)."""
+    """Given (x, y) positions from AEP, return (ra, dec) in deg."""
     # http://mathworld.wolfram.com/AzimuthalEquidistantProjection.html
     c = np.sqrt(x**2 + y**2)
 
@@ -179,7 +179,7 @@ def inverse_azimuthal_equidistant_coordinates(x, y, ra_rad, dec_rad):
     return np.rad2deg(lamb), np.rad2deg(phi)
 
 
-def generate_full_sky_cones(cone_radius, galactic_plane=15, hemi='north', output_directory='./region_list/'):
+def generate_full_sky_cones(cone_radius, galactic_plane=15, hemi='north', out_to_file=True, output_directory='./region_list/'):
     """Generate full sky coverage of candidate cones."""
     angle = 90 - galactic_plane
     deg_values = np.arange(-angle, angle, cone_radius)
@@ -205,11 +205,14 @@ def generate_full_sky_cones(cone_radius, galactic_plane=15, hemi='north', output
 
     ra, dec = galactic_to_icrs(ra_gal, dec_gal)
 
-    candidate_per_file = 250
-    for i in range(1, len(ra)//candidate_per_file+1):
-        with open(output_directory + f"region{i}.txt", 'w') as outfile:
-            outfile.write("# candidates for full sky search of dsph\n")
-            np.savetxt(outfile, np.array([ra[candidate_per_file*(i-1):candidate_per_file*i], dec[candidate_per_file*(i-1):candidate_per_file*i]]).T, delimiter=" ", comments='#')
+    if out_to_file is True:
+        candidate_per_file = 250
+        for i in range(1, len(ra)//candidate_per_file+1):
+            with open(output_directory + f"region{i}.txt", 'w') as outfile:
+                outfile.write("# candidates for full sky search of dsph\n")
+                np.savetxt(outfile, np.array([ra[candidate_per_file*(i-1):candidate_per_file*i], dec[candidate_per_file*(i-1):candidate_per_file*i]]).T, delimiter=" ", comments='#')
+    else:
+        return ra, dec
 
 
 def galactic_to_icrs(ra_gal, dec_gal):
@@ -333,4 +336,15 @@ if __name__ == '__main__':
     #     print('{}, {}'.format(*random_cones_outside_galactic_plane()))
     # get_cone_in_region(10, 20, 5, num_cones=20)
     # print(inverse_azimuthal_equidistant_coordinates(np.array([0]), np.array([0.0001]), 0.001, -np.pi/2))
-    generate_full_sky_cones(3.16)
+    import matplotlib.pyplot as plt
+    from astropy import units as u
+    import astropy.coordinates as coord
+
+    fig = plt.figure(figsize=(20, 10))
+    ax = fig.add_subplot(111, projection="hammer")
+    ra, dec = generate_full_sky_cones(3.16, out_to_file=False, hemi='both')
+    ra = coord.Angle(ra)
+    ra = ra.wrap_at(180*u.deg)
+    dec = coord.Angle(dec)
+    ax.scatter(ra.radian, dec.radian, color='xkcd:light grey blue')
+    fig.savefig("allsampleconesplot.pdf")
