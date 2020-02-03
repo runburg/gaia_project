@@ -20,7 +20,7 @@ from the_search.utils import generate_full_sky_cones
 # ##
 region_radius = 3.16
 
-generate_full_sky_cones(region_radius, galactic_plane=15, hemi='north', output_directory='./region_list/')
+generate_full_sky_cones(region_radius, galactic_plane=15, hemi='south', output_directory='./region_list/')
 
 file_list = glob.glob("./region_list/*.txt")
 radii = [1.0, 0.316, 0.1, 0.0316, 0.01]
